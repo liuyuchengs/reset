@@ -1,0 +1,43 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left" ng-click="changeRoute('/home')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		支付结果
+	</div>
+	<div class="header-item float-right" ng-click="changeRoute('/user')">
+		<img src="../contents/svg/users.svg">
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="payresult-content">
+	<div class="result-header">
+		<div class="container" ng-class="{'success':hasSuccess}">
+			<div></div>
+			<p ng-bind="resultValue"></p>
+		</div>
+	</div>
+	<ul class="item-group">
+		<li ng-if="!hasSuccess" ng-click="payAgain()">
+			<img class="icon" src="../contents/svg/wx-icon.svg">
+			<div class="text unborder">
+				<span>再次支付</span>
+				<img src="../contents/svg/right-arrow.svg">
+			</div>
+		</li>
+		<li ng-click="checkOrder()">
+			<img class="icon" src="../contents/svg/dingdan.svg">
+			<div class="text">
+				<span>查看订单</span>
+				<img src="../contents/svg/right-arrow.svg">
+			</div>
+		</li>
+		<li ng-click="toHome()">
+			<img class="icon" src="../contents/svg/see.svg">
+			<div class="text">
+				<span>继续浏览</span>
+				<img src="../contents/svg/right-arrow.svg">
+			</div>
+		</li>
+	</ul>
+</div>

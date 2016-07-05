@@ -1,0 +1,157 @@
+<div class="drop">
+	<div class="filter col-4" data-ng-init="load()">
+		<div class="filter-item" ng-class="{'check-color':menuParams.area}" ng-click="switchMenu('area')">
+			<span class="filter-text">位置</span>
+			<div></div>
+		</div>
+		<div class="filter-item" ng-class="{'check-color':menuParams.order}" ng-click="switchMenu('order')">
+			<span class="filter-text ">排序</span>
+			<div></div>
+		</div>
+		<div class="filter-item" ng-class="{'check-color':menuParams.classes}" ng-click="switchMenu('class')">
+			<span class="filter-text">分类</span>
+			<div></div>
+		</div>
+		<div class="filter-item" ng-class="{'check-color':menuParams.sex}" ng-click="switchMenu('sex')">
+			<span class="filter-text">性别</span>
+			<div></div>
+		</div>
+	</div>
+	<div class="drop-menu exam-drop-menu">
+		<ul id="drop-order" class="drop-menu-list" ng-show="hasOrder">
+			<li ng-class="{'li-check':orderParams.default.has}" ng-click="orderSelect('default')">
+				<span>默认排序</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':orderParams.price.has}" ng-click="orderSelect('price')">
+				<span>价格最低</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':orderParams.priceDesc.has}" ng-click="orderSelect('priceDesc')">
+				<span>价格最高</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':orderParams.scoreDesc.has}" ng-click="orderSelect('scoreDesc')">
+				<span>评分最高</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':orderParams.countDesc.has}" ng-click="orderSelect('countDesc')">
+				<span>销量最高</span>
+				<div></div>
+			</li>
+		</ul>
+		<ul id="drop-area" class="drop-menu-list" ng-show="hasArea">
+			<li ng-class="{'li-check':areaParams.default.has}" ng-click="areaSelect('default')">
+				<span >所有区域</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.futian.has}" ng-click="areaSelect('futian')">
+				<span>福田区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.nanshan.has}" ng-click="areaSelect('nanshan')">
+				<span>南山区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.luohu.has}" ng-click="areaSelect('luohu')">
+				<span>罗湖区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.baoan.has}" ng-click="areaSelect('baoan')">
+				<span>宝安区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.longhua.has}" ng-click="areaSelect('longhua')">
+				<span>龙华新区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.longgang.has}" ng-click="areaSelect('longgang')">
+				<span>龙岗区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.yantian.has}" ng-click="areaSelect('yantian')">
+				<span>盐田区</span>
+				<div></div>
+			</li>
+		</ul>
+		<ul class="drop-menu-list" ng-show="hasClass">
+			<li ng-class="{'li-check':classParams.default.has}" ng-click="classSelect('default')">
+				<span>全部项目</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':classParams.shangye.has}" ng-click="classSelect('shangye')">
+				<span>商业体检</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':classParams.changgui.has}" ng-click="classSelect('changgui')">
+				<span>常规体检</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':classParams.zhongnian.has}" ng-click="classSelect('zhongnian')">
+				<span>中年体检</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':classParams.laonian.has}" ng-click="classSelect('laonian')">
+				<span>老年体检</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':classParams.ruzhi.has}" ng-click="classSelect('ruzhi')">
+				<span>入职体检</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':classParams.yunqian.has}" ng-click="classSelect('yunqian')">
+				<span>孕前体检</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':classParams.ertong.has}" ng-click="classSelect('ertong')">
+				<span>儿童体检</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':classParams.manbing.has}" ng-click="classSelect('manbing')">
+				<span>慢病体检</span>
+				<div></div>
+			</li>
+		</ul>
+		<ul class="drop-menu-list" ng-show="hasSex">
+			<li ng-class="{'li-check':sexParams.default.has}" ng-click="sexSelect('default')">
+				<span>全部项目</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':sexParams.men.has}" ng-click="sexSelect('men')">
+				<span>男</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':sexParams.women.has}" ng-click="sexSelect('women')">
+				<span>女</span>
+				<div></div>
+			</li>
+		</ul>
+	</div>
+</div>
+<ul class="prduct-container" >
+	<li class="item" ng-repeat = "product in products" ng-click="detail(product.id,product.hospitalId)">
+		<div class="item-desc exam-desc">
+			<div class="item-title" ng-bind="product.title"></div>
+			<div class="item-subhead" ng-bind="product.hospital.name"></div>
+			<div class="item-price">
+				<div class="float-left">
+					<span class="saleprice">￥{{product.preferPrice}}</span>
+					<span class="priceType">{{product.preferPriceType}}</span>
+				</div>
+				<div class="float-left margin-l">
+					<span class="price float-left">￥{{product.standPrice}}</span>
+				</div>
+				<div class="float-left margin-l">
+					<span class="vip">专享</span>
+				</div>
+				<div class="margin-right">
+					<span class="item-count float-right">{{product.sales}}人下单</span>
+				</div>
+			</div>
+		</div>
+	</li>
+</ul>
+<div class="product-bg" ng-if="hasBg"></div>
+<div class="cush-tip" ng-if="noProduct">{{$parent.noProductText}}</div>
+<div ng-include="'section/tip.html'"></div>
+<div ng-include="'section/loading.html'"></div>

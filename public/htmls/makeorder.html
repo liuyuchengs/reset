@@ -1,0 +1,69 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left" ng-click="back()">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		订单确认
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="order-content">
+	<ul class="orderinfo">
+		<li>
+			<div class="title">项目：</div>
+			<div class="text" ng-bind="orderInfo.productName"></div>
+		</li>
+		<li>
+			<div class="title">机构：</div>
+			<div class="text" ng-bind="orderInfo.hospitalName"></div>
+		</li>
+		<li ng-show = "hasDoctor">
+			<div class="title">医生：</div>
+			<div class="text" ng-bind="orderInfo.doctorName"></div>
+		</li>
+		<li>
+			<div class="title">地址：</div>
+			<div class="text" ng-bind="orderInfo.hospitalAddress"></div>
+		</li>
+		<li>
+			<div class="title">就医时间：</div>
+			<div class="text" ng-bind="orderInfo.treatmentTime"></div>
+		</li>
+		<li>
+			<div class="title">套餐价格：</div>
+			<div class="text money" ng-bind="orderInfo.preferPrice"></div>
+		</li>
+		<li>
+			<div class="title">就医人：</div>
+			<div class="text">
+				<!--<div>选择就医人</div>-->
+				<span ng-bind="orderInfo.patientName"></span>
+			</div>
+		</li>
+		<li>
+			<div class="title">手机号码：</div>
+			<div class="text" ng-bind="orderInfo.patientTelephone"></div>
+		</li>
+	</ul>
+	<div class="base-separator"></div>
+	<div class="quan">
+		<div ng-class="{'check':hasCheck}" ng-click="selectCush()"></div>
+		<img src="../contents/svg/djq.svg">
+		<span ng-bind="giftText"></span>
+		<span class="money" ng-if="hasGift" ng-bind="orderInfo.giftMoney"></span>
+	</div>
+	<div class="base-separator"></div>
+	<div class="makeorder-tip">
+		<p>温馨提示：</p>
+		<p>1 请保存好就医人的手机号码，以便就医过程中联系。</p>
+		<p>2 在线付为平台预支付部分，到店付为门诊支付部分，两者组成套餐价格。</p>
+	</div>
+</div>
+<div class="markorder-menu">
+	<div class="order-btn" ng-click="makeorder()">提交订单</div>
+	<div class="order-text">
+		<p><span>在线付：￥</span><span class="money" ng-bind="orderInfo.dealMoney"></span></p>
+		<p><span>到店付：￥</span><span class="money" ng-bind="orderInfo.payMoney"></span></p>
+	</div>
+</div>
+<div class="has-user-menu"></div>

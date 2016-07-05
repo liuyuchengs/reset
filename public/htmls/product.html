@@ -1,0 +1,116 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left" ng-click="changeRoute('/home')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title" ng-bind="title">
+	</div>
+	<div class="header-item float-right" ng-click="question()">
+		<img src="../contents/svg/question.svg">
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="drop">
+	<div class="filter">
+		<div class="filter-item" ng-class="{'check-color':menuParams.area}" ng-click="switchMenu('area')">
+			<span class="filter-text">位置</span>
+			<div></div>
+		</div>
+		<div class="filter-item" ng-class="{'check-color':menuParams.order}" ng-click="switchMenu('order')">
+			<span class="filter-text ">排序</span>
+			<div></div>
+		</div>
+		<div class="filter-item" ng-class="{'check-color':menuParams.classes}" ng-click="switchMenu('class')">
+			<span class="filter-text">分类</span>
+			<div></div>
+		</div>
+	</div>
+	<div class="drop-menu">
+		<ul id="drop-order" class="drop-menu-list" ng-show="hasOrder">
+			<li ng-class="{'li-check':orderParams.default.has}" ng-click="orderSelect('default')">
+				<span>默认排序</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':orderParams.price.has}" ng-click="orderSelect('price')">
+				<span>价格最低</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':orderParams.priceDesc.has}" ng-click="orderSelect('priceDesc')">
+				<span>价格最高</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':orderParams.scoreDesc.has}" ng-click="orderSelect('scoreDesc')">
+				<span>评分最高</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':orderParams.countDesc.has}" ng-click="orderSelect('countDesc')">
+				<span>销量最高</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':orderParams.locationes.has}" ng-click="orderSelect('locationes')" ng-show="hasLocation">
+				<span>距离最近</span>
+				<div></div>
+			</li>
+		</ul>
+		<ul id="drop-area" class="drop-menu-list" ng-show="hasArea">
+			<li ng-class="{'li-check':areaParams.default.has}" ng-click="areaSelect('default')">
+				<span >所有区域</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.futian.has}" ng-click="areaSelect('futian')">
+				<span>福田区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.nanshan.has}" ng-click="areaSelect('nanshan')">
+				<span>南山区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.luohu.has}" ng-click="areaSelect('luohu')">
+				<span>罗湖区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.baoan.has}" ng-click="areaSelect('baoan')">
+				<span>宝安区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.longhua.has}" ng-click="areaSelect('longhua')">
+				<span>龙华新区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.longgang.has}" ng-click="areaSelect('longgang')">
+				<span>龙岗区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.yantian.has}" ng-click="areaSelect('yantian')">
+				<span>盐田区</span>
+				<div></div>
+			</li>
+		</ul>
+		<ul id="drop-class" class="drop-menu-grid" ng-show="hasClass" ng-include="'section/item-yake.html'" ng-if="productParams.yake.has"></ul>
+		<ul id="drop-class" class="drop-menu-grid" ng-show="hasClass" ng-include="'section/item-meirong.html'" ng-if="productParams.meirong.has" ></ul>
+		<ul id="drop-class" class="drop-menu-grid" ng-show="hasClass" ng-include="'section/item-fck.html'" ng-if="productParams.fck.has"></ul>
+		<ul id="drop-class" class="drop-menu-grid" ng-show="hasClass" ng-include="'section/item-zhongyi.html'" ng-if="productParams.zhongyi.has"></ul>
+	</div>
+</div>
+<ul class="prduct-container" >
+	<li class="item" ng-repeat = "product in products" ng-click="detail(product.id,product.hospitalId)" >
+		<img class="item-img float-left" ng-src="{{product.smallImg|defaultImg:'pro'}}" product-error>
+		<div class="item-desc">
+			<div class="item-title" ng-bind="product.title"></div>
+			<div class="item-subhead" ng-bind="product.hospital.name"></div>
+			<div class="item-price">
+				<div class="float-left">
+					<span class="saleprice" ng-bind-template="￥{{product.preferPrice}}"></span>
+					<span class="priceType" ng-bind-template="{{product.preferPriceType}}"></span>
+				</div>
+				<div class="float-left margin-l">
+					<span class="price float-left" ng-bind-template="￥{{product.standPrice}}"></span>
+				</div>
+				<div class="margin-right">
+					<span class="item-count float-right" ng-bind-template="{{product.sales}}人下单"></span>
+				</div>
+			</div>
+		</div>
+	</li>
+</ul>
+<div class="cush-tip" ng-if="noProduct" ng-bind-template="{{$parent.noProductText}}"></div>
+<div class="product-bg" ng-if="hasBg"></div>

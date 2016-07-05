@@ -1,0 +1,23 @@
+<div class="interaction-content">
+    <ul class="card">
+        <li ng-repeat="post in posts" ng-click="detail(post.id)">
+            <img class="headimg" ng-src="{{post.faceImage}}" fallback-src="../contents/img/men-head.png">
+            <div class="container">
+                <p class="name" ng-bind="post.userName"></p>
+                <p class="text" ng-bind="post.postName"></p>
+                <div class="info">
+                    <span ng-bind="post.middTimeStr"></span>
+                    <div class="mess">
+                        <img src="../contents/svg/mess.svg">
+                        <span ng-bind="post.commentNum"></span>
+                    </div>
+                    <div class="see">
+                        <img src="../contents/svg/see-grey.svg">
+                        <span ng-bind="post.visitNum"></span>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="cush-tip" ng-if="noProduct">{{$parent.noProductText}}</div>

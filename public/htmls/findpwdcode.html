@@ -1,0 +1,20 @@
+<div class="header">
+	<div class="header-item float-left" ng-click="changeRoute('/login')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		找回密码
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="register-content">
+	<div class="item-code">
+		<button class="item-btn float-right able" ng-click="getCode()" ng-bind="codeText"></button>
+		<div class="item-input">
+			<input type="text" placeholder="请输入短信验证码" ng-model="code">
+		</div>
+	</div>
+	<div class="item-tip">
+		若超时或未接收到验证码，可再次获取短信验证码！
+	</div>
+	<button class="button-full" ng-click="checkCode()">下一步</button>

@@ -1,0 +1,118 @@
+	<div class="header" ng-hide="selectTime" data-ng-init="init()">
+		<div class="header-item float-left" ng-click="back()">
+			<img src="../contents/svg/back.svg">
+		</div>
+		<div class="title">
+			项目详细
+		</div>
+		<div class="header-item header-item-width float-right follow" ng-click="switchFollow()">
+			<div class="icon" ng-class="{'select':follow.hasFollow}"></div>
+            <div class="txt" ng-bind="follow.followText"></div>
+		</div>
+	</div>
+	<div class="header" ng-show="selectTime">
+		<div class="header-item float-left" ng-click="selectTime=false">
+			<img src="../contents/svg/back.svg">
+		</div>
+		<div class="title">
+			选择就医时间
+		</div>
+	</div>
+	<div class="has-header"></div>
+	<div class="detail-content" ng-class="{'overflowhide':selectTime}">
+		<!--<div class="img-wrap">
+			<div class="img">
+				<img ng-src="{{productInfo.smallImg}}" fallback-src="../contents/img/p_default.png">
+				<div class="img-description">
+					<p>[{{productInfo.title}}]</p>
+				</div>
+			</div>
+			<div class="money">
+				<div>
+					<div class="container">
+						<div class="dealMoney">
+							<div class="text">￥{{productInfo.preferPrice}}</div>
+							<div class="btn" ng-bind="productInfo.preferPriceType"></div>
+						</div>
+					</div>
+				</div>
+				<div class="sourceMoney">
+					<span>门市价:</span>
+					<span>￥{{productInfo.standPrice}}{{productInfo.pricetype}}</span>
+					<span>{{productInfo.sales}}人下单</span>
+				</div>
+			</div>
+		</div>-->
+		<div class="product">
+			<div class="product-header">
+				<span>项目介绍</span>
+			</div>
+			<div class="img products">
+				<img ng-src="{{productImg[0].url}}" fallback-src="../contents/img/p_default.png">
+				<img ng-src="{{productImg[1].url}}" fallback-src="../contents/img/p_default.png">
+			</div>
+			<div class="product-header" ng-bind="productInfo.title"></div>
+			<div class="text" ng-bind="productInfo.introduction"></div>
+		</div>
+		<div class="product">
+			<div class="product-header">
+				<span>医院介绍</span>
+			</div>
+			<div class="img">
+				<img ng-src="{{hospitalInfo.logo}}" fallback-src="../contents/img/p_default.png">
+				<img ng-src="{{hospitalImg[0].url}}" fallback-src="../contents/img/p_default.png">
+			</div>
+			<div class="hos-title">
+				<p ng-bind="hospitalInfo.name"></p>
+				<p><span>地址：</span><span class="address" ng-bind="hospitalInfo.address"></span></p>
+			</div>
+			<div class="text" ng-bind="hospitalInfo.description"></div>
+		</div>
+		<ul class="doc-content" ng-if="hasDoctor">
+			<div class="product-header">
+				<span>选择就医时间</span>
+			</div>
+			<li ng-repeat="doctor in doctorInfo">
+				<img class="docImg" ng-src="{{doctor.face}}" fallback-src="../contents/img/p_default.png">
+				<div class="text">
+					<div class="text-header">
+						<span class="name" ng-bind="doctor.doctorname"></span>
+						<span class="score" ng-bind-template="{{doctor.score}}分"></span>
+					</div>
+					<div class="text-description">
+						<span>擅长:</span>
+						<span ng-bind="doctor.hobby"></span>
+					</div>
+					<div class="time" ng-click="chooseSchedule(doctor.id,doctor.doctorname)">
+						<div>
+							<img src="../contents/svg/time.svg">
+							<span>就医时间：</span>
+						</div>
+						<img class="arrow" src="../contents/svg/right-arrow.svg">
+						<span class="select-time" ng-class="{'selected':doctor.hasSelecTimeValue}" ng-bind="doctor.selectTimeValue"></span>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="select-times" ng-show="selectTime">
+		<ul>
+			<li ng-repeat="schedule in scheduleInfo">
+				<div class="day" ng-bind="schedule.date"></div>
+				<div class="time">
+					<div class="item" ng-repeat="time in schedule.timeList" ng-click="chooseTime(time.scheduleid,time.date)">
+						<span ng-bind="time.starttime"></span>
+						<div class="icon" ng-class="{'check':scheduleParams[time.scheduleid].has}"></div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="markorder-menu" ng-hide="selectTime">
+		<div class="order-btn" ng-class="{'disable':noSelectTime}" ng-click="orderDetail()">下单</div>
+		<div class="order-text">
+			<p><span>专享价：￥</span><span class="money" ng-bind-template="{{productInfo.preferPrice}}{{productInfo.preferPriceType}}"></span></p>
+			<p><span>门店价：￥</span><span class="money" ng-bind-template="{{productInfo.standPrice}}{{activityp}}"></span></p>
+		</div>
+	</div>
+	<div class="has-user-menu"></div>

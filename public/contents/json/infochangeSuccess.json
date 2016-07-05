@@ -1,0 +1,22 @@
+{
+    "data":{
+        "id":null,
+        "username":"18620369802",
+        "phone":"18620369802",
+        "birthday":-2303625600000,
+        "realname":"123",
+        "gender":null,
+        "device":null,
+        "password":null,
+        "accessToken":"4f884a60062940cda7484fdaf8f2af3f",
+        "remark":null,
+        "giftCode":1,
+        "face":null,
+        "nickname":"hehe",
+        "sex":"男",
+        "openid":null,
+        "age":120
+    },
+    "code":0,
+    "message":"成功"
+}

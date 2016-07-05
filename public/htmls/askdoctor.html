@@ -1,0 +1,59 @@
+<div class="header">
+	<div class="header-item float-left" ng-click="back()" data-ng-init="init()">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		咨询医生
+	</div>
+	<div class="header-item header-item-width float-right" ng-click="send()">
+		提交
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="say-content">
+	<div class="white-bg">
+		<textarea class="input" placeholder="请在问题中尽量具体地描述您的情况，如年龄、性别、希望得到帮助等" ng-model="content"></textarea>
+		<div class="photo">
+			<div class="camare" ng-click="choosePic()">
+				<img src="../contents/svg/camare.svg">
+			</div>
+			<div class="imgs">
+				<p id="tip" ng-if="noSelect">添加照片(最多可上传6张照片)</p>
+				<div class="item" ng-show="params.input1.has">
+					<input type="file" id="input1" class="input-item" accept="image/png,image/jpeg">
+					<img id="img1" class="display-img" ng-src="{{params.input1.url}}" accept="image/png,image/jpeg">
+					<img src="../contents/svg/delete.svg" class="icon" ng-click="remove('input1')" accept="image/png,image/jpeg">
+				</div>
+				<div class="item" ng-show="params.input2.has">
+					<input type="file" id="input2" class="input-item">
+					<img id="img1" class="display-img" ng-src="{{params.input2.url}}">
+					<img src="../contents/svg/delete.svg" class="icon" ng-click="remove('input2')">
+				</div>
+				<div class="item" ng-show="params.input3.has">
+					<input type="file" id="input3" class="input-item">
+					<img id="img1" class="display-img" ng-src="{{params.input3.url}}">
+					<img src="../contents/svg/delete.svg" class="icon" ng-click="remove('input3')">
+				</div>
+				<div class="item" ng-show="params.input4.has">
+					<input type="file" id="input4" class="input-item" accept="image/png,image/jpeg">
+					<img id="img1" class="display-img" ng-src="{{params.input4.url}}" accept="image/png,image/jpeg">
+					<img src="../contents/svg/delete.svg" class="icon" ng-click="remove('input4')" accept="image/png,image/jpeg">
+				</div>
+				<div class="item" ng-show="params.input5.has">
+					<input type="file" id="input5" class="input-item">
+					<img id="img1" class="display-img" ng-src="{{params.input5.url}}">
+					<img src="../contents/svg/delete.svg" class="icon" ng-click="remove('input5')">
+				</div>
+				<div class="item" ng-show="params.input6.has">
+					<input type="file" id="input6" class="input-item">
+					<img id="img1" class="display-img" ng-src="{{params.input6.url}}">
+					<img src="../contents/svg/delete.svg" class="icon" ng-click="remove('input6')">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="choose"  ng-class="{'select':hasSee}" ng-click="chooseSee()">
+		<div class="icon"></div>
+		<div class="txt">照片仅医生可见</div>
+	</div>
+</div>

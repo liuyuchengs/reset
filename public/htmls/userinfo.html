@@ -1,0 +1,81 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left" ng-click="changeRoute('/user')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		我的信息
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="userinfo-content">
+	<div class="img-item" ng-click="change('img')">
+		<input type="file" id="input1" class="input-file" accept="image/png,image/jpeg">
+		<span>我的头像</span>
+		<img class="icon" src="../contents/svg/right-arrow.svg">
+		<img class="img" ng-src="{{face|defaultHeadImg:sex}}" user-error="{{sex}}">
+	</div>
+	<ul class="item-group">
+		<li ng-click="change('realname')">
+			<div class="text  unborder">
+				<span>*真实姓名</span>
+				<img src="../contents/svg/right-arrow.svg">
+				<span ng-bind="realname"></span>
+			</div>
+		</li>
+		<li ng-click="change('sex')">
+			<div class="text">
+				<span>*性别</span>
+				<img src="../contents/svg/right-arrow.svg">
+				<span ng-bind="sex"></span>
+			</div>
+		</li>
+		<li ng-click="change('phone')">
+			<div class="text">
+				<span>*手机</span>
+				<img src="../contents/svg/right-arrow.svg">
+				<span ng-bind="phone"></span>
+			</div>
+		</li>
+		<li ng-click="change('age')">
+			<div class="text">
+				<span>*年龄</span>
+				<img src="../contents/svg/right-arrow.svg">
+				<span ng-bind="age"></span>
+			</div>
+		</li>
+	</ul>
+	<ul class="item-group">
+		<li ng-click="change('nickname')">
+			<div class="text unborder">
+				<span>昵称</span>
+				<img src="../contents/svg/right-arrow.svg">
+				<span ng-bind="nickname"></span>
+			</div>
+		</li>
+		<li ng-click="change('wxpay')">
+			<div class="text">
+				<span>微信账号</span>
+				<img src="../contents/svg/right-arrow.svg">
+				<span ng-bind="wxpay"></span>
+			</div>
+		</li>
+		<li ng-click="change('alipay')">
+			<div class="text">
+				<span>支付宝账号</span>
+				<img src="../contents/svg/right-arrow.svg">
+				<span ng-bind="alipay"></span>
+			</div>
+		</li>
+		<li ng-click="alert('敬请期待!')">
+			<div class="text">
+				<span>邮箱</span>
+				<img src="../contents/svg/right-arrow.svg">
+				<span ng-bind="email"></span>
+			</div>
+		</li>
+	</ul>
+	<div class="userinfo-tip">
+		"*"为必填项目,请填写完整！
+	</div>
+	<button class="button-full" ng-click="exit()">退出登录</button>
+</div>

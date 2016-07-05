@@ -1,0 +1,27 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left" ng-click="changeRoute('/home')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		订单支付
+	</div>
+	<div class="header-item float-right" ng-click="changeRoute('/user')">
+		<img src="../contents/svg/users.svg">
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="pay-content">
+	<div class="pay-title">
+		<img src="../contents/svg/dingdan.svg">
+		<div class="title-text">
+			<p>订单提交成功，请您尽快完成支付！</p>
+			<p>支付金额￥<span class="money" ng-bind="order.dealMoney"></span></p>
+		</div>
+	</div>
+	<div class="large-separator"></div>
+	<div class="pay-item" ng-click="pay()">
+		<img src="../contents/svg/wx-icon.svg">
+		<span>微信支付</span>
+		<img src="../contents/svg/right-arrow.svg">
+	</div>
+</div>

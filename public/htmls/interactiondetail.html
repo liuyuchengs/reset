@@ -1,0 +1,202 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left" ng-click="changeRoute('/interaction')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		主题详情
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="inte-detail-content">
+	<div class="userinfo">
+		<img ng-src="{{post.faceImage|defaultHeadImg:post.sex}}" user-error="{{post.sex}}">
+		<div class="text">
+			<p><span ng-bind="post.userName"></span></p>
+			<p class="post-title" ng-bind="post.postName"></p>
+			<div class="follow" ng-class="{'select':follow.hasFollow}" ng-click="clickFollow()">
+				<div class="icon"></div>
+				<div class="txt" ng-bind="follow.followText"></div>
+			</div>
+		</div>
+	</div>
+	<div class="select-item">
+		<div class="item" ng-if="post.hospitalName" ng-click="goHospital(post.hospitalId)">
+			<img src="../contents/svg/interaction-hos.svg" class="icon">
+			<span>医院名称</span>
+			<img class="arrow" src="../contents/svg/right-arrow.svg">
+			<span class="value" ng-bind="post.hospitalName"></span>
+		</div>
+		<div class="item" ng-if="post.doctorName" ng-click="goDoctor(post.doctorId)">
+			<img src="../contents/svg/interaction-doc.svg" class="icon">
+			<span>医生</span>
+			<img class="arrow" src="../contents/svg/right-arrow.svg">
+			<span class="value" ng-bind="post.doctorName"></span>
+		</div>
+		<div class="item" ng-if="post.productName" ng-click="goProduct(post.productId,post.hospitalId)">
+			<img src="../contents/svg/interaction-want.svg" class="icon">
+			<span>我也想做</span>
+			<img class="arrow" src="../contents/svg/right-arrow.svg">
+			<span class="value" ng-bind="post.productName">南山</span>
+		</div>
+	</div>
+	<div class="info" ng-if="post.hasList1">
+		<p>术前</p>
+		<div class="imgs" ng-click="switchSwiper('before',true)">
+			<div class="item" ng-repeat="img in post.list1" zoom-image>
+				<img  ng-src="{{img}}">
+			</div>
+		</div>
+	</div>
+	<div class="info" ng-if="post.hasList2">
+		<p>术后</p>
+		<div class="imgs" ng-click="switchSwiper('after',true)">
+			<div class="item" ng-repeat="img in post.list2" zoom-image>
+				<img  ng-src="{{img}}">
+			</div>	
+		</div>
+	</div>
+	<div class="interaction-swiper" ng-show="swiperParams.hasSwiper" ng-click="switchSwiper('',false)">
+		<div class="container" >
+			<div id="swiper1" class="swiper-container" ng-show="swiperParams.showBefore">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" ng-repeat="img in post.list1">
+						<img class="swiper-img" ng-src="{{img}}" ng-style="imgStyle">
+					</div>
+				</div>
+			</div>
+			<div id="swiper2" class="swiper-container" ng-show="swiperParams.showAfter">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" ng-repeat="img in post.list2">
+						<img class="swiper-img" ng-src="{{img}}" ng-style="imgStyle">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="info">
+		<p>过程</p>
+		<span class="text" ng-bind="post.postContent"></span>
+	</div>
+	<div class="bottom">
+		<div class="bottom-container">
+			<div class="item-container">
+				<div class="item">
+					<span ng-bind="post.visitNum"></span>
+					<img src="../contents/svg/see-grey.svg">
+				</div>
+			</div>
+			<div class="item-container">
+				<div class="item" ng-click="thumb(post.id,'0')">
+					<span ng-bind="post.praiseNum"></span>
+					<img src="../contents/svg/like.svg">
+				</div>
+			</div>
+			<div class="item-container" ng-click="share()">
+				<div class="item">
+					<span>分享</span>
+					<img src="../contents/svg/share.svg">
+				</div>
+			</div>
+			<div class="item-container">
+				<div class="item" ng-click="showPostInput()">
+					<span>评论</span>
+					<img src="../contents/svg/mess.svg">
+				</div>
+			</div>
+		</div>
+		<div class="input no-bottom" ng-if="showPostinput">
+			<div class="input-container">
+				<div class="arrow"><textarea name="name" placeholder="输入你的回复..." ng-model="post.message"></textarea></div>
+			</div>
+			<div class="btn">
+				<div class="btn-cancel" ng-click="hidePostInput()">取消</div>
+				<div class="btn-color" ng-click="sendPost(post.message)" >回复</div>
+			</div>
+		</div>
+	</div>
+	<div class="message">
+		<ul>
+			<li ng-repeat="reply in replyMess.commentList">
+				<img class="head-img" ng-src="{{reply.userImage|defaultHeadImg:reply.sex}}" user-error="{{reply.sex}}">
+				<div class="text">
+					<p class="name">
+						<span ng-bind="reply.userName"></span>
+						<span ng-bind-template="{{reply.count}}楼"></span>
+					</p>
+					<p class="title" ng-bind="reply.content"></p>
+					<div class="reply" ng-if="reply.hasReply">
+						<p ng-repeat="mess in reply.repliesMessageList">
+							<span ng-bind="mess.userName"></span>
+							<span class="reply-mess" ng-if="mess.isReply"> 回复 </span>
+							<span ng-bind="mess.replyName" ng-if="mess.isReply">小康康</span>
+							<span>:</span>
+							<span ng-bind="mess.content" ng-click="showReplyInput(reply.id,mess.userId,mess.userName)"></span>
+						</p>
+					</div>
+					<div class="input" ng-if="reply.hasReplyInput">
+						<div class="input-container">
+							<div class="arrow"><textarea name="name" placeholder="{{inputStyle}}"  ng-model="reply.message"></textarea></div>
+						</div>
+						<div class="btn">
+							<div class="btn-cancel" ng-click="hideReplyInput(reply.id)">取消</div>
+							<div class="btn-color" ng-click="sendReply(reply.message,reply.id)" >回复</div>
+						</div>
+					</div>
+					<div class="footer">
+						<span class="time" ng-bind="reply.createDateStr"></span>
+						<div class="btn blue" ng-click="thumb(reply.id,'1')">
+							<img src="../contents/svg/like-white.svg">
+							<span ng-bind="reply.praiseNum"></span>
+						</div>
+						<div class="btn purple" ng-click="showReplyInput(reply.id)">
+							<img src="../contents/svg/mess-white.svg">
+							<span>回复</span>
+						</div>
+					</div>
+				</div>
+			</li>
+			<!--<li>
+				<img class="head-img" src="../contents/temp/head-img.png">
+				<div class="text">
+					<p class="name">
+						<span>许璐璐</span>
+						<span>2楼</span>
+					</p>
+					<p class="title">
+						已经5天了，继续晒美图，回复得好快啊，几乎看不出来手术的痕迹
+					</p>
+					<div class="reply">
+						<p>
+							<span>小康康</span><span>:</span>
+							<span>真的变美了吗？</span>
+						</p>
+						<p>
+							<span>许璐璐</span><span class="reply-mess"> 回复 </span><span>小康康</span><span>:</span>
+							<span>真的变美了，骗你是小狗,不信你自己去试试</span>
+						</p>
+					</div>
+					<div class="input">
+						<div class="input-container">
+							<div class="arrow"><textarea name="name" placeholder="输入你的回复"></textarea></div>
+						</div>
+						<div class="btn">
+							<div class="btn-cancel">取消</div>
+							<div class="btn-color">回复</div>
+						</div>
+					</div>
+					<div class="footer">
+						<span class="time">05-18</span>
+						<div class="btn blue">
+							<img src="../contents/svg/like-white.svg">
+							<span>点赞</span>
+						</div>
+						<div class="btn purple" >
+							<img src="../contents/svg/mess-white.svg">
+							<span>回复</span>
+						</div>
+					</div>
+				</div>
+			</li>-->
+		</ul>
+	</div>
+</div>

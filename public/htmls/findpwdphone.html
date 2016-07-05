@@ -1,0 +1,18 @@
+<div class="header">
+	<div class="header-item float-left" ng-click="changeRoute('/login')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		找回密码
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="register-content">
+	<div class="item">
+		<input type="text" placeholder="请输入您注册的手机号" ng-model="phone">
+	</div>
+	<div class="item-tip">
+		请输入您注册过的手机号码，手机号码用于接受验证码，以便确认是您本人操作！
+	</div>
+	<button class="button-full" ng-click="checkPhone()">下一步</button>
+</div>

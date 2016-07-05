@@ -1,0 +1,28 @@
+<div class="header">
+	<div class="header-item float-left" ng-click="changeRoute('/user')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		邀请好友
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="invite-container" ng-style="bodyStyle">
+    <div class="bg1-container" ng-style="bgStyle">
+        <div class="bg2-container"></div>
+    </div>
+    <div class="invite-content">
+        <div class="invite-title-r" ng-bind-template="悠康用户{{name}}邀请您加入悠康">
+        </div>
+        <div class="invite-code-r">
+            <div class="title">邀请码</div>
+            <div class="code" ng-bind="code"></div>
+        </div>
+        <div class="invite-tip-r">
+            <p>1.注册页面填写"邀请码"即可获得<span class="tip-color">300元</span>代金券</p>
+            <p>2.邀请好友，可参与<span class="tip-color">iphone6S</span>抽奖</p>
+        </div>
+        
+        <div class="invite-btn" ng-click="goRegister()">立即注册</div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left" ng-click="changeRoute('/home')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">健康资讯</div>
+</div>
+<div class="has-header"></div>
+<div class="swiper-container">
+	<div class="swiper-wrapper">
+		<div class="swiper-slide">
+			<img class="swiper-img" ng-style="imgStyle" src="../contents/img/health_1.jpg">
+		</div>
+		<div class="swiper-slide">
+			<img class="swiper-img" ng-style="imgStyle" src="../contents/img/health_2.jpg">
+		</div>
+		<div class="swiper-slide">
+			<img class="swiper-img" ng-style="imgStyle" src="../contents/img/health_3.jpg">
+		</div>
+	</div>
+	<div class="swiper-pagination"></div>
+</div>
+<div class="new-nav">
+	<div class="nav-item" ng-class="{'select':navParam.all.has}" ng-click="switch('all')">综合</div>
+	<div class="nav-item" ng-class="{'select':navParam.yake.has}" ng-click="switch('yake')">牙科</div>
+	<div class="nav-item" ng-class="{'select':navParam.meirong.has}" ng-click="switch('meirong')">美容</div>
+	<div class="nav-item" ng-class="{'select':navParam.fck.has}" ng-click="switch('fck')">妇产科</div>
+	<div class="nav-item" ng-class="{'select':navParam.zhongyi.has}" ng-click="switch('zhongyi')">中医理疗</div>
+</div>
+<ul class="item-container">
+	<li ng-repeat="new in news" ng-click="toDetail(new.id)">
+		<img ng-src="{{new.picture}}" fallback-src="../contents/img/p_default.png">
+		<div>
+			<p class="title" ng-bind="new.title"></p>
+			<p class="date" ng-bind="new.createtimeStr"></p>
+		</div>
+	</li>
+</ul>
+<div class="cush-tip" ng-if="noProduct" ng-bind-template="{{$parent.noProductText}}"></div>

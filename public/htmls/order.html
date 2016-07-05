@@ -1,0 +1,48 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left" ng-click="changeRoute('/user')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		我的订单
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="myorder-content">
+	<div class="filter">
+		<div ng-class="{'select':filterParams.all.has}" ng-click="switchOrder('all')" class="item">全部</div>
+		<div ng-class="{'select':filterParams.toPay.has}" ng-click="switchOrder('toPay')" class="item">待付款</div>
+		<div ng-class="{'select':filterParams.toHos.has}" ng-click="switchOrder('toHos')" class="item">待就医</div>
+		<div ng-class="{'select':filterParams.toAssess.has}" ng-click="switchOrder('toAssess')" class="item">待评价</div>
+	</div>
+	<div id="order-tip" ng-show="noOrder">您还没有订单信息</div>
+	<ul id="list" class="order-list" ng-repeat="order in orders">
+		<li>
+			<div class="order-list-header">
+				<span>订单编号：</span>
+				<span ng-bind="order.orderNo"></span>
+				<span class="order-list-state" ng-bind="order.statusMes"></span>
+			</div>
+			<div class="order-list-content">
+				<div style="overflow: hidden;">
+					<div class="float-left">项目：</div>
+					<div class="float-left" ng-bind="order.productName"></div>
+					<div class="float-right" >
+						<span>￥</span>
+						<span ng-bind="order.discountprice"></span>
+					</div>
+				</div>
+				<p><span></span><span></span><span class="order-list-state"></span></p>
+				<p><span>医生：</span><span ng-bind="order.doctorName"></span></p>
+				<p><span>机构：</span><span ng-bind="order.hospitalName"></span></p>
+				<p><span>时间：</span><span ng-bind="order.treatmenttimeStr"></span></p>
+			</div>
+			<div class="order-list-footer">
+				<button data-type="unpaid" class="order-btn-unfinish" ng-if="order.toPay" ng-click="toPay(order)">去支付</button>
+				<button class='order-btn-finish' disabled='disabled' ng-if="order.payed">已支付</button>
+				<button class='order-btn-finish' disabled='disabled' ng-if="order.canceled">已取消</button>
+				<button data-type="cancel" class="order-btn-finish" ng-if="order.tocancel" ng-click="toCancel(order.id)">取消订单</button>
+				<button class='order-btn-finish' disabled='disabled' ng-if="order.finish">已完成</button>
+			</div>
+		</li>
+	</ul>
+</div>

@@ -1,0 +1,82 @@
+	<div class="header">
+		<div class="header-item float-left" ng-click="changeRoute('/user')">
+			<img src="../contents/svg/back.svg">
+		</div>
+		<div class="title">
+			我的消息
+		</div>
+    </div>
+	<div class="has-header"></div>
+	<div class="message-content" data-ng-init="init()">
+		<div class="switch third">
+			<div class="item " ng-class="{'select':params.user}" ng-click="switch('user')">
+				用户回复
+			</div>
+			<div class="item" ng-class="{'select':params.doctor}" ng-click="switch('doctor')">
+				医生回复
+			</div>
+			<div class="item" ng-class="{'select':params.system}" ng-click="switch('system')">
+				系统通知
+			</div>
+		</div>
+	</div>
+	<div>
+		<div class="inte-detail-content" ng-show="params.user">
+			<div class="message">
+				<ul>
+					<li ng-repeat="message in messages">
+						<img class="head-img" ng-src="{{message.userImage|defaultHeadImg:message.sex}}" user-error="{{message.sex}}" >
+						<div class="text">
+							<p class="name">
+								<span ng-bind="message.userName"></span>
+								<span></span>
+							</p>
+							<p class="title">
+								<span>回复我：</span><span ng-bind="message.content"></span>
+							</p>
+							<div class="reply">
+								<p>
+									<span>针对帖子：</span>
+									<span ng-bind="message.postName"></span>
+								</p>
+							</div>
+							<div class="footer">
+								<span class="time" ng-bind="message.dataStr"></span>
+								<span class="detail-link" ng-click="detail(message.postId)">查看详细内容</span>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="inte-detail-content" ng-show="params.doctor">
+			<div class="message">
+				<ul>
+					<li ng-repeat="message in messages">
+						<img class="head-img" ng-src="{{message.faceImage}}"  fallback-src="../contents/img/doc-head.png">
+						<div class="text">
+							<p class="name">
+								<span>医生 {{message.doctorName}}</span>
+								<span></span>
+							</p>
+							<p class="title">
+								<span ng-if="message.noReply">暂未</span><span>回复我</span><span ng-hide="message.noReply" ng-bind="message.postIntro"></span>
+							</p>
+							<div class="reply">
+								<p>
+									<span>针对问题：</span>
+									<span ng-bind="message.postContent"></span>
+								</p>
+							</div>
+							<div class="footer">
+								<span class="time" ng-bind="message.dataStr"></span>
+								<span class="detail-link" ng-click="doctorDetail(message.doctorId)">继续咨询医生</span>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="cush-tip" ng-show="params.system">暂无消息</div>
+		<div class="cush-tip" ng-if="noProduct">{{$parent.noProductText}}</div>
+	</div>

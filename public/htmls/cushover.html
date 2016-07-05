@@ -1,0 +1,32 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left" ng-click="changeRoute('/user/cush')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		过期代金券
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="cush-tip" ng-show="noCushOver">您还没有过期的代金券!</div>
+<div id="cush-body" class="cush-body" ng-repeat="cush in cushs">
+	<div class="overcush-item">
+		<div class="cush-money">
+			<div class="cush-money-have left">
+				<span>￥</span>
+				<span class="unable" ng-bind="cush.flags"></span>
+			</div>
+			<div class="cush-money-have right">
+				<span>余额 ￥</span>
+				<span ng-bind="cush.money"></span>
+			</div>
+		</div>
+		<div class="cush-data">
+			<span class="left">代金券</span>
+			<span ng-bind="cush.endDate" class="right"></span>
+			<span class="right">有效期至</span>
+		</div>
+		<div class="capter">
+			<div ng-bind="cush.mess"></div>
+		</div>
+	</div>
+</div>

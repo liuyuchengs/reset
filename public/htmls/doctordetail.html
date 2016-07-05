@@ -1,0 +1,101 @@
+
+<div class="header" data-ng-init="init()" >
+	<div class="header-item float-left" ng-click="back()">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		医生详细
+	</div>
+	<div class="header-item header-item-width float-right follow" ng-click="switchFollow()">
+		<div class="icon" ng-class="{'select':follow.hasFollow}"></div>
+		<div class="txt" ng-bind="follow.followText"></div>
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="doctor-detail-content">
+	<div class="select-date" ng-show="time.openSelect" >
+		<div class="select-date-container">
+			<div class="day-container">
+				<div class="left-arrow" ng-click="toPage('per',$event)"></div>
+				<div class="right-arrow" ng-click="toPage('next',$event)"></div>
+				<div class="width">
+					<div class="swiper-container">
+						<div class="swiper-wrapper" >
+							<div class="swiper-slide day-item" ng-repeat="day in time.timeList" ng-class="{'select':day.has}" ng-bind="day.value.date" ng-click="switchDay(day.value.date)"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="time-container" ng-repeat="day in time.timeList" ng-show="day.has">
+				<div class="time-item" ng-repeat="time in day.value.timeList" ng-click="selectTime(time.scheduleid,time.starttime,day.value.date)" ng-class="{'select':time.has}">
+					<span ng-bind="time.starttime"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="title">
+		<div class="line">
+			<img ng-src="{{doctorInfo.face}}">
+			<div class="text">
+				<p class="name">
+					<span ng-bind="doctorInfo.doctorname"></span>
+					<span ng-bind="doctorInfo.professionTitle"></span>
+				</p>
+				<p class="score">
+					<span ng-bind="doctorInfo.score"></span>
+					<span ng-bind-template="{{doctorInfo.sales}}人下单"></span>
+					<span ng-click="goAssess()">查看评论</span>
+				</p>
+				<p class="address" ng-bind="doctorInfo.hospitalname"></p>
+				<p class="use" ng-class="{'show-text':use.has}">
+					<span>擅长：</span>
+					<span class="texts" ng-bind="doctorInfo.hobby"></span>
+					<span class="show-btn" ng-click="showUse()" ng-bind="use.val"></span>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="description" ng-class="{'show-text':description.has}">
+		<span>医生简介：</span>
+		<span class="text" ng-bind="doctorInfo.workexperience"></span>
+		<span class="show-btn" ng-click="showDescription()" ng-bind="description.val"></span>
+	</div>
+	<div class="ask-doctor" ng-click="ask()">
+		<span>咨询医生</span>
+	</div>
+	<div class="date" ng-click="openSelect()">
+		<span>预约时间</span>
+		<div class="arrow"></div>
+		<div class="time no-border" ng-bind="time.selectTime"></div>
+		<div class="time" ng-bind="time.selectDay"></div>
+	</div>
+	<div class="product">
+		<ul>
+			<li ng-repeat="product in doctorInfo.dentallist" ng-click="orderDetail(product.id,product.title,product.standPrice)">
+				<div class="arrow" ></div>
+				<p class="item-title" ng-bind="product.title"></p>
+				<p class="sales" ng-bind-template="{{product.sales}}人下单"></p>
+				<p class="item-money">
+					<span class="dealMoney" ng-bind-template="￥{{product.preferPrice}}{{product.preferPriceType}}">
+					</span>
+					<span class="price" ng-bind-template="￥{{product.standPrice}}"></span>
+				</p>
+			</li>
+		</ul>
+	</div>
+	<div class="assess">
+		<div id="doctorAssess" class="assess-header">
+			医生评价
+		</div>
+		<ul>
+			<li ng-repeat="assess in assessInfo">
+				<p class="assess-title">
+					<span ng-bind="assess.user_realname"></span>
+					<span ng-bind="assess.totalscore"></span>
+				</p>
+				<p class="assess-text" ng-bind="assess.appraise"></p>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="cush-tip" ng-if="noProduct" ng-bind-template="{{$parent.noProductText}}"></div>

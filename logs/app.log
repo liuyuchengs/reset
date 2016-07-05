@@ -1,0 +1,8 @@
+[2016-07-05 14:39:15.146] [INFO] startup - Listening on port 3000
+[2016-07-05 14:39:42.451] [INFO] app - GET / - 363
+[2016-07-05 14:39:42.455] [INFO] http - ::ffff:192.168.0.102 - - "GET / HTTP/1.1" 200 191 "" "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36"
+[2016-07-05 14:39:42.467] [INFO] http - ::ffff:192.168.0.102 - - "GET /stylesheets/style.css HTTP/1.1" 200 111 "http://192.168.0.102:3000/" "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36"
+[2016-07-05 14:39:42.599] [INFO] app - GET /favicon.ico - 0
+[2016-07-05 14:39:42.601] [ERROR] http - ::ffff:192.168.0.102 - - "GET /favicon.ico HTTP/1.1" 404 - "http://192.168.0.102:3000/" "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36"
+[2016-07-05 14:41:44.269] [INFO] app - GET /users - 0
+[2016-07-05 14:41:44.271] [INFO] http - ::ffff:192.168.0.102 - - "GET /users HTTP/1.1" 200 22 "" "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36"

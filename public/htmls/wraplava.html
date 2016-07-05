@@ -1,0 +1,36 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left">
+		<a href="home.html">
+			<img src="../contents/svg/back.svg">
+		</a>
+	</div>
+	<div class="title">
+		Lava特惠
+	</div>
+	<div class="header-item float-right" ng-click="question()">
+		<img src="../contents/svg/question.svg">
+	</div>
+</div>
+<div class="has-header"></div>
+<ul class="prduct-container">
+	<li class="item" ng-repeat = "item in productInfo" ng-click="detail(item.id,item.hospitalId)">
+		<img class="item-img float-left" ng-src="{{item.samllimg}}" fallback-src="../contents/img/p_default.png">
+		<div class="item-desc">
+			<div class="item-title" ng-bind="item.title"></div>
+			<div class="item-subhead" ng-bind="item.address"></div>
+			<div class="item-price">
+				<div class="float-left">
+					<span class="saleprice" ng-bind-template="￥{{item.preferPrice}}"></span>
+					<span class="priceType" ng-bind-template="{{item.preferPriceType}}"></span>
+				</div>
+				<div class="float-left margin-l">
+					<span class="price float-left" ng-bind-template="￥{{item.standPrice}}"></span>
+				</div>
+				<div class="margin-right">
+					<span class="item-count float-right" ng-bind-template="{{item.sales}}人下单"></span>
+				</div>
+			</div>
+		</div>
+	</li>
+</ul>
+<div class="cush-tip" ng-if="noProduct" ng-bind-template="{{$parent.noProductText}}"></div>

@@ -1,0 +1,107 @@
+<div class="header header-transparent" data-ng-init="init()">
+	<div class="header-item float-right header-item-width home-icon">
+		<img src="../contents/svg/address.svg">
+		<span>深圳市</span>
+	</div>
+</div>
+<div class="swiper-container">
+	<div class="swiper-wrapper">
+		<div class="swiper-slide" ng-repeat="banner in banners" ng-click="activity(banner.id)">
+			<img class="swiper-img" ng-src="{{banner.path}}" ng-style="imgStyle">
+		</div>
+	</div>
+	<div class="swiper-pagination"></div>
+</div>
+</div>
+<div class="type">
+	<div class="type-line">
+		<div class="type-item float-left" ng-click="changeRoute('/product','product=yake')">
+			<div class="type-icon ">
+				<img src="../contents/svg/yake.svg" >
+				<p>牙科</p>
+			</div>
+		</div>
+		<div class="type-item middle" ng-click="changeRoute('/product','product=meirong')">
+			<div class="type-icon">
+				<img src="../contents/svg/meirong.svg" >
+				<p>医学美容</p>
+			</div>
+		</div>
+		<div class="type-item float-right" ng-click="changeRoute('/product','product=fck')">
+			<div class="type-icon ">
+				<img src="../contents/svg/fck.svg" >
+				<p>高端妇产科</p>
+			</div>
+		</div>
+	</div>
+	<div class="type-line">
+		<div class="type-item float-left" ng-click="changeRoute('/exam','item=product')">
+			<div class="type-icon ">
+				<img src="../contents/svg/tijian.svg" >
+				<p>体检</p>
+			</div>
+		</div>
+		<div class="type-item middle" ng-click="changeRoute('/product','product=zhongyi')">
+			<div class="type-icon">
+				<img src="../contents/svg/zhongyi.svg" >
+				<p>中医理疗</p>
+			</div>
+		</div>
+		<div class="type-item float-right" ng-click="changeRoute('/news')">
+			<div class="type-icon ">
+				<img src="../contents/svg/zixun.svg" >
+				<p>健康资讯</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="base-separator"></div>
+<div class="tehui">
+	<div class="tehui-qiang float-left" ng-click="changeRoute('/grab')">
+		<div class="item">
+			<img src="../contents/svg/qiang.svg" class="float-left">
+			<div class="item-title float-left">
+				<p>免费赠送专区</p>
+				<p>
+					<span class="title float-left">高端洗牙</span>
+					<span class="title float-left">精致脱毛</span>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="tehui-tehui float-left" ng-click="changeRoute('/discount')">
+		<div class="item sales">
+			<img src="../contents/svg/sales.svg">
+			<p>特惠区</p>
+		</div>
+	</div>
+</div>
+<div class="base-separator"></div>
+<div class="hot">
+	<div>
+		<img src="../contents/svg/hot.svg">
+		<span>热门推荐</span>
+	</div>
+</div>
+<ul class="prduct-container">
+	<li class="item" ng-repeat = "item in items"  ng-click="detail(item.id,item.hospitalId,item.type)">
+		<img class="item-img float-left" ng-src="{{item.samllimg|defaultImg:'pro'}}" product-error>
+		<div class="item-desc">
+			<div class="item-title" ng-bind="item.title"></div>
+			<div class="item-subhead" ng-bind="item.hospitalname"></div>
+			<div class="item-price">
+				<div class="float-left">
+					<span class="saleprice" ng-bind-template="￥{{item.preferPrice}}"></span>
+					<span class="priceType" ng-bind-template="{{item.preferPriceType}}"></span>
+				</div>
+				<div class="float-left margin-l">
+					<span class="price float-left" ng-bind-template="￥{{item.standPrice}}"></span>
+				</div>
+				<div class="margin-right">
+					<span class="item-count float-right" ng-bind-template="{{item.sales}}人下单"></span>
+				</div>
+			</div>
+		</div>
+	</li>
+</ul>
+<div class="cush-tip" ng-if="noProduct" ng-bind="$parent.noProductText"></div>

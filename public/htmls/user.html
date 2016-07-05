@@ -1,0 +1,107 @@
+
+<div class="user-content" data-ng-init="init()">
+	<div class="user" ng-click="goto('/user/userinfo')">
+		<img class="img" ng-src="{{user.face|defaultHeadImg:user.sex}}" user-error="{{user.sex}}">
+		<div class="text">
+			<p ng-if="isLogin" ng-bind="user.nickname"></p>
+			<p ng-if="isLogin">粉丝：<span ng-bind="countFansMan"></span></p>
+			<p ng-if="isLogin">关注：<span ng-bind="countFocusMan"></span></p>
+			<p class="login-tip" ng-bind="user.tip"></p>
+		</div>		
+		<img class="icon" src="../contents/svg/right-arrow.svg">
+	</div>
+	<div class="myorder" >
+		<div class="link" ng-click="goto('/user/order','p=all')">
+			<img class="icon" src="../contents/svg/dingdan.svg">
+			<span>我的订单</span>
+			<img class="arrow" src="../contents/svg/right-arrow.svg">
+		</div>
+		<div class="items">
+			<div class="item" ng-click="goto('/user/order','p=toPay')">
+				<img src="../contents/img/order-pay.png">
+				<p>待付款</p>
+			</div>
+			<div class="item" ng-click="goto('/user/order','p=toHos')">
+				<img src="../contents/img/order-go.png">
+				<p>待就医</p>
+			</div>
+			<div class="item" ng-click="goto('/user/order','p=toAssess')">
+				<img src="../contents/img/order-assess.png">
+				<p>待评价</p>
+			</div>
+		</div>
+	</div>
+	<div class="myorder" >
+		<div class="link" >
+			<img class="icon" src="../contents/svg/user-pay.svg">
+			<span>我的钱包</span>
+		</div>
+		<div class="items">
+			<div class="item" ng-click="goto('/user/paymoney')">
+				<img src="../contents/svg/user-money.svg">
+				<p>余额</p>
+			</div>
+			<div class="item" ng-click="goto('/user/cush')">
+				<img src="../contents/svg/user-ticket.svg">
+				<p>代金券</p>
+			</div>
+			<div class="item" ng-click="alert('敬请期待!')">
+				<img src="../contents/svg/user-score.svg">
+				<p>积分</p>
+			</div>
+		</div>
+	</div>
+	<ul class="item-group">
+		<li ng-click="goto('/user/mypost','item=publish')">
+			<img class="icon" src="../contents/svg/mypost.svg">
+			<div class="text">
+				<span>我的帖子</span>
+				<img src="../contents/svg/right-arrow.svg">
+			</div>
+		</li>
+		<li ng-click="goto('/user/mymessage','item=user')">
+			<img class="icon" src="../contents/svg/mymessage.svg">
+			<div class="text">
+				<span>我的消息</span>
+				<img src="../contents/svg/right-arrow.svg">
+			</div>
+		</li>
+		<li ng-click="goto('/user/myfollow','item=user')">
+			<img class="icon" src="../contents/svg/myfollow.svg">
+			<div class="text">
+				<span>我的关注</span>
+				<img src="../contents/svg/right-arrow.svg">
+			</div>
+		</li>
+	</ul>
+	<ul class="item-group">
+		<li ng-click="goto('/grab/order')">
+			<img class="icon" src="../contents/svg/qiang.svg">
+			<div class="text">
+				<span>我的惠赠</span>
+				<img src="../contents/svg/right-arrow.svg">
+			</div>
+		</li>
+		<!--<li ng-click="alert('敬请期待!')">
+			<img class="icon" src="../contents/svg/u-zixun.svg">
+			<div class="text">
+				<span>我的咨询</span>
+				<img src="../contents/svg/right-arrow.svg">
+			</div>
+		</li>-->
+		<li ng-click="goto('/invite/new')">
+			<img class="icon" src="../contents/svg/u-invite.svg">
+			<div class="text">
+				<span>邀请好友</span>
+				<img src="../contents/svg/right-arrow.svg">
+			</div>
+		</li>
+		<li ng-click="goto('/user/userinfo')">
+			<img class="icon" src="../contents/svg/u-account.svg">
+			<div class="text">
+				<span>我的账户</span>
+				<img src="../contents/svg/right-arrow.svg">
+			</div>
+		</li>
+	</ul>
+</div>

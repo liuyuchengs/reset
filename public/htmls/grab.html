@@ -1,0 +1,106 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left" ng-click="changeRoute('/home')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		免费抢单
+	</div>
+	<div class="header-item float-right" ng-click="question()">
+		<img src="../contents/svg/question.svg">
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="drop">
+	<div class="filter">
+		<div class="filter-item" ng-class="{'check-color':menuParams.area}" ng-click="switchMenu('area')">
+			<span class="filter-text">位置</span>
+			<div></div>
+		</div>
+		<div class="filter-item" ng-class="{'check-color':menuParams.classes}" ng-click="switchMenu('class')">
+			<span class="filter-text">分类</span>
+			<div></div>
+		</div>
+		<div class="filter-item" ng-class="{'check-color':menuParams.date}" ng-click="switchMenu('date')">
+			<span class="filter-text ">时间</span>
+			<div></div>
+		</div>
+	</div>
+	<div class="drop-menu">
+		<ul id="drop-area" class="drop-menu-list" ng-show="hasArea">
+			<li ng-class="{'li-check':areaParams.default.has}" ng-click="areaSelect('default')">
+				<span >所有区域</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.futian.has}" ng-click="areaSelect('futian')">
+				<span>福田区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.nanshan.has}" ng-click="areaSelect('nanshan')">
+				<span>南山区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.luohu.has}" ng-click="areaSelect('luohu')">
+				<span>罗湖区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.baoan.has}" ng-click="areaSelect('baoan')">
+				<span>宝安区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.longhua.has}" ng-click="areaSelect('longhua')">
+				<span>龙华新区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.longgang.has}" ng-click="areaSelect('longgang')">
+				<span>龙岗区</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':areaParams.yantian.has}" ng-click="areaSelect('yantian')">
+				<span>盐田区</span>
+				<div></div>
+			</li>
+		</ul>
+		<ul id="drop-date" class="drop-menu-list" ng-show="hasDate" >
+			<li ng-class="{'li-check':date.has}" ng-click="dateSelect(date.val)" ng-repeat="date in dateParams">
+				<span ng-bind="date.val"></span>
+				<div></div>
+			</li>
+		</ul>
+		<ul id="drop-class" class="drop-menu-list" ng-show="hasClass">
+			<li ng-class="{'li-check':classParams.jieya.has}" ng-click="classSelect('jieya')">
+				<span>洁牙</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':classParams.meirong.has}" ng-click="classSelect('meirong')">
+				<span>医学美容</span>
+				<div></div>
+			</li>
+			<li ng-class="{'li-check':classParams.tuina.has}" ng-click="classSelect('tuina')">
+				<span>推拿</span>
+				<div></div>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="prduct-container">
+	<div class="item" ng-repeat="grab in grabs">
+		<img class="item-img float-left" ng-src="{{grab.smallImg}}" fallback-src="../contents/img/p_default.png">
+		<div class="item-desc">
+			<div class="item-title" ng-bind="grab.title"></div>
+			<div class="item-subhead" ng-bind="grab.hospital.name">
+			</div>
+			<div class="item-qiang" ng-class="{'no':grab.noamount}">
+				<div class="btn" ng-bind="grab.btnMess" ng-click="writeCode(grab.noamount,grab.id,grab.hospitalId)"></div>
+				<div class="text" ng-bind-template="价值：{{grab.standPrice}}"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="product-bg" ng-if="hasBg"></div>
+<div class="grab-imgtip" ng-if="showTip">
+	<div class="grab-tip"></div>
+	<div class="sharConttent">
+		<img src="../contents/svg/grab-close.svg" class="close" ng-click="switchTip('close')">
+	</div>
+</div>
+<div class="cush-tip" ng-if="noGrab" ng-bind-template="{{$parent.noProductText}}"></div>

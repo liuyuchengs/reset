@@ -1,0 +1,10 @@
+<ul class="prduct-container"  data-ng-init="load()">
+	<li class="item" ng-repeat = "hospital in hospitals">
+		<img class="item-img float-left" ng-src="{{hospital.logo}}" fallback-src="../contents/img/p_default.png">
+		<div class="item-desc">
+			<div class="item-title" ng-bind="hospital.name"></div>
+			<div class="score" ng-bind="hospital.score"></div>
+			<div class="item-subhead" ng-bind="hospital.address"></div>
+		</div>
+	</li>
+</ul>

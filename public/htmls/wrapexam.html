@@ -1,0 +1,36 @@
+
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left">
+		<a href="home.html">
+			<img src="../contents/svg/back.svg">
+		</a>
+	</div>
+	<div class="title">
+		体检特惠
+	</div>
+</div>
+<div class="has-header"></div>
+<ul class="prduct-container" >
+	<li class="item" ng-repeat = "product in products" ng-click="detail(product.id,product.hospitalId)">
+		<div class="item-desc exam-desc">
+			<div class="item-title" ng-bind="product.title"></div>
+			<div class="item-subhead" ng-bind="product.name"></div>
+			<div class="item-price">
+				<div class="float-left">
+					<span class="saleprice" ng-bind-template="￥{{product.preferPrice}}"></span>
+					<span class="priceType" ng-bind-template="{{product.preferPriceType}}"></span>
+				</div>
+				<div class="float-left margin-l">
+					<span class="price float-left" ng-bind-template="￥{{product.standPrice}}"></span>
+				</div>
+				<div class="float-left margin-l">
+					<span class="vip">专享</span>
+				</div>
+				<div class="margin-right">
+					<span class="item-count float-right" ng-bind-template="{{product.sales}}人下单"></span>
+				</div>
+			</div>
+		</div>
+	</li>
+</ul>
+<div class="cush-tip" ng-if="noProduct" ng-bind-template="{{$parent.noProductText}}"></div>

@@ -1,0 +1,52 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left" ng-click="changeRoute('/user')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		邀请好友
+	</div>
+    <div class="header-item-width float-right" ng-click="changeRoute('/invite/notes')">
+		<span class="text">邀请记录</span>
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="invite-container" ng-style="bodyStyle">
+    <div class="grab-imgtip" ng-if="showTip">
+        <div class="grab-tip"><img src="../contents/svg/grab-close.svg" class="close" ng-click="switchTip('close')"></div>
+    </div>
+    <div class="bg1-container" ng-style="bgStyle">
+        <div class="bg2-container"></div>
+    </div>
+    <div class="invite-content">
+        <div class="invite-title">
+            <p>1.邀请好友成功即可每人获得<span class="tip-color">300元</span>代金券</p>
+            <p>2.若被邀请人在本平台有下单消费，邀请人可返<span class="tip-color">80元</span>现金奖励</p>
+            <p>3.邀请人数前100名，即可参与抽奖<span class="tip-color">10个IPhone6s</span></p>
+        </div>
+        <div class="invite-code">
+            <div class="title">我的邀请码</div>
+            <div class="code" ng-bind="code"></div>
+        </div>
+        <p></p>
+        <div class="invite-btn" ng-click="share()">分享我的邀请码给好友</div>
+    </div>
+    <div class="invite-tip">
+        <p class="tip-title">活动详情</p>
+        <div class="item">
+            <div class="orders">1.</div>
+            <div class="text">点击"分享我的邀请码给好友",即可分享出自己的邀请链接，被邀请人通过邀请人的分享链接完成注册;</div>
+        </div>
+        <div class="item">
+            <div class="orders">2.</div>
+            <div class="text">"成功邀请好友"指被邀请人完成注册并完善其个人资料，即可每人获得300元代金券;</div>
+        </div>
+        <div class="item">
+            <div class="orders">3.</div>
+            <div class="text">若被邀请人在本平台有下单消费，邀请人可返80元现金</div>
+        </div>
+        <div class="item">
+            <div class="orders">4.</div>
+            <div class="text">现金通过用户的个人账户返回，用户需要在"我的账户"填入微信或者支付宝账号信息，以便我们注入该奖励的现金</div>
+        </div>
+    </div>
+</div>

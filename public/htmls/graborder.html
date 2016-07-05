@@ -1,0 +1,32 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left" ng-click="changeRoute('/user')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		惠赠订单
+	</div>
+</div>
+<div class="has-header"></div>
+<ul class="grab-order-content" ng-if="hasGift">
+	<li>
+		<div class="title">惠赠单号</div>
+		<div class="text" ng-bind="$parent.gift.giftCode"></div>
+	</li>
+	<li>
+		<div class="title">项目</div>
+		<div class="text" ng-bind="$parent.gift.productName"></div>
+	</li>
+	<li>
+		<div class="title">机构</div>
+		<div class="text" ng-bind="$parent.gift.hospitalName"></div>
+	</li>
+	<li>
+		<div class="title">地址</div>
+		<div class="text" ng-bind="$parent.gift.hospitalAddress"></div>
+	</li>
+	<li>
+		<div class="title">就医时间</div>
+		<div class="text" ng-bind="$parent.gift.daydateStr"></div>
+	</li>
+</ul>
+<div class="cush-tip" ng-if="!hasGift">您还没有惠赠订单！</div>

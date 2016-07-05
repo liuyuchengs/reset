@@ -1,0 +1,41 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left" ng-click="changeRoute('/user')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		我的余额
+	</div>
+    <div class="header-item-width float-right" ng-click="choosePay()">
+		<span class="text">提现</span>
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="pay-money-container">
+    <div class="display-money">
+        <p class="first-text">我的余额</p>
+        <p><span class="money" ng-bind="money.balance"></span><span>元</span></p>
+    </div>
+    <p class="display-tip" ng-show="money.dealMoney">
+        <span class="tip-color">温馨提示：</span>
+        <span>您有一笔</span>
+        <span ng-bind="money.dealMoney"></span>
+        <span>元的交易已成功受理,系统会在3个工作日内返还到您的账户,请注意查收!</span>
+    </p>
+</div>
+<div class="how-pay-container" ng-show="showPay" ng-click="hiddenPay()">
+    <div class="content">
+        <div class="title">请选择提现方式</div>
+        <div class="items">
+            <div class="item" ng-click="getMoney('2',$event)">
+                <img class="icon" src="../contents/svg/wx-icon.svg">
+                <span>微信</span>
+                <img class="arrow" src="../contents/svg/right-arrow.svg">
+            </div>
+            <div class="item" ng-click="getMoney('1',$event)">
+                <img class="icon" src="../contents/svg/alipay-icon.svg">
+                <span>支付宝</span>
+                <img class="arrow" src="../contents/svg/right-arrow.svg">
+            </div>
+        </div>
+    </div>
+</div>

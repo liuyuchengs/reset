@@ -1,0 +1,32 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left" ng-click="changeRoute('/home')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		活动专区
+	</div>
+</div>
+<div class="has-header"></div>
+<ul class="prduct-container" >
+	<li class="item" ng-repeat = "product in products" ng-click="detail(product.id,product.hospitalId,product.type)" >
+		<img class="item-img float-left" ng-src="{{product.samllimg}}" fallback-src="../contents/img/p_default.png">
+		<div class="item-desc">
+			<div class="item-title" ng-bind="product.title"></div>
+			<div class="item-subhead" ng-bind="product.name"></div>
+			<div class="item-price">
+				<div class="float-left">
+					<span class="saleprice" ng-bind-template="￥{{product.preferPrice}}"></span>
+					<span class="priceType" ng-bind-template="{{product.preferPriceType}}"></span>
+				</div>
+				<div class="float-left margin-l">
+					<span class="price float-left" ng-bind-template="￥{{product.standPrice}}"></span>
+					<span class="price float-left" ng-if="product.hasActivity">元/次</span>
+				</div>
+				<div class="margin-right">
+					<span class="item-count float-right" ng-bind-template="{{product.sales}}人下单"></span>
+				</div>
+			</div>
+		</div>
+	</li>
+</ul>
+<div class="cush-tip" ng-if="noProduct">{{$parent.noProductText}}</div>

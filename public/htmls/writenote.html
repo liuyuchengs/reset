@@ -1,0 +1,93 @@
+<div class="header" data-ng-init="load()">
+	<div class="header-item float-left" ng-click="changeRoute('/write')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		写日记
+	</div>
+	<div class="header-item header-item-width float-right" ng-click="addNotePost()">
+		发布
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="say-content">
+	<div class="switch">
+		<div class="item select" ng-class="{'select':switchParams.kanya.has}" ng-click="switch('kanya')">看牙</div>
+		<div class="item"  ng-class="{'select':switchParams.qiumei.has}" ng-click="switch('qiumei')">求美</div>
+		<div class="item" ng-class="{'select':switchParams.yunsheng.has}" ng-click="switch('yunsheng')">孕·生</div>
+	</div>
+	<div class="product" >
+		<div class="select-title" ng-class="{'select':select.has}" ng-click="chooseOrder()">
+			<span>选择项目</span>
+			<div class="icon"></div>
+			<div class="txt" ng-bind="select.value"></div>
+		</div>
+		<div class="select-product" ng-show="select.has">
+			<ul>
+				<li ng-repeat="od in order.orderInfo" ng-click="chooseProduct(od.id)" ng-class="{'select':od.has}">
+					<div class="icon"></div>
+					<div class="txt">
+						<span ng-bind="od.treatmenttimeStr"></span>
+						<span ng-bind="od.productName"></span>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="title">
+		<div class="input-tip">标题</div>
+		<textarea  placeholder="(20字符以内)" ng-model="queryParams.postName"></textarea>
+	</div>
+	<div class="white-bg">
+		<textarea class="input" placeholder="想写点什么呢" ng-model="queryParams.postContent"></textarea>
+		<div class="photo">
+			<p class="photo-title">术前照片</p>
+			<div class="camare" ng-click="chooseBeforePic()">
+				<img src="../contents/svg/camare.svg">
+			</div>
+			<div class="imgs">
+				<span ng-if="noBeforeSelect">添加照片</span>
+				<div class="item" ng-show="beforeParams.input1.has">
+					<input type="file" id="input1" class="input-item" accept="image/png,image/jpeg">
+					<img id="img1" class="display-img" ng-src="{{beforeParams.input1.url}}" accept="image/png,image/jpeg">
+					<img src="../contents/svg/delete.svg" class="icon" ng-click="removeBefore('input1')" accept="image/png,image/jpeg">
+				</div>
+				<div class="item" ng-show="beforeParams.input2.has" accept="image/png,image/jpeg">
+					<input type="file" id="input2" class="input-item">
+					<img id="img1" class="display-img" ng-src="{{beforeParams.input2.url}}">
+					<img src="../contents/svg/delete.svg" class="icon" ng-click="removeBefore('input2')">
+				</div>
+				<div class="item" ng-show="beforeParams.input3.has" accept="image/png,image/jpeg">
+					<input type="file" id="input3" class="input-item">
+					<img id="img1" class="display-img" ng-src="{{beforeParams.input3.url}}">
+					<img src="../contents/svg/delete.svg" class="icon" ng-click="removeBefore('input3')">
+				</div>
+			</div>
+
+		</div>
+		<div class="photo">
+			<p class="photo-title">术后照片</p>
+			<div class="camare" ng-click="chooseAfterPic()">
+				<img src="../contents/svg/camare.svg">
+			</div>
+			<div class="imgs">
+				<span ng-if="noAfterSelect">添加照片</span>
+				<div class="item" ng-show="afterParams.input7.has">
+					<input type="file" id="input7" class="input-item" accept="image/png,image/jpeg">
+					<img id="img1" class="display-img" ng-src="{{afterParams.input7.url}}" accept="image/png,image/jpeg">
+					<img src="../contents/svg/delete.svg" class="icon" ng-click="removeAfter('input7')" accept="image/png,image/jpeg">
+				</div>
+				<div class="item" ng-show="afterParams.input8.has">
+					<input type="file" id="input8" class="input-item" accept="image/png,image/jpeg">
+					<img id="img1" class="display-img" ng-src="{{afterParams.input8.url}}">
+					<img src="../contents/svg/delete.svg" class="icon" ng-click="removeAfter('input8')">
+				</div>
+				<div class="item" ng-show="afterParams.input9.has">
+					<input type="file" id="input9" class="input-item" accept="image/png,image/jpeg">
+					<img id="img1" class="display-img" ng-src="{{afterParams.input9.url}}">
+					<img src="../contents/svg/delete.svg" class="icon" ng-click="removeAfter('input9')">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

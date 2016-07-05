@@ -1,0 +1,32 @@
+<div class="header">
+	<div class="header-item float-left" ng-click="changeRoute('/user/userinfo')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		修改信息
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="change">
+	<div class="text-change" ng-hide="hasImg">
+		<div class="text" ng-bind="title"></div>
+		<div class="input">
+			<input type="text" placeholder="{{tip}}" ng-model="$parent.val" ng-if="hasinput">
+			<div ng-class="{'select':sexparams.men}" ng-if="hassex" ng-click="select('男')">男</div>
+			<div ng-class="{'select':sexparams.women}" ng-if="hassex" ng-click="select('女')">女</div>
+		</div>
+	</div>
+	<div class="img-change" ng-show="hasImg">
+		<div class="camare" ng-click="choosePic()">
+			<img src="../contents/svg/camare.svg">
+		</div>
+		<div class="imgs">
+			<div class="item" ng-show="input.has">
+				<input type="file" id="input1" class="input-item" accept="image/png,image/jpeg">
+				<img id="img1" class="display-img" ng-src="{{input.url}}" accept="image/png,image/jpeg">
+				<img src="../contents/svg/delete.svg" class="icon" ng-click="removePic('input1')" accept="image/png,image/jpeg">
+			</div>
+		</div>
+	</div>
+	<button class="button-full" ng-click="change()">保存</button>
+</div>

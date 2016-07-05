@@ -1,0 +1,18 @@
+<div class="follow-product-content" data-ng-init="init()">
+    <ul>
+        <li ng-repeat="follow in follows">
+            <img ng-src="{{follow.smallImg|defaultImg:'pro'}}" product-error>
+            <div class="info">
+                <p class="title" ng-bind="follow.title"></p>
+                <p class="address" ng-bind="follow.hospitalName"></p>
+            </div>
+            <div class="follow select" ng-class="{'select':follow.hasFollow}" ng-click="switchFollow(follow.id)">
+                <div class="icon"></div>
+                <div class="txt" ng-bind="follow.followText"></div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="cush-tip" ng-if="noProduct">{{$parent.noProductText}}</div>
+<div ng-include="'section/tip.html'"></div>
+<div ng-include="'section/loading.html'"></div>

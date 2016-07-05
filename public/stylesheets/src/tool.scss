@@ -1,0 +1,554 @@
+/*
+** ******全局变量******
+*/
+$bg-color:#f2f2f2;   //背景文本
+$line-color:#ddd;   //边框颜色
+$main-color:#1fc1d9;  //主色调
+$green-color:#9BBC77; //绿色文本
+$font-size:14px;
+$small-font-size:12px;
+$large-font-size:16px;
+$f-color:#333; //主文本
+$s-color:#666; //次文本
+$t-color:#999; //大段长文本
+
+//浏览器兼容性
+$prefix-webkit:true !default;
+$prefix-mozilla:true !default;
+$prefix-ms:true !default;
+$prefix-opera:true !default;
+$prefix-spec:true !default;
+
+
+/*
+** ******全局样式*****
+*/
+body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,input{
+    margin:0;padding:0;border:0;
+}
+input,button,textarea{
+	font-size: $font-size;
+	font-family: "微软雅黑",Helvetica,Sans-serif;
+}
+body{
+	color:$f-color;
+	background-color:#fff;
+	font-size:$font-size;
+	font-family: "微软雅黑",Helvetica,Sans-serif;
+	-webkit-tap-highlight-color:rgba(255,255,255,0);
+	line-height: 20px;
+}
+span,p{
+	word-wrap: break-word;
+}
+
+/*
+** ******mixin部分******
+*/
+//纵向居中
+@mixin vertical-center($parent-height,$self-height){
+  margin-top:($parent-height - $self-height)/2;
+}
+//横向居中(绝对定位)
+@mixin hor-abosult-center($self-height,$self-width){
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-top: -($self-height/2);
+    margin-left:-($self-width/2);
+}
+//分隔区域
+@mixin separate($height,$bg-color){
+    height: $height;
+    background-color: $bg-color;
+    width: 100%;
+}
+@mixin absolute-left($count) {
+	$left:65px;
+	position: absolute;
+	left:($count - 1)*$left;
+}
+//0.5px的全边框，all:伪元素占据页面大小，top,left,right,bottom:上，下，左，右
+@mixin half-border($border,$color,$size:1px){
+	position:relative;
+	&:before{
+		-webkit-transform:scale(0.5);
+		-moz-transform: scale(0.5);
+		-ms-transform: scale(0.5);
+		transform: scale(0.5);
+		-webkit-transform-origin:0% 0%;
+		-moz-transform-origin: 0% 10%;
+		-ms-transform-origin: 0% 0%;
+		transform-origin: 0% 0%;
+		content: "";
+		position: absolute;
+		box-sizing: border-box;
+		display: block;
+		@if($border==bottom){
+			left:0;
+			right:-100%;
+			bottom:0;
+			border-bottom:solid $size $color;
+		}@else if($border==top){
+			left:0;
+			right:-100%;
+			top:0;
+			border-top:solid $size $color;
+		}@else if($border==left){
+			left:0;
+			top:0;
+			bottom:-100%;
+			border-left:solid $size $color;
+		}@else if($border==right){
+			right:0;
+			top:0;
+			bottom:-100%;
+			border-right:solid $size $color;
+		}
+	}
+}
+//多0.5px边框
+@mixin half-border-all($directions,$color,$size:1px){
+	position:relative;
+	&:before{
+		-webkit-transform:scale(0.5);
+		-moz-transform: scale(0.5);
+		-ms-transform: scale(0.5);
+		transform: scale(0.5);
+		-webkit-transform-origin:0% 0%;
+		-moz-transform-origin: 0% 10%;
+		-ms-transform-origin: 0% 0%;
+		transform-origin: 0% 0%;
+		content: "";
+		position: absolute;
+		box-sizing: border-box;
+		display: block;
+		top:0;
+		left:0;
+		bottom:-100%;
+		right:-100%;
+		@each $direction in $directions{
+			border-#{$direction}:solid $size $color;
+		}
+	}
+}
+
+//上0.5px边框
+@mixin half-border-top($color,$size:1px){
+	@include half-border(top,$color,$size);
+}
+//下0.5px边框
+@mixin half-border-bottom($color,$size:1px){
+	@include half-border(bottom,$color);
+}
+//左0.5px边框
+@mixin half-border-left($color,$size:1px){
+	@include half-border(left,$color);
+}
+//右0.5px边框
+@mixin half-border-right($color,$size:1px){
+	@include half-border(right,$color);
+}
+
+
+//三角形
+@mixin triangle($direction,$size,$borderColor){
+	height:0px;
+	width:0px;
+	border:solid $size transparent;
+	@if $direction==top {
+		border-bottom: solid $size $borderColor;
+	}@else if $direction==left{
+		border-right: solid $size $borderColor;
+	}@else if $direction==right{
+		border-left:solid $size $borderColor;
+	}@else if $direction==bottom{
+		border-top:solid $size borderColor;
+	}
+}
+
+//兼容性属性
+@mixin prefixer($property,$value,$prefixes){
+	@each $prefix in $prefixes{
+		@if $prefix==webkit and $prefix-webkit==true{
+			-webkit-#{$property}:$value;
+		}@else if $prefix==moz and $prefix-mozilla==true{
+			-moz-#{$property}:$value;
+		}@else if $prefix==ms and $prefix-ms==true{
+			-ms-#{$property}:$value;
+		}@else if $prefix==o and $prefix-opera==true{
+			-o-#{$property}:$value;
+		}@else if $prefix==spec and $prefix-spec==true{
+			#{$property}:$value;
+		}
+	}
+}
+
+//兼容性box-shadow
+@mixin box-shadow($shadow...){
+	@include prefixer(box-shadow,$shadow,webkit moz ms o spec);
+}
+
+/*
+* ******基础样式******
+*/
+.float-left{
+	float:left;
+}
+.float-right{
+	float:right;
+}
+.base-separator{
+	@include separate(10px,$bg-color);
+	@include half-border-all(top bottom,$line-color);
+}
+.large-separator{
+	@include separate(40px,$bg-color);
+}
+.has-header{
+	height:50px;
+	width: 100%;
+}
+.has-menu{
+	height: 50px;
+	width: 100%;
+}
+.has-user-menu{
+	height:55px;
+	width: 100%;
+}
+.check-color{
+	color:#1fc1d9;
+}
+.overflowhide{
+	position:fixed;
+	top:0px;
+	left:0px;
+	width:100%;
+}
+//整宽按钮
+.button-full{
+	width:100%;
+	height:40px;
+	background-color: $main-color;
+	color:#fff;
+	border: none;
+	margin-bottom:20px;
+}
+//标题头
+.header{
+    position: fixed;
+    top: 0px;
+    width:100%;
+    height:50px;
+    background-color: $main-color;
+    color: #fff;
+    text-align: center;
+    z-index: 20;
+    .title{
+		$title-height:30px;
+		$title-width:100px;
+		height:$title-height;
+		width: $title-width;
+		line-height: $title-height;
+        font-size: $large-font-size;
+		@include hor-abosult-center($title-height,$title-width);
+    }
+	.header-item{
+		$item-height:40px;
+		height:$item-height;
+		width:$item-height;
+		line-height: $item-height;
+		@include vertical-center(50px,$item-height);
+		a{
+			display: inline-block;
+			height:100%;
+			width:100%;
+		}
+		img{
+			height:20px;
+			vertical-align: middle;
+		}
+	}
+	.header-item-width{
+		width:80px;
+		.btn{
+			width:60px;
+			height:30px;
+			border-radius: 3px;
+			line-height:30px;
+			margin-right:10px;
+			background-color:#fff;
+			color:$main-color;
+			text-align: center;
+			display: inline-block;
+			margin-top:5px;
+		}
+		.text{
+			height:50px;
+			line-height: 50px;
+		}
+	}
+	.home-icon{
+		line-height: 20px;
+		margin-top: 10px;
+	}
+	.follow{
+		.icon{
+			display: inline-block;
+			height:15px;
+			width:15px;
+			margin-top:-3px;
+			vertical-align: middle;
+			background:url("../../contents/svg/jia-white.svg");
+			background-size: contain;
+		}
+		.txt{
+			display: inline-block;
+		}
+		.select{
+			background:url("../../contents/svg/check-mark-white.svg");
+			background-size: contain;
+		}
+	}
+}
+.header-transparent{
+	background-color:transparent;
+	color:$s-color;
+	position: absolute;
+}
+//产品列表
+.prduct-container{
+	$con-padding:10px;
+	padding-left: $con-padding;
+	padding-right:$con-padding;
+	overflow: hidden;
+	list-style: none;
+	.item{
+		$img-height:80px;
+		padding-top: $con-padding;
+		padding-bottom: $con-padding;
+		overflow: hidden;
+		@include half-border-bottom($line-color)
+		.item-img{
+			height:$img-height;
+			width:$img-height;
+			margin-right: 5px;
+			border-radius: 2px;
+		}
+		.item-desc{
+			margin-left:($img-height+10px);
+			.item-subhead{
+				font-size: $small-font-size;
+				margin-top: 5px;
+			}
+			.score{
+				color:$main-color;
+				margin-top: 5px;
+			}
+			.item-price{
+				overflow: hidden;
+				margin-top: 18px;
+				div{
+					line-height: 20px;
+				}
+				.item-count{
+					font-size: $small-font-size;
+				}
+				.vip{
+					color:#1fc1d9;
+				}
+				.saleprice{
+					color: #1fc1d9;;
+				}
+				.priceType{
+					color:#1fc1d9;
+					font-size:$small-font-size;
+				}
+				.price{
+					font-size:$small-font-size;
+					text-decoration: line-through;
+					color:#959595;
+				}
+			}
+		}
+		.exam-desc{
+			margin-left: 10px;
+		}
+		.item-qiang{
+			$bg-color:#FF5A00;
+			border:solid 1px $bg-color;
+			height:30px;
+			line-height: 30px;
+			text-align: center;
+			margin-top: 5px;
+			.text{
+				color:#959595;
+				margin-right:80px;
+				text-decoration:line-through;
+			}
+			.btn{
+				width:80px;
+				background-color:$bg-color;
+				float:right;
+				color:#fff;
+			}
+		}
+		.no{
+			border: solid 1px #959595;
+			.btn{
+				background-color: #959595;
+			}
+		}
+	}
+}
+//底部菜单
+.button-menu{
+	$f-color:#9f9f9f;
+	$bottom-menu-height:50px;
+	$bottom-icon-height:40px;
+	position: fixed;
+	z-index: 20;
+	bottom: 0px;
+	left: 0px;
+	width:100%;
+	background-color: #fff;
+	height:50px;
+	color:$f-color;
+	border-top:solid 1px #ddd;
+	.button-menu-item{
+		width:25%;
+		height: 100%;
+		float: left;
+		text-align: center;
+		.icon{
+			display: inline-block;
+			text-align: center;
+			height:$bottom-icon-height;
+			font-size: $small-font-size;
+			@include vertical-center($bottom-menu-height,$bottom-icon-height);
+			p{
+				line-height: 15px;
+			}
+			div{
+				height:25px;
+				width:25px;
+			}
+			.homeIcon{
+				background:url("../../contents/svg/home-uncheck.svg");
+				background-size: contain;
+			}
+			.doctorIcon{
+				background:url("../../contents/svg/doctor-uncheck.svg");
+				background-size: contain;
+			}
+			.InteractionIcon{
+				background:url("../../contents/svg/hudong-uncheck.svg");
+				background-size: contain;
+			}
+			.userIcon{
+				background:url("../../contents/svg/user-uncheck.svg");
+				background-size: contain;
+			}
+		}
+		.check {
+			color:$main-color;
+			.homeIcon{
+				background:url("../../contents/svg/home-check.svg");
+				background-size: contain;
+			}
+			.doctorIcon{
+				background:url("../../contents/svg/doctor-check.svg");
+				background-size: contain;
+			}
+			.InteractionIcon{
+				background:url("../../contents/svg/hudong-check.svg");
+				background-size: contain;
+			}
+			.userIcon{
+				background:url("../../contents/svg/user-check.svg");
+				background-size: contain;
+			}
+		}
+	}
+}
+//提示框
+.tip{
+	position: fixed;
+	top: 0px;
+	left:0px;
+	height:100%;
+	width:100%;
+	z-index: 100;
+	background-color: rgba(0,0,0,0.3);
+	.container{
+		$tip-width:260px;
+		$tip-height:130px;
+		width: $tip-width;
+		height: $tip-height;
+		border-radius: 5px;
+		@include hor-abosult-center($tip-height,$tip-width);
+		background-color: #fff;
+		box-shadow: 0px 0px 10px #696969;
+		.tip-text{
+			height:50px;
+			text-align: center;
+			padding: 20px;
+			@include half-border-bottom($line-color);
+		}
+		.tip-btn{
+			height:39px;
+			display: -webkit-box;
+			display: flex;
+			flex-direction: row;
+			flex-flow: nowrap;
+			position: relative;
+			.item:nth-child(2){
+				@include half-border-left($line-color);
+			}
+			.item{
+				/*解决ios8.0+下不等分问题*/
+				width:100%;
+				-webkit-box-flex: 1.0;
+				-moz-box-flex: 1.0;
+				flex:1.0;
+				text-align: center;
+				line-height: 39px;
+				color:$main-color;
+			}
+		}
+	}
+}
+//loding动画
+.loding{
+	position:fixed;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+	z-index:100;
+	background-color:rgba(0,0,0,0.4);
+	display: block;
+	.content{
+		text-align: center;
+		width:140px;
+		height:70px;
+		position:absolute;
+		left:50%;
+		top:50%;
+		margin-top:-35px;
+		margin-left:-70px;
+		border-radius:5px;
+		padding-top: 10px;
+		background-color:#fff;
+		img{
+			width:40px;
+			height:40px;
+		}
+	}
+}
+
+//body背景色
+.bg-color{
+	background-color: #f2f2f2;
+}

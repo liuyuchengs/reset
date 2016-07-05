@@ -1,0 +1,82 @@
+<div class="header" data-ng-init="init()">
+	<div class="header-item float-left" ng-click="back()">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">套餐详细
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="examDetail-container">
+	<div class="img-container">
+		<img src="../contents/img/tj_img.jpg">
+		<div class="img-description">
+			<p ng-bind="product.title"></p>
+		</div>
+	</div>
+	<div class="examDetail-filter">
+		<div class="item" ng-class="{'select':filterParams.product.has}" ng-click="switch('product')">套餐详情</div>
+		<div class="item" ng-class="{'select':filterParams.hospital.has}" ng-click="switch('hospital')">医院详情</div>
+		<div class="item" ng-class="{'select':filterParams.notice.has}" ng-click="switch('notice')">须知</div>
+	</div>
+	<div class="examDetail-content">
+		<div class="productInfo" ng-show="filterParams.product.has">
+			<div class="description">
+				<div class="title">套餐介绍</div>
+				<div class="text" ng-bind="product.introduction"></div>
+			</div>
+			<div class="product">
+				<div class="title">套餐项目</div>
+				<ol class="items">
+					<li ng-repeat="item in productItem" ng-bind="item.name"></li>
+				</ol>
+			</div>
+		</div>
+		<div class="hospitalInfo" ng-show="filterParams.hospital.has">
+			<div class="img">
+				<img ng-src="{{hospital.logo}}" fallback-src="../contents/img/p_default.png">
+				<img ng-src="{{hospitalImg}}" fallback-src="../contents/img/p_default.png">
+			</div>
+			<div class="title">
+				<p class="name" ng-bind="hospital.name"></p>
+				<p class="address">
+					<span>地址：</span>
+					<span ng-bind="hospital.address"></span></p>
+				<p class="phone">
+					<span>联系电话：</span>
+					<span ng-bind="hospital.telephone"></span>
+				</p>
+			</div>
+			<div class="text" ng-bind="hospital.description"></div>
+		</div>
+		<div class="noticeInfo" ng-show="filterParams.notice.has">
+			<div class="text" ng-bind="product.notice"></div>
+		</div>
+	</div>
+</div>
+<div class="markorder-menu">
+	<div class="order-btn" ng-click="selectTimeBtn()" ng-class="{'disable':noSchedule}">下单</div>
+	<div class="order-text">
+		<p><span>专享价：￥</span><span class="money" ng-bind-template="{{product.preferPrice}}{{product.preferPriceType}}"></span></p>
+		<p><span>门店价：￥</span><span class="money" ng-bind="product.standPrice"></span></p>
+	</div>
+</div>
+<div class="has-user-menu"></div>
+<div class="selecttime" ng-show="hasSelectTime">
+	<div class="container">
+		<div class="selecttime-header">
+			选择体检日期
+		</div>
+		<div class="times">
+			<ul>
+				<li ng-repeat="schedule in schedules"  ng-class="{'select':scheduleParams[schedule.scheduleid].has}" ng-click="selectTime(schedule.scheduleid)">
+					<span ng-bind="schedule.dateStr"></span>
+					<div></div>
+				</li>
+			</ul>
+		</div>
+		<div class="btn">
+			<div class="item" ng-click="cancelTime()">取消</div>
+			<div class="item" ng-click="detail()">确定</div>
+		</div>
+	</div>
+</div>

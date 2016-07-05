@@ -1,0 +1,1 @@
+app.controller("indexCtrl",["$scope","$location",function($scope,$location){$scope.navMenuParams={home:!0,doctor:!1,interaction:!1,user:!1},$scope.menuClick=function(item){$location.path(item);for(var prototype in $scope.navMenuParams)prototype===item?$scope.navMenuParams[item]=!0:$scope.navMenuParams[prototype]=!1}}]);

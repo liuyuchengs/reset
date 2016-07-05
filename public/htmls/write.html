@@ -1,0 +1,22 @@
+<div class="header" data-ng-init="load()">
+	<div class="header-item float-left" ng-click="changeRoute('/interaction')">
+		<img src="../contents/svg/back.svg">
+	</div>
+	<div class="title">
+		发布消息
+	</div>
+</div>
+<div class="has-header"></div>
+<div class="write-content">
+	<div class="item"  ng-click="goTo('/write/say')">
+		<img src="../contents/svg/talk.svg">
+		<p class="main">随便聊聊</p>
+		<p class="sub">来分享你的健康心得吧</p>
+	</div>
+	<div class="item"  ng-click="goTo('/write/note')">
+		<img src="../contents/svg/write-node.svg">
+		<p class="main">写日记</p>
+		<p class="sub">这里有聊不完的健康话题</p>
+	</div>
+</div>
+<div ng-include="'section/uploading.html'"></div>

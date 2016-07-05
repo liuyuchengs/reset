@@ -1,0 +1,15 @@
+<div class="follow-user-content" data-ng-init="init()">
+    <ul>
+        <li ng-repeat="follow in follows">
+            <img ng-src="{{follow.face|defaultHeadImg:follow.sex}}" user-error="{{follow.sex}}">
+            <span ng-bind="follow.nickname"></span>
+            <div class="follow select" ng-class="{'select':follow.hasFollow}" ng-click="switchFollow(follow.id)">
+                <div class="icon"></div>
+                <div class="txt" ng-bind="follow.followText"></div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="cush-tip" ng-if="noProduct">{{$parent.noProductText}}</div>
+<div ng-include="'section/tip.html'"></div>
+<div ng-include="'section/loading.html'"></div>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>悠康医生</title>
+    <script>
+        function getQueryString(name){
+            var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) {
+                return unescape(r[2]);
+            }
+            return null;
+        }
+        if(getQueryString("code")){
+            var code = getQueryString("code");
+            var url = "https://www.uokang.com/v2/htmls/index.html#/pay?code="+code
+            window.location.href= url;
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

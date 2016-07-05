@@ -1,0 +1,44 @@
+
+<div class="header" data-ng-init="init()">
+    <div class="header-item float-left" ng-click="changeRoute('/user')">
+        <img src="../contents/svg/back.svg">
+    </div>
+    <div class="title">
+        我的代金券
+    </div>
+</div>
+<div class="has-header"></div>
+<div >
+    <div class="cush-active">
+        <input id="cushCode" class="cush-input" type="text" placeholder="填码得券" ng-model="activeValue">
+        <button id="activa" class="cush-btn" ng-click="active()">兑换</button>
+    </div>
+    <div class="cush-active-tip">
+        <span ng-click="changeRoute('/user/cushover')">查看过期券>></span>
+        <span ng-click="changeRoute('/user/cush/read')">查看使用规则>></span>
+    </div>
+</div>
+<div class="cush-tip" ng-show="noCush">您还没有代金券</div>
+<div id="cush-body" class="cush-body" ng-repeat="cush in cushs">
+    <div class="cush-item">
+        <div class="cush-money">
+            <div class="cush-money-have left" ng-hide="cush.used">
+                <span>￥</span>
+                <span ng-bind="cush.flags"></span>
+            </div>
+            <div class="cush-money-have left" ng-show="cush.used">
+                <span>￥</span>
+                <span class="unable" ng-bind="cush.flags"></span>
+            </div>
+            <div class="cush-money-have right" ng-show="cush.used">
+                <span>余额 ￥</span>
+                <span ng-bind="cush.money"></span>
+            </div>
+        </div>
+        <div class="cush-data">
+            <span class="left">代金券</span>
+            <span class="right" ng-bind="cush.endDate"></span>
+            <span class="right">有效期至</span>
+        </div>
+    </div>
+</div>
