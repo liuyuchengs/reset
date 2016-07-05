@@ -1,7 +1,7 @@
 var koa = require("koa"); //koa框架
 var body = require("koa-body")(); //koa的request和response转换
 var serverStatic = require("koa-static"); //静态文件服务目录
-var router = require("./routes/js/mainRoute.js"); //路由模块
+var router = require("./../routes/js/mainRoute.js"); //路由模块
 var app = koa();
 
 //配置

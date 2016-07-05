@@ -1,7 +1,7 @@
     /**
-     * ParamsObj:参数对象
+     * ParamsObj:下拉参数对象
      */
-    class ParamsObj {
+    class DropParams {
         has:boolean;
         val:string;
         id:number;
@@ -12,4 +12,4 @@
         }
     }
 
-    export = ParamsObj;
+    export = DropParams;
