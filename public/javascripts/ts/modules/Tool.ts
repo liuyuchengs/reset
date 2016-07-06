@@ -165,25 +165,23 @@ class Tool implements ITool {
      * @params params->判断该变量是否为空，支持string,number,boolean
      * return ture->为空,false->非空
      */
-    empty(params:any){
-        let types = typeof params;
-        switch(types){
-            case "string":
-                if(params===null||params===""){
-                    return true;
-                }else{
-                    return false;
-                }
-            case "number":
-                if(params===null){
-                    return true;
-                }else{
-                    return false;
-                }
-            case "boolean":
-                return <boolean>params;
-            default:
+    empty(params:string|number|boolean){
+        if(typeof params === "string"){
+            if(params===null||params===""){
+                return true;
+            }else{
                 return false;
+            }
+        }else if(typeof params ==="number"){
+            if(params===null){
+                return true;
+            }else{
+                return false;
+            }
+        }else if(typeof params ==="boolean"){
+            return params;
+        }else{
+            return false;
         }
     }
 
@@ -227,7 +225,7 @@ class Tool implements ITool {
         var str:string = "";
         for(let i = 0;i < array.length;i++){
             if(array[i][1]!=null){
-                str = "&"+array[i][0]+"="+array[i][1];
+                str += `&${ array[i][0] }=${array[i][1]}`;
             }
         }
         str = str.slice(0,1); //截取第一个"&"
