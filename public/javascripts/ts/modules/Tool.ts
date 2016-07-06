@@ -1,27 +1,23 @@
-import User = require("./User");
-import DropParams = require("./DropParams");
 /**
- * 工具模块
+ * Tool extends ITool
  */
-class Tool {
 
-    /**
-     * 保存用户信息
-     */
-    static user:User;
-
-    /**
-     * 保存host信息
-     */
-    static host:string = "https://www.uokang.com";
-    constructor() {
+class Tool implements ITool {
+    user:IUser;
+    host:string;
+    private $rootScope:IRootScope;
+    private $location:angular.ILocationService;
+    constructor($rootScope:IRootScope,$location:angular.ILocationService,host:string) {
+        this.$rootScope = $rootScope;
+        this.$location = $location;
+        this.host = host;
     }
 
     /**
      * 设置local
      * @params key:localStorage键,val:localStorage值
      */
-    static setLocal(key:string,val:Object){
+    setLocal(key:string,val:any){
         localStorage.setItem(key,JSON.stringify(val));
     }
 
@@ -30,7 +26,7 @@ class Tool {
      * @params key:localStorage键
      * return localStorage值
      */
-    static getLocal(key:string){
+    getLocal(key:string){
         return JSON.parse(localStorage.getItem(key));
     }
 
@@ -38,14 +34,14 @@ class Tool {
      * 删除local
      * @params key->localStorage键
      */
-    static removeLocal(key:string){
+    removeLocal(key:string){
         localStorage.removeItem(key);
     }
 
     /**
      * 清除所有local
      */
-    static clearLocal(){
+    clearLocal(){
         localStorage.clear();
     }
 
@@ -53,7 +49,7 @@ class Tool {
      * 设置session
      * @params key->session键,val->session值
      */
-    static setSession(key:string,val:Object){
+    setSession(key:string,val:any){
         sessionStorage.setItem(key,JSON.stringify(val));
     }
 
@@ -62,15 +58,15 @@ class Tool {
      * @params key->session键
      * return session值
      */
-    static getSession(key:string){
-        sessionStorage.getItem(key);
+    getSession(key:string){
+        return sessionStorage.getItem(key);
     }
 
     /**
      * 删除session
      * @params key->需要删除的session键
      */
-    static removeSession(key:string){
+    removeSession(key:string){
         sessionStorage.removeItem(key);
     }
 
@@ -78,17 +74,30 @@ class Tool {
      * 跳转到指定url
      * @params url->需要跳转的完整url
      */
-    static toUrl(url:string){
+    toUrl(url:string){
         if(url.length>0){
-            location.href =  url;
+            location.href = url;
+        }
+    }
+
+    /**
+     * 改变路由
+     * @params path->路径,search->查询字符串
+     */
+    changeRoute(path:string,search?:string){
+        this.$location.path(path);
+        if(search){
+            this.$location.search(search);
+        }else{
+            this.$location.search("");
         }
     }
 
     /**
      * 通过检查localStorage,判断是否登录
      */
-    static checkLogin(){
-        if(Tool.getLocal("user")){
+    checkLogin(){
+        if(this.getLocal("user")){
             return true;
         }else{
             return false;
@@ -98,10 +107,10 @@ class Tool {
     /**
      * 判断用户是否完成用户信息,检查所有项
      */
-    static infoComplete(){
-        if(Tool.getLocal("user")){
-            let user:User = <User>this.getLocal("user");
-            if(Tool.emptyObject(user)){
+    infoComplete(){
+        if(this.getLocal("user")){
+            let user:IUser = <IUser>this.getLocal("user");
+            if(this.emptyany(user)){
                 return true;
             }else{
                 return false;
@@ -112,11 +121,51 @@ class Tool {
     }
 
     /**
+     * 确认按钮的提示框
+     * @params mess->提示文本，callback->确认按钮处理函数，不传则使用默认处理函数
+     */
+    alert(mess:string,callback?:()=>void){
+        this.$rootScope.message = mess;
+        this.$rootScope.hasCancel = false;
+        this.$rootScope.hasComfirm = true;
+        this.$rootScope.hasTip = true;
+        if(callback){
+            this.$rootScope.comfirm = callback;
+        }else{
+            this.$rootScope.comfirm = ()=>{
+                this.$rootScope.hasTip = false;
+            }
+        }
+    }
+
+    /**
+     * 带确认按钮和取消按钮的提示框
+     * @params mess->提示文本,callback->确认按钮处理函数,必传
+     */
+    comfirm(mess:string,callback:()=>void){
+        this.$rootScope.message = mess;
+        this.$rootScope.hasCancel = true;
+        this.$rootScope.hasComfirm = true;
+        this.$rootScope.hasTip = true;
+        this.$rootScope.cancel = ()=>{
+            this.$rootScope.hasTip = false;
+        }
+        this.$rootScope.comfirm = callback;
+    }
+
+    /**
+     * 获取用户信息
+     */
+    loadUser(){
+        this.user = this.getLocal("user");
+    }
+
+    /**
      * 判断变量是否为空
      * @params params->判断该变量是否为空，支持string,number,boolean
      * return ture->为空,false->非空
      */
-    static empty(params:Object){
+    empty(params:any){
         let types = typeof params;
         switch(types){
             case "string":
@@ -132,7 +181,7 @@ class Tool {
                     return false;
                 }
             case "boolean":
-                return params;
+                return <boolean>params;
             default:
                 return false;
         }
@@ -143,10 +192,10 @@ class Tool {
      * @params obj->判断该对象是否为空，检查所有属性
      * return true->为空，false->非空
      */
-    static emptyObject(obj:Object){
+    emptyany(obj:any){
         let result:boolean = false;
-        for(let props in obj){
-            if(Tool.empty(obj[props])){
+        for(let item in obj){
+            if(this.empty(item)){
                 result = true;
             }
         }
@@ -157,11 +206,9 @@ class Tool {
      * 设置下拉菜单项为选择状态
      * @params index->需要设置为选择状态的下拉对象索引，container->下拉对象容器
      */
-    static select(index:number,container:Array<DropParams>){
+    select(index:number,container:Array<IDropParams>){
         //如果已经选择则不做处理
-        if(container[index].has){
-            return ;
-        }else{
+        if(!container[index].has){
             for(let item of container){
                 if(item.has){
                     item.has = false;
@@ -176,11 +223,11 @@ class Tool {
      * @params obj->需要转换的对象
      * return 转换成的字符串
      */
-    static convertObj(obj:Object){
-        var str = "";
-        for(var prop in obj){
-            if(obj[prop]!=null){
-                str += "&" + prop + "=" + obj[prop];
+    convertParams(array:[[string,string|number|boolean]]){
+        var str:string = "";
+        for(let i = 0;i < array.length;i++){
+            if(array[i][1]!=null){
+                str = "&"+array[i][0]+"="+array[i][1];
             }
         }
         str = str.slice(0,1); //截取第一个"&"
@@ -192,7 +239,7 @@ class Tool {
      * @params name->查询参数的key
      * return 查询参数的值，如果有
      */
-    static queryString(name:string){
+    queryString(name:string){
         let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
         let r = window.location.search.substr(1).match(reg);
         if(r != null){
@@ -204,10 +251,9 @@ class Tool {
     /**
      * 取消window的scroll监听
      */
-    static cancelWindowListen(){
+    cancelWindowListen(){
         window.onscroll = null;
     }
-    
 }
 
 export = Tool;

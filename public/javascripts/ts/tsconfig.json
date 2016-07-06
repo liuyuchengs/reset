@@ -2,9 +2,10 @@
     "compilerOptions": {
         "module": "amd",
         "target": "es5",
+        "declaration":true,
         "noImplicitAny": true,
         "sourceMap": false,
-        "outDir": "./",
+        "outDir": "./../js",
         "watch":true,
         "noResolve":false
     },
