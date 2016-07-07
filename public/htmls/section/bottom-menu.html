@@ -1,24 +1,24 @@
-<div class="button-menu" ng-show="hasNav">
+<div class="button-menu" ng-show="navMenu.has">
 	<div class="button-menu-item" ng-click="menuClick('home')">
-		<div class="icon" ng-class="{'check':navMenuParams.home}">
+		<div class="icon" ng-class="{'check':navMenu.home}">
 			<div class=homeIcon></div>
 			<p>首页</p>
 		</div>
 	</div>
 	<div class="button-menu-item" ng-click="menuClick('doctor')" >
-		<div class="icon" ng-class="{'check':navMenuParams.doctor}">
+		<div class="icon" ng-class="{'check':navMenu.doctor}">
 			<div class="doctorIcon"></div>
 			<p>医生</p>
 		</div>
 	</div>
 	<div class="button-menu-item" ng-click="menuClick('interaction')">
-		<div class="icon" ng-class="{'check':navMenuParams.interaction}">
+		<div class="icon" ng-class="{'check':navMenu.interaction}">
 			<div class="InteractionIcon"></div>
 			<p>互动</p>
 		</div>
 	</div>
 	<div class="button-menu-item" ng-click="menuClick('user')">
-		<div class="icon" ng-class="{'check':navMenuParams.user}">
+		<div class="icon" ng-class="{'check':navMenu.user}">
 			<div class="userIcon"></div>
 			<p>我的</p>
 		</div>

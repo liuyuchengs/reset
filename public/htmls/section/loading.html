@@ -1,6 +1,6 @@
-<div class="loding" ng-show="loading">
+<div class="loding" ng-show="load.has">
 	<div class="content">
-		<img src="../contents/img/loading.gif">
-		<p>加载中..</p>
+		<img ng-src="load.src">
+		<p ng-bind="load.val"></p>
 	</div>
 </div>

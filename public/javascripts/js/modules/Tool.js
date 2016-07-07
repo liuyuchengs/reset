@@ -155,26 +155,27 @@ define(["require", "exports"], function (require, exports) {
          * return ture->为空,false->非空
          */
         Tool.prototype.empty = function (params) {
-            var types = typeof params;
-            switch (types) {
-                case "string":
-                    if (params === null || params === "") {
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
-                case "number":
-                    if (params === null) {
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
-                case "boolean":
-                    return params;
-                default:
+            if (typeof params === "string") {
+                if (params === null || params === "") {
+                    return true;
+                }
+                else {
                     return false;
+                }
+            }
+            else if (typeof params === "number") {
+                if (params === null) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            else if (typeof params === "boolean") {
+                return params;
+            }
+            else {
+                return false;
             }
         };
         /**
@@ -216,7 +217,7 @@ define(["require", "exports"], function (require, exports) {
             var str = "";
             for (var i = 0; i < array.length; i++) {
                 if (array[i][1] != null) {
-                    str = "&" + array[i][0] + "=" + array[i][1];
+                    str += "&" + array[i][0] + "=" + array[i][1];
                 }
             }
             str = str.slice(0, 1); //截取第一个"&"

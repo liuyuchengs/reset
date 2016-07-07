@@ -1,11 +1,11 @@
-<div ng-if="hasTip" class="tip">
+<div ng-if="messageTip.has" class="tip">
   <div class="container">
 	<div class="tip-text">
-	<span ng-bind="message"></span>
+	<span ng-bind="messageTip.message"></span>
   </div>
   <div class="tip-btn">
-	  <div ng-if="hasCancel" ng-click="cancel()" class="item">取消</div>
-		<div ng-if="hasComfirm" ng-click="comfirm()" class="item">确定</div>
+	  <div ng-if="messageTip.hasCancel" ng-click="messageTip.cancel()" class="item">取消</div>
+		<div ng-if="messageTip.hasComfirm" ng-click="messageTip.comfirm()" class="item">确定</div>
   </div>
   </div>
 </div>
