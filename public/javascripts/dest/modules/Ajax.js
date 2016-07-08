@@ -1,8 +1,5 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
-    /**
-     * Ajax
-     */
     var Ajax = (function () {
         function Ajax($rootScope, $http, $q, ToolService) {
             this.$rootScope = $rootScope;
@@ -10,6 +7,10 @@ define(["require", "exports"], function (require, exports) {
             this.$q = $q;
             this.ToolService = ToolService;
         }
+        /**
+         * $http get请求
+         * @params obj->请求参数，obj.url->地址
+         */
         Ajax.prototype.get = function (obj) {
             if (obj.url) {
                 this.$rootScope.load.has = true;
@@ -26,6 +27,10 @@ define(["require", "exports"], function (require, exports) {
                 return defered_1.promise;
             }
         };
+        /**
+         * $http post请求
+         *
+         */
         Ajax.prototype.post = function (obj) {
             if (obj.url) {
                 this.$rootScope.load.has = true;
@@ -39,7 +44,8 @@ define(["require", "exports"], function (require, exports) {
                 }
                 else {
                     headers = {
-                        "accessToken": obj.headers.accessToken
+                        "accessToken": obj.headers.accessToken,
+                        "Content-type": "application/x-www-form-urlencoded;charset=UTF-8",
                     };
                 }
                 var paramsStr = this.ToolService.convertParams(obj.data);

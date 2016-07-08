@@ -1,6 +1,3 @@
-/**
- * Tool extends ITool
- */
 define(["require", "exports"], function (require, exports) {
     "use strict";
     var Tool = (function () {
@@ -115,16 +112,16 @@ define(["require", "exports"], function (require, exports) {
          */
         Tool.prototype.alert = function (mess, callback) {
             var _this = this;
-            this.$rootScope.message = mess;
-            this.$rootScope.hasCancel = false;
-            this.$rootScope.hasComfirm = true;
-            this.$rootScope.hasTip = true;
+            this.$rootScope.messageTip.message = mess;
+            this.$rootScope.messageTip.hasCancel = false;
+            this.$rootScope.messageTip.hasComfirm = true;
+            this.$rootScope.messageTip.has = true;
             if (callback) {
-                this.$rootScope.comfirm = callback;
+                this.$rootScope.messageTip.comfirm = callback;
             }
             else {
-                this.$rootScope.comfirm = function () {
-                    _this.$rootScope.hasTip = false;
+                this.$rootScope.messageTip.comfirm = function () {
+                    _this.$rootScope.messageTip.has = false;
                 };
             }
         };
@@ -134,14 +131,14 @@ define(["require", "exports"], function (require, exports) {
          */
         Tool.prototype.comfirm = function (mess, callback) {
             var _this = this;
-            this.$rootScope.message = mess;
-            this.$rootScope.hasCancel = true;
-            this.$rootScope.hasComfirm = true;
-            this.$rootScope.hasTip = true;
-            this.$rootScope.cancel = function () {
-                _this.$rootScope.hasTip = false;
+            this.$rootScope.messageTip.message = mess;
+            this.$rootScope.messageTip.hasCancel = true;
+            this.$rootScope.messageTip.hasComfirm = true;
+            this.$rootScope.messageTip.has = true;
+            this.$rootScope.messageTip.cancel = function () {
+                _this.$rootScope.messageTip.has = false;
             };
-            this.$rootScope.comfirm = callback;
+            this.$rootScope.messageTip.comfirm = callback;
         };
         /**
          * 获取用户信息
@@ -185,7 +182,8 @@ define(["require", "exports"], function (require, exports) {
          */
         Tool.prototype.emptyany = function (obj) {
             var result = false;
-            for (var item in obj) {
+            for (var _i = 0, obj_1 = obj; _i < obj_1.length; _i++) {
+                var item = obj_1[_i];
                 if (this.empty(item)) {
                     result = true;
                 }
@@ -213,11 +211,11 @@ define(["require", "exports"], function (require, exports) {
          * @params obj->需要转换的对象
          * return 转换成的字符串
          */
-        Tool.prototype.convertParams = function (array) {
+        Tool.prototype.convertParams = function (obj) {
             var str = "";
-            for (var i = 0; i < array.length; i++) {
-                if (array[i][1] != null) {
-                    str += "&" + array[i][0] + "=" + array[i][1];
+            for (var key in obj) {
+                if (obj[key] !== null) {
+                    str += "&" + key + "=" + obj[key];
                 }
             }
             str = str.slice(0, 1); //截取第一个"&"
@@ -241,6 +239,36 @@ define(["require", "exports"], function (require, exports) {
          */
         Tool.prototype.cancelWindowListen = function () {
             window.onscroll = null;
+        };
+        /**
+         * 添加window的scroll监听
+         */
+        Tool.prototype.onWindowListen = function (fn) {
+            if (!(this.$rootScope.load.has || this.$rootScope.followTip.has)) {
+                var body = document.body;
+                var html = document.documentElement;
+                var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+                if (height > window.innerHeight) {
+                    if (height - window.scrollY - window.innerHeight < 100) {
+                        fn();
+                    }
+                }
+            }
+        };
+        /**
+         * 加载并注册控制器
+         */
+        Tool.loadCtrl = function (obj) {
+            return {
+                "nothing": function ($q, $controllerProvider) {
+                    var defered = $q.defer();
+                    require([obj.url], function (controller) {
+                        $controllerProvider.register(obj.name, controller);
+                        defered.resolve();
+                    });
+                    return defered.promise;
+                }
+            };
         };
         return Tool;
     }());

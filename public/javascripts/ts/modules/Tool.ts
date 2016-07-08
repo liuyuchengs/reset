@@ -1,13 +1,16 @@
 /**
- * Tool extends ITool
+ * Tool 
  */
+import ag = require("angular");
+import Data = require("Data");
+import IRootScope = require("IRootScope");
 
-class Tool implements ITool {
-    user:IUser;
+class Tool{
+    user:Data.IUser;
     host:string;
-    private $rootScope:IRootScope;
+    private $rootScope:IRootScope.rootScope;
     private $location:angular.ILocationService;
-    constructor($rootScope:IRootScope,$location:angular.ILocationService,host:string) {
+    constructor($rootScope:IRootScope.rootScope,$location:angular.ILocationService,host:string) {
         this.$rootScope = $rootScope;
         this.$location = $location;
         this.host = host;
@@ -109,7 +112,7 @@ class Tool implements ITool {
      */
     infoComplete(){
         if(this.getLocal("user")){
-            let user:IUser = <IUser>this.getLocal("user");
+            let user:Data.IUser = <Data.IUser>this.getLocal("user");
             if(this.emptyany(user)){
                 return true;
             }else{
@@ -125,15 +128,15 @@ class Tool implements ITool {
      * @params mess->提示文本，callback->确认按钮处理函数，不传则使用默认处理函数
      */
     alert(mess:string,callback?:()=>void){
-        this.$rootScope.message = mess;
-        this.$rootScope.hasCancel = false;
-        this.$rootScope.hasComfirm = true;
-        this.$rootScope.hasTip = true;
+        this.$rootScope.messageTip.message = mess;
+        this.$rootScope.messageTip.hasCancel = false;
+        this.$rootScope.messageTip.hasComfirm = true;
+        this.$rootScope.messageTip.has = true;
         if(callback){
-            this.$rootScope.comfirm = callback;
+            this.$rootScope.messageTip.comfirm = callback;
         }else{
-            this.$rootScope.comfirm = ()=>{
-                this.$rootScope.hasTip = false;
+            this.$rootScope.messageTip.comfirm = ()=>{
+                this.$rootScope.messageTip.has = false;
             }
         }
     }
@@ -143,14 +146,14 @@ class Tool implements ITool {
      * @params mess->提示文本,callback->确认按钮处理函数,必传
      */
     comfirm(mess:string,callback:()=>void){
-        this.$rootScope.message = mess;
-        this.$rootScope.hasCancel = true;
-        this.$rootScope.hasComfirm = true;
-        this.$rootScope.hasTip = true;
-        this.$rootScope.cancel = ()=>{
-            this.$rootScope.hasTip = false;
+        this.$rootScope.messageTip.message = mess;
+        this.$rootScope.messageTip.hasCancel = true;
+        this.$rootScope.messageTip.hasComfirm = true;
+        this.$rootScope.messageTip.has = true;
+        this.$rootScope.messageTip.cancel = ()=>{
+            this.$rootScope.messageTip.has = false;
         }
-        this.$rootScope.comfirm = callback;
+        this.$rootScope.messageTip.comfirm = callback;
     }
 
     /**
@@ -192,7 +195,7 @@ class Tool implements ITool {
      */
     emptyany(obj:any){
         let result:boolean = false;
-        for(let item in obj){
+        for(let item of obj){
             if(this.empty(item)){
                 result = true;
             }
@@ -204,7 +207,7 @@ class Tool implements ITool {
      * 设置下拉菜单项为选择状态
      * @params index->需要设置为选择状态的下拉对象索引，container->下拉对象容器
      */
-    select(index:number,container:Array<IDropParams>){
+    select(index:number,container:Array<Data.IDropParams>){
         //如果已经选择则不做处理
         if(!container[index].has){
             for(let item of container){
@@ -221,11 +224,11 @@ class Tool implements ITool {
      * @params obj->需要转换的对象
      * return 转换成的字符串
      */
-    convertParams(array:[[string,string|number|boolean]]){
-        var str:string = "";
-        for(let i = 0;i < array.length;i++){
-            if(array[i][1]!=null){
-                str += `&${ array[i][0] }=${array[i][1]}`;
+    convertParams(obj:any){
+        let str:string = "";
+        for(let key in obj){
+            if(obj[key]!==null){
+                str += "&"+key+"="+obj[key];
             }
         }
         str = str.slice(0,1); //截取第一个"&"
@@ -251,6 +254,38 @@ class Tool implements ITool {
      */
     cancelWindowListen(){
         window.onscroll = null;
+    }
+
+    /**
+     * 添加window的scroll监听
+     */
+    onWindowListen(fn:()=>void){
+        if(!(this.$rootScope.load.has||this.$rootScope.followTip.has)){
+            let body = document.body;
+            let html = document.documentElement;
+            let height = Math.max(body.scrollHeight,body.offsetHeight,html.clientHeight,html.scrollHeight,html.offsetHeight);
+            if(height>window.innerHeight){
+                if(height-window.scrollY-window.innerHeight<100){
+                    fn();
+                }
+            }
+        }
+    }
+
+    /**
+     * 加载并注册控制器
+     */
+    static loadCtrl(obj:Data.IRoutQueryObj){
+        return {
+            "nothing":($q:ag.IQService,$controllerProvider:ag.IControllerProvider)=>{
+                let defered = $q.defer();
+                require([obj.url],(controller:any)=>{
+                    $controllerProvider.register(obj.name,controller);
+                    defered.resolve();
+                })
+                return defered.promise;
+            }
+        }
     }
 }
 

@@ -1,12 +1,15 @@
 /**
- * Tool extends ITool
+ * Tool
  */
-declare class Tool implements ITool {
-    user: IUser;
+import ag = require("angular");
+import Data = require("Data");
+import IRootScope = require("IRootScope");
+declare class Tool {
+    user: Data.IUser;
     host: string;
     private $rootScope;
     private $location;
-    constructor($rootScope: IRootScope, $location: angular.ILocationService, host: string);
+    constructor($rootScope: IRootScope.rootScope, $location: angular.ILocationService, host: string);
     /**
      * 设置local
      * @params key:localStorage键,val:localStorage值
@@ -91,13 +94,13 @@ declare class Tool implements ITool {
      * 设置下拉菜单项为选择状态
      * @params index->需要设置为选择状态的下拉对象索引，container->下拉对象容器
      */
-    select(index: number, container: Array<IDropParams>): void;
+    select(index: number, container: Array<Data.IDropParams>): void;
     /**
      * 将对象转换成字符串
      * @params obj->需要转换的对象
      * return 转换成的字符串
      */
-    convertParams(array: [[string, string | number | boolean]]): string;
+    convertParams(obj: any): string;
     /**
      * 获取查询参数
      * @params name->查询参数的key
@@ -108,5 +111,15 @@ declare class Tool implements ITool {
      * 取消window的scroll监听
      */
     cancelWindowListen(): void;
+    /**
+     * 添加window的scroll监听
+     */
+    onWindowListen(fn: () => void): void;
+    /**
+     * 加载并注册控制器
+     */
+    static loadCtrl(obj: Data.IRoutQueryObj): {
+        "nothing": ($q: ag.IQService, $controllerProvider: ag.IControllerProvider) => ag.IPromise<{}>;
+    };
 }
 export = Tool;

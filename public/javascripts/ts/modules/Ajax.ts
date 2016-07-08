@@ -1,19 +1,26 @@
 /**
  * Ajax
  */
-class Ajax implements IAjax {
-    private $rootScope:IRootScope;
+import IRootScope = require("IRootScope");
+import Data = require("Data");
+import Tool = require("Tool");
+class Ajax{
+    private $rootScope:IRootScope.rootScope;
     private $http:angular.IHttpService;
     private $q:angular.IQService;
-    private ToolService:ITool;
-    constructor($rootScope:IRootScope,$http:angular.IHttpService,$q:angular.IQService,ToolService:ITool) {
+    private ToolService:Tool;
+    constructor($rootScope:IRootScope.rootScope,$http:angular.IHttpService,$q:angular.IQService,ToolService:Tool) {
         this.$rootScope = $rootScope;
         this.$http = $http;
         this.$q = $q;
         this.ToolService = ToolService;
     }
 
-    get(obj:IGetQuery){
+    /**
+     * $http get请求
+     * @params obj->请求参数，obj.url->地址
+     */
+    get(obj:Data.IGetQuery){
         if(obj.url){
             this.$rootScope.load.has = true;
             let defered:angular.IDeferred<any> = this.$q.defer();
@@ -30,7 +37,11 @@ class Ajax implements IAjax {
         }
     }
 
-    post(obj:IPostQuery){
+    /**
+     * $http post请求
+     * 
+     */
+    post(obj:Data.IPostQuery){
         if(obj.url){
             this.$rootScope.load.has = true;
             let defered:angular.IDeferred<any> = this.$q.defer();
@@ -42,7 +53,8 @@ class Ajax implements IAjax {
                 }
             }else{
                 headers = {
-                    "accessToken":obj.headers.accessToken
+                    "accessToken":obj.headers.accessToken,
+                    "Content-type":"application/x-www-form-urlencoded;charset=UTF-8",
                 }
             }
             let paramsStr:string = this.ToolService.convertParams(obj.data);
