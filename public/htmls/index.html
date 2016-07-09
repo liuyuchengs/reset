@@ -14,5 +14,6 @@
 	<script data-main="../javascripts/dest/main.js" src="../javascripts/lib/require.min.js"></script>
 </body>
 </html>
-<div class="has-menu" ng-show="hasNav"></div>
+<div class="cush-tip" ng-if="followTip.has" ng-bind="followTip.val"></div>
+<div class="has-menu" ng-show="navMenu.has"></div>
 <div ng-include="'section/bottom-menu.html'"></div>

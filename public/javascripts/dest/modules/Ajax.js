@@ -35,18 +35,17 @@ define(["require", "exports"], function (require, exports) {
             if (obj.url) {
                 this.$rootScope.load.has = true;
                 var defered_2 = this.$q.defer();
-                var headers;
-                if (obj.headers.contentType) {
-                    headers = {
-                        "accessToken": obj.headers.accessToken,
-                        "Content-type": obj.headers.contentType,
-                    };
-                }
-                else {
-                    headers = {
-                        "accessToken": obj.headers.accessToken,
-                        "Content-type": "application/x-www-form-urlencoded;charset=UTF-8",
-                    };
+                var headers = {
+                    "accessToken": "",
+                    "Content-type": "application/x-www-form-urlencoded;charset=UTF-8",
+                };
+                if (obj.headers) {
+                    if (obj.headers.contentType) {
+                        headers["Content-type"] = obj.headers.contentType;
+                    }
+                    if (obj.headers.accessToken) {
+                        headers["accessToken"] = obj.headers.accessToken;
+                    }
                 }
                 var paramsStr = this.ToolService.convertParams(obj.data);
                 this.$http.post(obj.url, paramsStr, {

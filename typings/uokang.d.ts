@@ -111,7 +111,8 @@ declare module "Data"{
         /**
          * 存储下拉变量的查询id
          */
-        id:number;
+        id?:number;
+        children?:IDropParams[];
     }
 
     /**
@@ -205,6 +206,8 @@ declare module "IRootScope"{
     export interface IFollowTip{
         has:boolean;
         val:string;
+        empty:string;
+        no:string;
     }
 
     /**

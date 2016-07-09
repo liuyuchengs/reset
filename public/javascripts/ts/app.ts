@@ -10,7 +10,8 @@ import ag = require("angular");
 import Tool = require("./modules/Tool");
 import Ajax = require("./modules/Ajax");
 import Weixin = require("./modules/Weixin");
-let host:string = "https://www.uokang.com";
+import Swiper = require("Swiper");
+let host:string = "http://192.168.0.104:3000";
 var app = ag.module("myApp",['ngRoute']);
 
 /**
@@ -18,7 +19,7 @@ var app = ag.module("myApp",['ngRoute']);
  * 程序启动前配置$rootScope
  */
 app.run(($rootScope:IRootScope.rootScope,$location:ag.ILocationService)=>{
-    //导航栏参数
+    // 导航栏参数
     $rootScope.navMenu = {
         home:false,
         doctor:false,
@@ -27,14 +28,14 @@ app.run(($rootScope:IRootScope.rootScope,$location:ag.ILocationService)=>{
         has:false
     }
 
-    //加载提示框变量
+    // 加载提示框变量
     $rootScope.load = {
         has:false,
         src:"../../contents/img/loading.gif",
         val:"加载中...",
     }
 
-    //消息提示框变量
+    // 消息提示框变量
     $rootScope.messageTip = {
         has:false,
         message:"",
@@ -42,6 +43,14 @@ app.run(($rootScope:IRootScope.rootScope,$location:ag.ILocationService)=>{
         hasComfirm:false,
         comfirm:null,
         cancel:null,
+    }
+
+    // 瀑布流提示文本
+    $rootScope.followTip = {
+        has:false,
+        val:"",
+        empty:"暂无信息",
+        no:"已经没有了",
     }
 
     //全局属性变量
@@ -84,6 +93,10 @@ app.run(($rootScope:IRootScope.rootScope,$location:ag.ILocationService)=>{
                 $rootScope.navMenu.has = true;
             }
         }else{
+            $rootScope.navMenu.home = false;
+            $rootScope.navMenu.doctor = false;
+            $rootScope.navMenu.interaction = false;
+            $rootScope.navMenu.user = false;
             $rootScope.navMenu.has =false;
         }
     }
@@ -133,7 +146,7 @@ app.config(($routeProvider:ag.route.IRouteProvider,$controllerProvider:ag.IContr
         templateUrl:"interaction.html",
         controller:"interactionCtrl",
     }).when("/user",{
-        templateUrl:"userCtrl",
+        templateUrl:"user.html",
         controller:"userCtrl",
     }).when("/doctor/detail",{
         templateUrl:"doctordetail.html",
@@ -141,196 +154,196 @@ app.config(($routeProvider:ag.route.IRouteProvider,$controllerProvider:ag.IContr
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/doctorDetail.js",
             name:"doctorDetailCtrl",
-        })
+        },$controllerProvider)
     }).when("/doctor/askDoctor",{
         templateUrl:"askdoctor.html",
         controller:"askDoctorCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/askDoctor.js",
             name:"askDoctorCtrl",
-        })
+        },$controllerProvider)
     }).when("/interaction/detail",{
         templateUrl:"interactiondetail.html",
         controller:"interactionDetailCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/interactionDetail.js",
             name:"interactionDetailCtrl",
-        })
+        },$controllerProvider)
     }).when("/user/userinfo",{
         templateUrl:"userinfo.html",
         controller:"userInfoCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/userinfo.js",
             name:"userInfoCtrl",
-        })
+        },$controllerProvider)
     }).when("/user/cush",{
         templateUrl:"cush.html",
         controller:"cushCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/cush.js",
             name:"cushCtrl",
-        })
+        },$controllerProvider)
     }).when("/user/cush/read",{
         templateUrl:"cushreadme.html",
         controller:"cushCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/cush.js",
             name:"cushCtrl",
-        })
+        },$controllerProvider)
     }).when("/user/cushover",{
         templateUrl:"cushover.html",
         controller:"cushOverCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/cushOver.js",
             name:"cushOverCtrl",
-        })
+        },$controllerProvider)
     }).when("/user/userinfochange",{
         templateUrl:"userinfochange.html",
         controller:"userInfoChangeCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/userInfoChange.js",
             name:"userInfoChangeCtrl",
-        })
+        },$controllerProvider)
     }).when("/user/order",{
         templateUrl:"order.html",
         controller:"userOrderCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/order.js",
             name:"userOrderCtrl",
-        })
+        },$controllerProvider)
     }).when("/activity",{
         templateUrl:"activity.html",
         controller:"activityCtrl",
         resolve:Tool.loadCtrl({
-            url:"../javascripts/dest/controller/activity.js",
+            url:"../../javascripts/dest/controller/activity.js",
             name:"activityCtrl",
-        })
+        },$controllerProvider)
     }).when("/product/detail",{
         templateUrl:"productdetail.html",
         controller:"productDetailCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/productDetail.js",
             name:"productDetailCtrl",
-        })
+        },$controllerProvider)
     }).when("/product",{
         templateUrl:"product.html",
         controller:"productCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/product.js",
             name:"productCtrl",
-        })
+        },$controllerProvider)
     }).when("/exam/detail",{
         templateUrl:"examdetail.html",
         controller:"examDetailCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/examDetail.js",
             name:"examDetailCtrl",
-        })
+        },$controllerProvider)
     }).when("/discount",{
         templateUrl:"discount.html",
         controller:"discountCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/discount.js",
             name:"discountCtrl",
-        })
+        },$controllerProvider)
     }).when("/findpwd/phone",{
         templateUrl:"findpwdphone.html",
         controller:"findPassCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/findPass.js",
             name:"findPassCtrl",
-        })
+        },$controllerProvider)
     }).when("/findpwd/code",{
         templateUrl:"findpwdcode.html",
         controller:"findPassCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/findPass.js",
             name:"findPassCtrl",
-        })
+        },$controllerProvider)
     }).when("/findpwd/pwd",{
         templateUrl:"findpwdpwd.html",
         controller:"findPassCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/findPass.js",
             name:"findPassCtrl",
-        })
+        },$controllerProvider)
     }).when("/grab",{
         templateUrl:"grab.html",
         controller:"grabCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/grab.js",
             name:"grabCtrl",
-        })
+        },$controllerProvider)
     }).when("/grab/code",{
         templateUrl:"grabcode.html",
         controller:"grabCodeCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/grabCode.js",
             name:"grabCodeCtrl",
-        })
+        },$controllerProvider)
     }).when("/grab/order",{
         templateUrl:"graborder.html",
         controller:"grabOrderCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/grabOrder.js",
             name:"grabOrderCtrl",
-        })
+        },$controllerProvider)
     }).when("/login",{
         templateUrl:"login.html",
         controller:"loginCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/login.js",
             name:"loginCtrl",
-        })
+        },$controllerProvider)
     }).when("/makeorder",{
         templateUrl:"makeorder.html",
         controller:"makeOrderCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/makeorder.js",
             name:"makeOrderCtrl",
-        })
+        },$controllerProvider)
     }).when("/news",{
         templateUrl:"news.html",
         controller:"newsCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/news.js",
             name:"newsCtrl",
-        })
+        },$controllerProvider)
     }).when("/news/detail",{
         templateUrl:"newsdetail.html",
         controller:"newsCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/news.js",
             name:"newsCtrl",
-        })
+        },$controllerProvider)
     }).when("/order",{
         templateUrl:"order.html",
         controller:"orderCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/order.js",
             name:"orderCtrl",
-        })
+        },$controllerProvider)
     }).when("/pay",{
         templateUrl:"pay.html",
         controller:"payCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/pay.js",
             name:"payCtrl",
-        })
+        },$controllerProvider)
     }).when("/pay/result",{
         templateUrl:"payresult.html",
         controller:"payResultCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/payResult.js",
             name:"payResultCtrl",
-        })
+        },$controllerProvider)
     }).when("/register",{
         templateUrl:"register.html",
         controller:"registerCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/register.js",
             name:"registerCtrl",
-        })
+        },$controllerProvider)
     }).when("/agreement",{
         templateUrl:"agreement.html",
     }).when("/write",{
@@ -339,77 +352,77 @@ app.config(($routeProvider:ag.route.IRouteProvider,$controllerProvider:ag.IContr
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/write.js",
             name:"writeCtrl",
-        })
+        },$controllerProvider)
     }).when("/write/say",{
         templateUrl:"writesay.html",
         controller:"writeCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/write.js",
             name:"writeCtrl",
-        })
+        },$controllerProvider)
     }).when("/write/note",{
         templateUrl:"writenote.html",
         controller:"writeCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/write.js",
             name:"writeCtrl",
-        })
+        },$controllerProvider)
     }).when("/user/mypost",{
         templateUrl:"mypost.html",
         controller:"myPostCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/myPost.js",
             name:"myPostCtrl",
-        })
+        },$controllerProvider)
     }).when("/user/mymessage",{
         templateUrl:"mymessage.html",
         controller:"myMessageCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/myMessage.js",
             name:"myMessageCtrl",
-        })
+        },$controllerProvider)
     }).when("/user/myfollow",{
         templateUrl:"myfollow.html",
         controller:"myFollowCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/myFollow.js",
             name:"myFollowCtrl",
-        })
+        },$controllerProvider)
     }).when("/exam",{
         templateUrl:"exam.html",
         controller:"examCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/exam.js",
             name:"examCtrl",
-        })
+        },$controllerProvider)
     }).when("/invite/new",{
         templateUrl:"invitenew.html",
         controller:"inviteCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/invite.js",
             name:"inviteCtrl",
-        })
+        },$controllerProvider)
     }).when("/invite/register",{
         templateUrl:"inviteregister.html",
         controller:"inviteCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/invite.js",
             name:"inviteCtrl",
-        })
+        },$controllerProvider)
     }).when("/invite/notes",{
         templateUrl:"invitenotes.html",
         controller:"inviteNotesCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/inviteNotes.js",
             name:"inviteNotesCtrl",
-        })
+        },$controllerProvider)
     }).when("/user/paymoney",{
         templateUrl:"paymoney.html",
         controller:"payMoneyCtrl",
         resolve:Tool.loadCtrl({
             url:"../javascripts/dest/controller/payMoney.js",
             name:"payMoneyCtrl",
-        })
+        },$controllerProvider)
     })
     .otherwise({redirectTo:"/home"})
 })
@@ -419,7 +432,7 @@ app.config(($routeProvider:ag.route.IRouteProvider,$controllerProvider:ag.IContr
  * 各种小工具
  */
 app.factory("ToolService",($rootScope:IRootScope.rootScope,$location:ag.ILocationService)=>{
-    new Tool($rootScope,$location,host)
+    return new Tool($rootScope,$location,host)
 })
 
 /**
@@ -429,7 +442,7 @@ app.factory("ToolService",($rootScope:IRootScope.rootScope,$location:ag.ILocatio
  * post:post方式异步数据
  */
 app.factory("AjaxService",($rootScope:IRootScope.rootScope,$http:ag.IHttpService,$q:ag.IQService,ToolService:Tool)=>{
-    new Ajax($rootScope,$http,$q,ToolService);
+    return new Ajax($rootScope,$http,$q,ToolService);
 })
 
 /**
@@ -437,7 +450,7 @@ app.factory("AjaxService",($rootScope:IRootScope.rootScope,$http:ag.IHttpService
  * 与微信jsapi交互
  */
 app.factory("WeixinService",($rootScope:IRootScope.rootScope,AjaxService:Ajax,ToolService:Tool)=>{
-    new Weixin($rootScope,AjaxService,ToolService);
+    return new Weixin($rootScope,AjaxService,ToolService);
 })
 
 /**
@@ -449,7 +462,7 @@ app.directive("fallbackSrc",()=>{
         restrict:"A",
         link:(scope:ag.IScope,iElement:ag.IRootElementService,iAttr:ag.IAttributes)=>{
             iElement.bind("error",()=>{
-                ag.element(this).attr("src",iAttr["fallbackSrc"]);
+                iElement.attr("src",iAttr["fallbackSrc"]);
             })
         },
     }
@@ -465,7 +478,7 @@ app.directive("productError",()=>{
         restrict:"A",
         link:($scope:ag.IScope,iElement:ag.IRootElementService,iAttr:ag.IAttributes)=>{
             iElement.bind("error",()=>{
-                ag.element(this).attr("src","../contents/img/p_default.png");
+                iElement.attr("src","../contents/img/p_default.png");
             })
         },
     }
@@ -481,7 +494,7 @@ app.directive("doctorError",()=>{
         restrict:"A",
         link:($scope:ag.IScope,iElement:ag.IRootElementService,iAttr:ag.IAttributes)=>{
             iElement.bind("error",()=>{
-                ag.element(this).attr("src","../contents/img/doc-head.png");
+                iElement.attr("src","../contents/img/doc-head.png");
             })
         }
     }
@@ -503,7 +516,7 @@ app.directive("userError",()=>{
                         imgUrl = "../contents/img/women-head.png"
                     }
                 }
-                ag.element(this).attr("src",imgUrl);
+                iElement.attr("src",imgUrl);
             })
         }
     }
@@ -518,7 +531,7 @@ app.directive("zoomImage",()=>{
     return {
         restrict:"A",
         link:($scope:ag.IScope,iElement:ag.IRootElementService,iAttr:ag.IAttributes)=>{
-            let containSize = parseInt(iElement.css("width").slice(0-2));
+            let containSize = parseInt(iElement.css("width").slice(0,-2));
             iElement.css("height",containSize);
             let children = iElement.children();
             children.bind("load",()=>{
@@ -619,9 +632,9 @@ app.controller("homeCtrl",($scope:any,$rootScope:IRootScope.rootScope,$http:ag.I
             if(data.code===0){
                 if(data.data.length<1){
                     if($scope.items.length<1){
-                        $rootScope.followTip.val = "暂无数据";
+                        $rootScope.followTip.val = $rootScope.followTip.empty
                     }else{
-                        $rootScope.followTip.val = "已经没有了";
+                        $rootScope.followTip.val = $rootScope.followTip.no;
                     }
                     $rootScope.followTip.has = true;
                 }else{
@@ -652,9 +665,35 @@ app.controller("homeCtrl",($scope:any,$rootScope:IRootScope.rootScope,$http:ag.I
         })
     }
 
+    // 分页查询，查询下一页
+    let loadNext = ()=>{
+        queryParams.currentPage++;
+        loadRecommend();
+    }
+
     // 初始化图片轮播插件
     let initSwiper = ()=>{
-        
+        var myswiper = new Swiper(".swiper-container",{
+            loop:false,
+            pagination: '.swiper-pagination',
+            autoplay: 2000,
+            autoplayDisableOnInteraction:false,
+            observeParents:true,  //
+            observer:true,
+            //第一张轮播图显示6s,其他的2s
+            onSlideChangeEnd: (swiper:any)=>{
+                if(swiper.activeIndex==0||swiper.activeIndex==1){
+                    swiper.stopAutoplay();
+                    setTimeout(function(){
+                        if(swiper.activeIndex==0||swiper.activeIndex==1){
+                            swiper.startAutoplay();
+                        }
+                    },4000)
+                }else{
+                    swiper.startAutoplay();
+                }
+            }
+        })
     }
 
     // 处理热门数据
@@ -668,14 +707,217 @@ app.controller("homeCtrl",($scope:any,$rootScope:IRootScope.rootScope,$http:ag.I
         })
     }
 
+    //跳转到详细页面
+    $scope.detail = (productId:string,hospitalId:string,type:number)=>{
+        if(type===5){
+            ToolService.changeRoute("/exam/detail","productId="+productId+"&hospitalId="+hospitalId);
+        }else{
+            ToolService.changeRoute("/product/detail","flag=1&productId="+productId+"&hospitalId="+hospitalId);
+        }
+    }
+
+    //图片轮播跳转
+    $scope.activity = (id:number)=>{
+        if(id===1){
+            ToolService.changeRoute("/activity","flag=2");
+        }
+        if(id===2){
+            ToolService.changeRoute("/invite/new");
+        }
+        if(id===3){
+            ToolService.changeRoute("/activity","flag=1");
+        }
+    }
+
     //初始化$rootScope
     $rootScope.followTip.has = false;
     $rootScope.followTip.val = "";
     $rootScope.globalProp.hasBgColor = false;
 
     //初始化页面
+    loadRecommend();
+    queryBanners();
+    initSwiper();
+    ToolService.onWindowListen(loadNext)
+    if(!ToolService.getSession("locationInfo")||!ToolService.getSession("locationInfo").has){
+        //WeixinService.wxInit();
+        //WeixinService.wxConfig();
+    }
 
+})
 
+/**
+ * 控制器
+ * 医生页面
+ */
+app.controller("doctorCtrl",($scope:any,$rootScope:IRootScope.rootScope,$http:ag.IHttpService,ToolService:Tool,AjaxService:Ajax)=>{
+
+    //初始化$rootScope
+    $rootScope.globalProp.hasBgColor = false;
+    
+})
+
+/**
+ * 控制器
+ * 互动页面
+ */
+app.controller("interactionCtrl",($scope:any,$rootScope:IRootScope.rootScope,ToolService:Tool,AjaxService:Ajax)=>{
+    // 查询参数
+    let queryParams = {
+        flag:1,
+        pageRows:10,
+        currentPage:1
+    }
+
+    // 选项条参数
+    $scope.navParams = [
+        {has:true,val:"看牙",id:1},
+        {has:false,val:"求美",id:2},
+        {has:false,val:"孕·生",id:3},
+    ]
+    $scope.posts = [];
+
+    // 加载帖子数据
+    let queryPost = ()=>{
+        AjaxService.post({
+            url:ToolService.host+"/wx/post/postList",
+            data:queryParams,
+        }).then((data)=>{
+            if(data.data.length<1){
+                if($scope.posts.length<1){
+                     $rootScope.followTip.val = $rootScope.followTip.empty;
+                }else{
+                    $rootScope.followTip.val = $rootScope.followTip.no;
+                }
+                $rootScope.followTip.has = true;
+            }else{
+                mergePost(data.data);
+                $scope.posts = $scope.posts.concat(data.data);
+            }  
+        }).catch(()=>{
+            ToolService.alert("获取帖子信息失败!");
+        }).finally(()=>{
+            $rootScope.load.has = false;
+        })
+    }
+
+    // 处理帖子数据
+    let mergePost = (items:any[])=>{
+        items.forEach((item:any)=>{
+            if(item.visitNum==null||item.visitNum==""){
+                item.visitNum=0;
+            }
+            if(item.commentNum==""||item.commentNum==null){
+                item.commentNum = 0;
+            }
+            if(item.faceImage!==null||item.faceImage!==""){
+                item.faceImage = "https://biz.uokang.com/"+item.faceImage;
+            }
+            for(var index in item.list2){
+                if(item.list2[index]==""||item.list2[index]==null){
+                    item.list2.splice(index,1);
+                }
+            }
+        })
+    }
+
+    // 切换帖子类型
+    $scope.switchType = (index:number)=>{
+        queryParams.flag = $scope.navParams[index].id;
+        queryParams.currentPage = 1;
+        ToolService.select(index,$scope.navParams);
+        $rootScope.followTip.has = false;
+        $scope.posts = [];
+        queryPost();
+    }
+
+    //跳转到详细页面
+    $scope.detail = (id:number)=>{
+        ToolService.changeRoute("/interaction/detail","id="+id);
+    }
+
+    // 加载下一页数据
+    let loadNext = ()=>{
+        queryParams.currentPage++;
+        queryPost();
+    }
+
+    // 初始化页面
+    $rootScope.followTip.has = false;
+    $rootScope.followTip.val = "";
+    ToolService.onWindowListen(loadNext);
+    queryPost();
+})
+
+/**
+ * 控制器
+ * 用户页面
+ */
+app.controller("userCtrl",($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILocationService,ToolService:Tool,AjaxService:Ajax)=>{
+
+    $scope.user = {};
+    $scope.isLogin = false;
+    $scope.countFocusMan = 0;
+    $scope.countFansMan = 0;
+
+    //切换用户名称的显示
+    let init = ()=>{
+        if(ToolService.checkLogin()){
+            ToolService.loadUser();
+            $scope.user = ToolService.user;
+            $scope.isLogin = true;
+            if(ToolService.empty($scope.user.nickname)){
+                $scope.user.nickname = "还没有填写昵称";
+            }
+        }else{
+            $scope.user.face = "../contents/img/men-head.png";
+            $scope.user.tip = "点击登录/注册";
+        }
+    }
+    
+    //未开放项目的提示
+    $scope.alert = (mess:string)=>{
+        ToolService.alert(mess);
+    }
+
+    //获取关注数量和粉丝数量
+    let queryFocus = ()=>{
+        AjaxService.post({
+            url:ToolService.host+"/wx/focus/focusManCount",
+            data:{"accessToken":ToolService.user.accessToken},
+        }).then((data)=>{
+            if(data.code==0){
+                if(!ToolService.empty(data.data.countFocusMan)){
+                    $scope.countFocusMan = data.data.countFocusMan;
+                }
+                if(!ToolService.empty(data.data.countFansMan)){
+                    $scope.countFansMan = data.data.countFansMan;
+                }
+            }
+        }).catch(()=>{
+            ToolService.alert("获取粉丝信息失败");
+        }).finally(()=>{
+            $rootScope.load.has = false;
+        })
+    }
+
+    //跳转到选项页面
+    $scope.goto = (path:string,query:string)=>{
+        if(ToolService.checkLogin()){
+            ToolService.changeRoute(path,query);
+        }else{
+            ToolService.changeRoute("/login","");
+        }
+    }
+
+    //页面初始化
+    $rootScope.globalProp.hasBgColor = true;
+    ToolService.cancelWindowListen();
+    init();
+    if(ToolService.checkLogin()){
+        ToolService.loadUser();
+        queryFocus();
+    }
 })
 
 export = app;

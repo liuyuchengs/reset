@@ -9,9 +9,7 @@
 <div class="has-header"></div>
 <div class="interaction-content">
 	<div class="switch">
-		<div class="item" ng-class="{'select':navParams.kanya.has}" ng-click="switchNav('kanya')">看牙</div>
-		<div class="item" ng-class="{'select':navParams.shumei.has}" ng-click="switchNav('shumei')">求美</div>
-		<div class="item" ng-class="{'select':navParams.yunsheng.has}" ng-click="switchNav('yunsheng')">孕·生</div>
+		<div class="item" ng-repeat="item in navParams" ng-class="{'select':item.has}" ng-click="switchType($index)" ng-bind="item.val"></div>
 	</div>
 	<ul class="card">
 		<li ng-repeat="post in posts" ng-click="detail(post.id)">

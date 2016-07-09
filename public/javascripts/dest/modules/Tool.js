@@ -5,6 +5,77 @@ define(["require", "exports"], function (require, exports) {
             this.$rootScope = $rootScope;
             this.$location = $location;
             this.host = host;
+            this.areaParams = [
+                { has: true, val: "全部区域" },
+                { has: false, val: "福田区" },
+                { has: false, val: "南山区" },
+                { has: false, val: "罗湖区" },
+                { has: false, val: "宝安区" },
+                { has: false, val: "龙华新区" },
+                { has: false, val: "龙岗区" },
+                { has: false, val: "盐田区" },
+            ];
+            this.yakeParams = [
+                { has: true, val: "全部", id: null },
+                { has: false, val: "种植牙", id: 19 },
+                { has: false, val: "洗牙", id: 20 },
+                { has: false, val: "烤瓷牙", id: 80 },
+                { has: false, val: "补牙", id: 22 },
+                { has: false, val: "拔牙", id: 23 },
+                { has: false, val: "牙齿美容", id: 24 },
+                { has: false, val: "牙齿矫正", id: 64 },
+                { has: false, val: "义齿", id: 65 },
+                { has: false, val: "牙周治疗", id: 63 },
+                { has: false, val: "其他", id: 60 },
+            ];
+            this.meirongParams = [
+                { has: true, val: "全部", id: null },
+                { has: false, val: "眼部整形", id: 7 },
+                { has: false, val: "面部整形", id: 8 },
+                { has: false, val: "鼻部整形", id: 9 },
+                { has: false, val: "胸部整形", id: 45 },
+                { has: false, val: "吸脂塑形", id: 12 },
+                { has: false, val: "私密整形", id: 78 },
+                { has: false, val: "注射美容", id: 79 },
+                { has: false, val: "激光美肤", id: 80 },
+                { has: false, val: "口唇整形", id: 81 },
+                { has: false, val: "其他", id: 13 },
+            ];
+            this.fckParams = [
+                { has: true, val: "全部", id: null },
+                { has: false, val: "产前检查", id: 48 },
+                { has: false, val: "分娩", id: 49 }
+            ];
+            this.zhongyiParams = [
+                { has: true, val: "全部", id: null },
+                { has: false, val: "头部", id: 51 },
+                { has: false, val: "肩颈", id: 52 },
+                { has: false, val: "腰部", id: 53 },
+                { has: false, val: "腿部", id: 54 },
+                { has: false, val: "全身", id: 55 },
+                { has: false, val: "经络", id: 56 },
+                { has: false, val: "其他", id: 57 }
+            ];
+            this.tijianParams = [
+                { has: true, val: "全部项目", id: null },
+                { has: false, val: "商业体检", id: 75 },
+                { has: false, val: "常规体检", id: 67 },
+                { has: false, val: "中年体检", id: 69 },
+                { has: false, val: "老年体检", id: 70 },
+                { has: false, val: "入职体检", id: 71 },
+                { has: false, val: "孕前体检", id: 72 },
+                { has: false, val: "青年体检", id: 68 },
+                { has: false, val: "儿童体检", id: 74 },
+                { has: false, val: "慢病体检", id: 73 },
+            ];
+            this.professionalParams = [
+                { has: true, val: "全部项目", id: null, },
+                { has: false, val: "牙科", id: 2 },
+                { has: false, val: "医学美容", id: 3 },
+                { has: false, val: "高端妇产科", id: 4 },
+                { has: false, val: "中医理疗", id: 6 },
+                { has: false, val: "体检", id: 5 }
+            ];
         }
         /**
          * 设置local
@@ -215,10 +286,10 @@ define(["require", "exports"], function (require, exports) {
             var str = "";
             for (var key in obj) {
                 if (obj[key] !== null) {
-                    str += "&" + key + "=" + obj[key];
+                    str += key + "=" + obj[key] + "&";
                 }
             }
-            str = str.slice(0, 1); //截取第一个"&"
+            str = str.slice(0, str.length - 1); //截取第一个"&"
             return str;
         };
         /**
@@ -244,23 +315,26 @@ define(["require", "exports"], function (require, exports) {
          * 添加window的scroll监听
          */
         Tool.prototype.onWindowListen = function (fn) {
-            if (!(this.$rootScope.load.has || this.$rootScope.followTip.has)) {
-                var body = document.body;
-                var html = document.documentElement;
-                var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-                if (height > window.innerHeight) {
-                    if (height - window.scrollY - window.innerHeight < 100) {
-                        fn();
+            var _this = this;
+            window.onscroll = function () {
+                if (!(_this.$rootScope.load.has || _this.$rootScope.followTip.has)) {
+                    var body = document.body;
+                    var html = document.documentElement;
+                    var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+                    if (height > window.innerHeight) {
+                        if (height - window.scrollY - window.innerHeight < 100) {
+                            fn();
+                        }
                     }
                 }
-            }
+            };
         };
         /**
          * 加载并注册控制器
          */
-        Tool.loadCtrl = function (obj) {
+        Tool.loadCtrl = function (obj, $controllerProvider) {
             return {
-                "nothing": function ($q, $controllerProvider) {
+                nothing: function ($q) {
                     var defered = $q.defer();
                     require([obj.url], function (controller) {
                         $controllerProvider.register(obj.name, controller);

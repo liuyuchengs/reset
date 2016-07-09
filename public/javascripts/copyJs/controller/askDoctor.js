@@ -99,7 +99,7 @@ define(["jquery"],function($){
 				url = window.createObjectURL(obj);
 			} else if (window.URL != undefined) { // mozilla(firefox)
 				url = window.URL.createObjectURL(obj);
-			} else if (window.webkitURL != undefined) { // webkit or chrome
+			} else if (window.webkitURL != undefined) { // webkit
 				url = window.webkitURL.createObjectURL(obj);
 			}
 			return url;

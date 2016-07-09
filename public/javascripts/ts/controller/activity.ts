@@ -32,14 +32,14 @@ function activity($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILocat
     let queryActivity = ()=>{
         AjaxService.post({
             url:ToolService.host+"/wx/product/queryActivity",
-            data:$scope.queryParams,
+            data:queryParams,
         }).then((data)=>{
             if(data.code === 0){
                 if(data.data.length<1){
                     if($scope.products.length<1){
-                        $rootScope.followTip.val = "暂无数据";
+                        $rootScope.followTip.val = $rootScope.followTip.empty;
                     }else{
-                        $rootScope.followTip.val = "已经没有了!";
+                        $rootScope.followTip.val = $rootScope.followTip.no;
                     }
                     $rootScope.followTip.has = true;
                 }else{
@@ -70,7 +70,7 @@ function activity($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILocat
 
     //加载下一页数据
     let loadNext = ()=>{
-        $scope.queryParams.currentPage++;
+        queryParams.currentPage++;
         queryActivity();
     }
 
@@ -79,7 +79,7 @@ function activity($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILocat
     $rootScope.followTip.has = false;
     $rootScope.followTip.val = "";
     if($location.search().flag){
-        $scope.queryParams.flag = $location.search().flag;
+        queryParams.flag = $location.search().flag;
         queryActivity();
         ToolService.onWindowListen(loadNext);
     }else{

@@ -1444,7 +1444,7 @@ define(["angular","wx"],function(angular,wx){
     app.controller("interactionCtrl",["$scope","$rootScope","$http","Tool","Ajax",function($scope,$rootScope,$http,Tool,Ajax){
         $scope.noProductText = "";
         $scope.noProduct = false;
-        $scope.hasInteractionMenu = true;
+
         $scope.queryParams = {
             flag:1,
             pageRows:10,

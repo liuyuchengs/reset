@@ -4,7 +4,7 @@ require.config({
         "angular": "../lib/angular.min",
         "angular-route": "../lib/angular.route.min",
         "jquery": "../lib/jquery.min",
-        "swiper": "../lib/swiper.min",
+        "Swiper": "../lib/swiper.min",
         "wx": "https://res.wx.qq.com/open/js/jweixin-1.0.0",
         "app": "app",
         "Ajax": "modules/Ajax",
@@ -22,6 +22,6 @@ require.config({
     },
 });
 //使用require
-requirejs(["angular", "app", "angular-route", "jquery", "swiper"], function (angular) {
+requirejs(["angular", "app", "angular-route", "jquery", "Swiper"], function (angular) {
     angular.bootstrap(document, ['myApp']);
 });

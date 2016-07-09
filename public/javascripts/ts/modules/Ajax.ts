@@ -45,16 +45,16 @@ class Ajax{
         if(obj.url){
             this.$rootScope.load.has = true;
             let defered:angular.IDeferred<any> = this.$q.defer();
-            var headers:any;
-            if(obj.headers.contentType){
-                headers = {
-                    "accessToken":obj.headers.accessToken,
-                    "Content-type":obj.headers.contentType,
+            var headers:any={
+                "accessToken":"",
+                "Content-type":"application/x-www-form-urlencoded;charset=UTF-8",
+            }
+            if(obj.headers){
+                if(obj.headers.contentType){
+                    headers["Content-type"] = obj.headers.contentType;
                 }
-            }else{
-                headers = {
-                    "accessToken":obj.headers.accessToken,
-                    "Content-type":"application/x-www-form-urlencoded;charset=UTF-8",
+                if(obj.headers.accessToken){
+                    headers["accessToken"] = obj.headers.accessToken;
                 }
             }
             let paramsStr:string = this.ToolService.convertParams(obj.data);

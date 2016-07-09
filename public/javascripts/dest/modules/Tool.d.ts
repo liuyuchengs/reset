@@ -7,6 +7,13 @@ import IRootScope = require("IRootScope");
 declare class Tool {
     user: Data.IUser;
     host: string;
+    areaParams: Data.IDropParams[];
+    yakeParams: Data.IDropParams[];
+    meirongParams: Data.IDropParams[];
+    fckParams: Data.IDropParams[];
+    zhongyiParams: Data.IDropParams[];
+    tijianParams: Data.IDropParams[];
+    professionalParams: Data.IDropParams[];
     private $rootScope;
     private $location;
     constructor($rootScope: IRootScope.rootScope, $location: angular.ILocationService, host: string);
@@ -118,8 +125,8 @@ declare class Tool {
     /**
      * 加载并注册控制器
      */
-    static loadCtrl(obj: Data.IRoutQueryObj): {
-        "nothing": ($q: ag.IQService, $controllerProvider: ag.IControllerProvider) => ag.IPromise<{}>;
+    static loadCtrl(obj: Data.IRoutQueryObj, $controllerProvider: ag.IControllerProvider): {
+        nothing: ($q: ag.IQService) => ag.IPromise<{}>;
     };
 }
 export = Tool;
