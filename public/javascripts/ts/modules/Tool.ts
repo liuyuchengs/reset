@@ -14,6 +14,7 @@ class Tool{
     fckParams:Data.IDropParams[];
     zhongyiParams:Data.IDropParams[];
     tijianParams:Data.IDropParams[];
+    doctorOrderParams:Data.IDropParams[];
     professionalParams:Data.IDropParams[];
     private $rootScope:IRootScope.rootScope;
     private $location:angular.ILocationService;
@@ -21,18 +22,24 @@ class Tool{
         this.$rootScope = $rootScope;
         this.$location = $location;
         this.host = host;
+        /**
+         * 区域分类参数
+         */
         this.areaParams = [
-            {has:true,val:"全部区域"},
-            {has:false,val:"福田区"},
-            {has:false,val:"南山区"},
-            {has:false,val:"罗湖区"},
-            {has:false,val:"宝安区"},
-            {has:false,val:"龙华新区"},
-            {has:false,val:"龙岗区"},
-            {has:false,val:"盐田区"},
+            {has:false,val:"全部区域",id:""},
+            {has:false,val:"福田区",id:"福田区"},
+            {has:false,val:"南山区",id:"南山区"},
+            {has:false,val:"罗湖区",id:"罗湖区"},
+            {has:false,val:"宝安区",id:"宝安区"},
+            {has:false,val:"龙华新区",id:"龙华新区"},
+            {has:false,val:"龙岗区",id:"龙岗区"},
+            {has:false,val:"盐田区",id:"盐田区"},
         ];
+        /**
+         * 牙科页面项目分类参数
+         */
         this.yakeParams = [
-            {has:true,val:"全部",id:null},
+            {has:false,val:"全部",id:null},
             {has:false,val:"种植牙",id:19},
             {has:false,val:"洗牙",id:20},
             {has:false,val:"烤瓷牙",id:80},
@@ -44,8 +51,11 @@ class Tool{
             {has:false,val:"牙周治疗",id:63},
             {has:false,val:"其他",id:60},
         ];
+        /**
+         * 美容页面项目分类参数
+         */
         this.meirongParams = [
-            {has:true,val:"全部",id:null},
+            {has:false,val:"全部",id:null},
             {has:false,val:"眼部整形",id:7},
             {has:false,val:"面部整形",id:8},
             {has:false,val:"鼻部整形",id:9},
@@ -57,13 +67,19 @@ class Tool{
             {has:false,val:"口唇整形",id:81},
             {has:false,val:"其他",id:13},
         ];
+        /**
+         * 妇产科项目分类参数
+         */
         this.fckParams = [
-            {has:true,val:"全部",id:null},
+            {has:false,val:"全部",id:null},
             {has:false,val:"产前检查",id:48},
             {has:false,val:"分娩",id:49}
         ];
+        /**
+         * 中医页面项目分类参数
+         */
         this.zhongyiParams = [
-            {has:true,val:"全部",id:null},
+            {has:false,val:"全部",id:null},
             {has:false,val:"头部",id:51},
             {has:false,val:"肩颈",id:52},
             {has:false,val:"腰部",id:53},
@@ -72,8 +88,11 @@ class Tool{
             {has:false,val:"经络",id:56},
             {has:false,val:"其他",id:57}
         ];
+        /**
+         * 体检页面项目分类参数
+         */
         this.tijianParams = [
-            {has:true,val:"全部项目",id:null},
+            {has:false,val:"全部项目",id:null},
             {has:false,val:"商业体检",id:75},
             {has:false,val:"常规体检",id:67},
             {has:false,val:"中年体检",id:69},
@@ -84,13 +103,24 @@ class Tool{
             {has:false,val:"儿童体检",id:74},
             {has:false,val:"慢病体检",id:73},
         ];
+        /**
+         * 医生页面排序参数
+         */
+        this.doctorOrderParams = [
+            {has:false,val:"默认排序",id:""},
+            {has:false,val:"按职称",id:"profession_title desc"},
+            {has:false,val:"按评分",id:"score desc"},
+        ]
+        /**
+         * 医生页面专科参数
+         */
         this.professionalParams = [
-            {has:true,val:"全部项目",id:null,},
-            {has:false,val:"牙科",id:2},
-            {has:false,val:"医学美容",id:3},
-            {has:false,val:"高端妇产科",id:4},
-            {has:false,val:"中医理疗",id:6},
-            {has:false,val:"体检",id:5}
+            {has:false,val:"全部项目",id:null,children:[{has:false,val:"全部",id:""}]},
+            {has:false,val:"牙科",id:2,children:this.yakeParams},
+            {has:false,val:"医学美容",id:3,children:this.meirongParams},
+            {has:false,val:"高端妇产科",id:4,children:this.fckParams},
+            {has:false,val:"中医理疗",id:6,children:this.zhongyiParams},
+            {has:false,val:"体检",id:5,children:this.tijianParams}
         ]
     }
 
@@ -285,7 +315,7 @@ class Tool{
      * 设置下拉菜单项为选择状态
      * @params index->需要设置为选择状态的下拉对象索引，container->下拉对象容器
      */
-    select(index:number,container:Array<Data.IDropParams>){
+    select(index:number,container:Array<Data.IDropParams>,cancel:boolean=false){
         //如果已经选择则不做处理
         if(!container[index].has){
             for(let item of container){
@@ -294,6 +324,8 @@ class Tool{
                 }
             }
             container[index].has = true;
+        }else if(cancel){
+            container[index].has = false;
         }
     }
 
@@ -366,6 +398,17 @@ class Tool{
                 return defered.promise;
             }
         }
+    }
+
+    /**
+     * 重置全局变量
+     */
+    reset(){
+        this.$rootScope.followTip.has = false;
+        this.$rootScope.followTip.val = null;
+        this.$rootScope.globalProp.hasBgColor = false;
+        this.$rootScope.globalProp.hasBlackBg = false;
+        this.cancelWindowListen();
     }
 }
 

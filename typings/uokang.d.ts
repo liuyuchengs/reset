@@ -111,7 +111,7 @@ declare module "Data"{
         /**
          * 存储下拉变量的查询id
          */
-        id?:number;
+        id?:any;
         children?:IDropParams[];
     }
 
@@ -198,6 +198,7 @@ declare module "IRootScope"{
      */
     export interface IGlobalProp{
         hasBgColor:boolean;
+        hasBlackBg:boolean;
     }
 
     /**
@@ -223,6 +224,7 @@ declare module "IRootScope"{
         menuClick:(path:string)=>void;
         changeRoute:(path:string,query?:string)=>void;
     }
+
 }
 
 /**

@@ -247,7 +247,7 @@ span, p {
 
 .button-menu {
   position: fixed;
-  z-index: 20;
+  z-index: 10;
   bottom: 0px;
   left: 0px;
   width: 100%;

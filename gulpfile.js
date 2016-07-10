@@ -1,66 +1,81 @@
-var gulp = require('gulp')
-var nodemon = require('gulp-nodemon')
-var sourcemaps = require('gulp-sourcemaps')
-var concat = require('gulp-concat')
-var uglify = require('gulp-uglify')
-var cssmin = require('gulp-cssmin')
-var del = require('del')
-var path = require('path')
 
-var client = {
-  js: {
-    src: 'client/js',
-    dest: 'public/js'
-  },
-  css: {
-    src: 'client/css',
-    dest: 'public/css'
-  }
-}
+var gulp = require("gulp");
+var sass = require("gulp-sass"); //编译sass->css
+var cssMin = require("gulp-cssmin") //压缩css
+var uglify = require("gulp-uglify");
+var sourcemaps = require("gulp-sourcemaps"); //压缩时建立map文件
 
-gulp.task('default', ['jsmin', 'cssmin', 'start'])
-
-gulp.task('start', function () {
-  nodemon({
-    script: 'bin/www',
-    ext: 'js css ejs',
-    ignore: ['public', 'logs'],
-    tasks: function (files) {
-      var tasks = []
-      files.forEach(function (file) {
-        if (path.relative(client.js.src, file).substr(0, 2) !== '..'
-          && !~tasks.indexOf('jsmin')) {
-          tasks.push('jsmin')
-        }
-        if (path.relative(client.css.src, file).substr(0, 2) !== '..'
-          && !~tasks.indexOf('cssmin')) {
-          tasks.push('cssmin')
-        }
-      })
-      return tasks
-    }
-  })
+//编译sass
+gulp.task("sass",function(){
+    return gulp.src("public/stylesheets/src/*.scss")
+        .pipe(sass())
+        .pipe(gulp.dest("public/stylesheets/css"));
 })
 
-gulp.task('cleanjs', function () {
-  return del([client.js.dest])
+//压缩css
+gulp.task("cssMin",function(){
+    return gulp.src("public/stylesheets/css/*.css")
+        .pipe(cssMin())
+        .pipe(gulp.dest("public/stylesheets/dest"));
+})
+/*
+//压缩css
+gulp.task("cleanCSS",function(){
+    return gulp.src("stylesheets/css/*.css")
+        .pipe(sourcemaps.init())
+        .pipe(cleanCSS())
+        .pipe(sourcemaps.write("../maps"))
+        .pipe(gulp.dest("stylesheets/dest"));
+})
+//压缩js
+gulp.task("uglify1",function(){
+    return gulp.src("javascripts/js/*.js")
+        .pipe(sourcemaps.init())
+        .pipe(uglify({
+            mangle:false,
+        }))
+        .pipe(sourcemaps.write("../maps"))
+        .pipe(gulp.dest("javascripts/dest"))
+})
+gulp.task("uglify2",function(){
+    return gulp.src("javascripts/js/controller/*.js")
+        .pipe(sourcemaps.init())
+        .pipe(uglify({mangle:false,}))
+        .pipe(sourcemaps.write("../maps"))
+        .pipe(gulp.dest("javascripts/dest/controller"))
+})
+gulp.task("uglify3",function(){
+    return gulp.src("javascripts/js/service/*.js")
+        .pipe(sourcemaps.init())
+        .pipe(uglify({mangle:false,}))
+        .pipe(sourcemaps.write("../maps"))
+        .pipe(gulp.dest("javascripts/dest/service"))
+})*/
+
+//压缩js
+gulp.task("uglify1",function(){
+    return gulp.src("javascripts/js/*.js")
+        .pipe(uglify({
+            mangle:false,
+        }))
+        .pipe(gulp.dest("javascripts/dest"))
+})
+gulp.task("uglify2",function(){
+    return gulp.src("javascripts/js/controller/*.js")
+        .pipe(uglify({mangle:false,}))
+        .pipe(gulp.dest("javascripts/dest/controller"))
+})
+gulp.task("uglify3",function(){
+    return gulp.src("javascripts/js/service/*.js")
+        .pipe(uglify({mangle:false,}))
+        .pipe(gulp.dest("javascripts/dest/service"))
 })
 
-gulp.task('cleancss', function () {
-  return del([client.css.dest])
+//监视
+gulp.task("watch",function(){
+	//return gulp.watch(["stylesheets/src/*.scss","javascripts/js/*.js"],["sass","cleanCSS","uglify"]);
+    //开发环境
+    return gulp.watch(["stylesheets/src/*.scss"],["sass"]);
 })
 
-gulp.task('jsmin', ['cleanjs'], function () {
-  return gulp.src(client.js.src + '/**/*.js')
-    .pipe(sourcemaps.init())
-    .pipe(concat('graph.js'))
-    .pipe(uglify())
-    .pipe(gulp.dest(client.js.dest))
-})
-
-gulp.task('cssmin', ['cleancss'], function () {
-  return gulp.src(client.css.src + '/**/*.css')
-    .pipe(concat('style.css'))
-    .pipe(cssmin())
-    .pipe(gulp.dest(client.css.dest))
-})
+gulp.task("default",["watch"]);

@@ -5,8 +5,6 @@ import Ajax = require("../modules/Ajax");
 import $ = require("jquery");
 function askDoctor($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILocationService,$http:ag.IHttpService,ToolService:Tool,AjaxService:Ajax){
 
-
-    //
     $scope.hasSee = true;
     $scope.content = null;
     $scope.noSelect = true;
@@ -90,5 +88,110 @@ function askDoctor($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILoca
         return url;
     }
 
+    // 触发随便说说选择照片
+	$scope.choosePic = ()=>{
+        var count = 0;
+        for(var item in $scope.params){
+            count++;
+            var prototype = $scope.params[item];
+            if(!prototype.has){
+                prototype.has = true;
+                $(prototype.val).click();
+                return ;
+            }
+        }
+        if(count==6){
+            ToolService.alert("最多只能上传6张图片!");
+        }
+    }
 
+    // 删除图片
+    $scope.remove = (item:any)=>{
+        if($scope.params[item]){
+            $scope.params[item].has=false;
+            $scope.params[item].url="";
+            let element = document.getElementById(item);
+            element.outerHTML = element.outerHTML; //重新替换Input元素
+            $scope.listen(); //替换input后重新监听
+        }
+    }
+
+    // 调整照片参数
+    $scope.mergePic = ()=>{
+        var imgStr = "img";
+        var pStr = "p";
+        var count = 1;
+        var afterCount = 3;
+        var file = new Blob([""],{type:"image/jpeg"});
+        for(var index in $scope.beforeParams){
+            var prototype = $scope.beforeParams[index];
+            if(prototype.has){
+                if(count<4){
+                    $scope.postData.append(imgStr+count,$(prototype.val).get(0).files[0]);
+                    count++;
+                }else{
+                    $scope.postData.append(pStr+(count-afterCount),$(prototype.val).get(0).files[0]);
+                    count++;
+                }
+            }
+        }
+        for(count;count<7;count++){
+            if(count<4){
+                $scope.postData.append(imgStr+count,file);
+            }else{
+                $scope.postData.append(pStr+(count-afterCount),file);
+            }
+        }
+    }
+
+    // 提交提问
+    $scope.send = ()=>{
+        if($scope.content===null||$scope.content===""){
+            ToolService.alert("请填写咨询内容!");
+        }else{
+            var url = ToolService.host+"/wx/post/addPost";
+            $scope.mergePic();
+            $scope.postData.append("postName","");
+            $scope.postData.append("postContent",$scope.content);
+            $scope.postData.append("postFlags",3);
+            $scope.postData.append("doctorId",$scope.doctorId);
+            $rootScope.load.has = false;
+            $http.post(url,$scope.postData,{
+                headers:{
+                    "Content-Type":undefined,
+                    "accessToken":ToolService.user.accessToken,
+                }
+            }).success((data:any)=>{
+                $rootScope.load.has = false;
+                if(data.code==0){
+                    history.back();
+                }else{
+                    ToolService.alert("连接数据失败，请稍后再试!");
+                }
+            }).error(function(){
+                $rootScope.load.has = false;
+                $scope.postData = new FormData();
+                ToolService.alert("连接失败，请稍后再试!");
+            })
+        }
+    }
+
+    //返回上一页
+    $scope.back = ()=>{
+        history.back();
+    }
+
+    //初始化页面
+    $rootScope.globalProp.hasBgColor = true;
+    ToolService.cancelWindowListen();
+    getParams();
+    if(ToolService.checkLogin()){
+        ToolService.loadUser();
+    }else{
+        ToolService.comfirm("请先登录",()=>{
+            $rootScope.messageTip.has = false;
+            ToolService.changeRoute("/login");
+        })
+    }
+    listen();
 }

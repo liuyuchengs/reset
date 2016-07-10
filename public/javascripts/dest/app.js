@@ -40,6 +40,7 @@ define(["require", "exports", "angular", "./modules/Tool", "./modules/Ajax", "./
         //全局属性变量
         $rootScope.globalProp = {
             hasBgColor: false,
+            hasBlackBg: false,
         };
         //改变导航栏样式
         $rootScope.switchNavMenu = function (item) {
@@ -715,8 +716,126 @@ define(["require", "exports", "angular", "./modules/Tool", "./modules/Ajax", "./
      * 医生页面
      */
     app.controller("doctorCtrl", function ($scope, $rootScope, $http, ToolService, AjaxService) {
-        //初始化$rootScope
-        $rootScope.globalProp.hasBgColor = false;
+        $scope.doctors = [];
+        $scope.orderParams = ToolService.doctorOrderParams;
+        $scope.areaParams = ToolService.areaParams;
+        $scope.professionalParams = ToolService.professionalParams;
+        $scope.menuParams = [
+            { has: false, val: "专科" },
+            { has: false, val: "区域" },
+            { has: false, val: "排序" }
+        ];
+        //查询参数
+        var queryParams = {
+            professionId: "",
+            itemid: "",
+            orderby: "",
+            city: "深圳",
+            area: "",
+            pageRows: 10,
+            currentPage: 1
+        };
+        // 加载医生数据
+        var queryDoctor = function () {
+            AjaxService.post({
+                url: ToolService.host + "/wx/doctor/querydoctorbycityandprofession",
+                data: queryParams
+            }).then(function (data) {
+                if (data.data.length < 1) {
+                    if ($scope.doctors.length < 1) {
+                        $rootScope.followTip.val = $rootScope.followTip.empty;
+                    }
+                    else {
+                        $rootScope.followTip.val = $rootScope.followTip.no;
+                    }
+                    $rootScope.followTip.has = true;
+                }
+                else {
+                    mergeDoctor(data.data);
+                    $scope.doctors = $scope.doctors.concat(data.data);
+                }
+            }).catch(function () {
+                ToolService.alert("数据加载失败");
+            }).finally(function () {
+                $rootScope.load.has = false;
+            });
+        };
+        // 处理医生数据
+        var mergeDoctor = function (items) {
+            items.forEach(function (item) {
+                if (item.score == "" || item.score == null) {
+                    item.score = "暂无评";
+                }
+                if (item.sales == "" || item.sales == null) {
+                    item.sales = 0;
+                }
+            });
+        };
+        // 导航栏菜单切换
+        $scope.switchNav = function (index, obj) {
+            ToolService.select(index, obj, true);
+            $rootScope.globalProp.hasBlackBg = obj[index].has;
+        };
+        // 区域和排序切换
+        $scope.switchDrop = function (index, obj) {
+            ToolService.select(index, obj);
+            if (obj === ToolService.areaParams) {
+                $scope.menuParams[1].has = false;
+                queryParams.area = ToolService.areaParams[index].id;
+            }
+            else if (obj === ToolService.doctorOrderParams) {
+                $scope.menuParams[2].has = false;
+                queryParams.orderby = ToolService.doctorOrderParams[index].id;
+            }
+            $rootScope.followTip.has = false;
+            $scope.doctors = [];
+            queryParams.currentPage = 1;
+            queryDoctor();
+            $rootScope.globalProp.hasBlackBg = false;
+        };
+        //切换专科一级菜单
+        $scope.switchLevelOne = function (index, obj) {
+            ToolService.select(index, obj, true);
+        };
+        //缓存以选择二级菜单项
+        var selected = {
+            index: 0,
+            obj: ToolService.professionalParams[0],
+        };
+        // 切换专科二级菜单
+        $scope.switchLevelTwo = function (index, obj) {
+            if (selected.obj !== obj || (selected.obj === obj && selected.index != index)) {
+                ToolService.select(selected.index, selected.obj.children, true);
+                selected.index = index;
+                selected.obj = obj;
+                ToolService.select(index, obj.children);
+                $scope.menuParams[0].has = false;
+                queryParams.professionId = obj.id;
+                queryParams.itemid = obj.children[index].id;
+                $rootScope.followTip.has = false;
+                $scope.doctors = [];
+                queryParams.currentPage = 1;
+                queryDoctor();
+                $rootScope.globalProp.hasBlackBg = false;
+            }
+        };
+        // 加载下一页数据
+        var loadNext = function () {
+            queryParams.currentPage++;
+            queryDoctor();
+        };
+        // 跳转到详情页面
+        $scope.detail = function (id) {
+            ToolService.changeRoute("/doctor/detail", "id=" + id);
+        };
+        //页面初始化
+        ToolService.reset();
+        ToolService.areaParams[0].has = true;
+        ToolService.doctorOrderParams[0].has = true;
+        ToolService.professionalParams[0].has = true;
+        ToolService.professionalParams[0].children[0].has = true;
+        ToolService.onWindowListen(loadNext);
+        queryDoctor();
     });
     /**
      * 控制器

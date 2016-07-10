@@ -56,6 +56,7 @@ app.run(($rootScope:IRootScope.rootScope,$location:ag.ILocationService)=>{
     //全局属性变量
     $rootScope.globalProp = {
         hasBgColor:false,
+        hasBlackBg:false,
     }
 
     //改变导航栏样式
@@ -752,8 +753,135 @@ app.controller("homeCtrl",($scope:any,$rootScope:IRootScope.rootScope,$http:ag.I
  */
 app.controller("doctorCtrl",($scope:any,$rootScope:IRootScope.rootScope,$http:ag.IHttpService,ToolService:Tool,AjaxService:Ajax)=>{
 
-    //初始化$rootScope
-    $rootScope.globalProp.hasBgColor = false;
+    $scope.doctors = [];
+    $scope.orderParams = ToolService.doctorOrderParams;
+    $scope.areaParams = ToolService.areaParams;
+    $scope.professionalParams = ToolService.professionalParams;
+    $scope.menuParams = [
+        {has:false,val:"专科"},
+        {has:false,val:"区域"},
+        {has:false,val:"排序"}
+    ]
+
+    //查询参数
+    let queryParams = {
+        professionId:"",
+        itemid:"",
+        orderby:"",
+        city:"深圳",
+        area:"",
+        pageRows:10,
+        currentPage:1
+    }
+
+    // 加载医生数据
+    let queryDoctor = ()=>{
+        AjaxService.post({
+            url:ToolService.host+"/wx/doctor/querydoctorbycityandprofession",
+            data:queryParams
+        }).then((data)=>{
+            if(data.data.length<1){
+                if($scope.doctors.length<1){
+                    $rootScope.followTip.val = $rootScope.followTip.empty;
+                }else{
+                    $rootScope.followTip.val = $rootScope.followTip.no;
+                }
+                $rootScope.followTip.has = true;
+            }else{
+                mergeDoctor(data.data);
+                $scope.doctors = $scope.doctors.concat(data.data);
+            }
+        }).catch(()=>{
+            ToolService.alert("数据加载失败");
+        }).finally(()=>{
+            $rootScope.load.has = false;
+        })
+    }
+
+    // 处理医生数据
+    let mergeDoctor = (items:any[])=>{
+        items.forEach((item)=>{
+            if(item.score==""||item.score==null){
+                item.score="暂无评";
+            }
+            if(item.sales==""||item.sales==null){
+                item.sales=0;
+            }
+        })
+    }
+
+    // 导航栏菜单切换
+    $scope.switchNav = (index:number,obj:any[])=>{
+        ToolService.select(index,obj,true);
+        $rootScope.globalProp.hasBlackBg = obj[index].has;
+    }
+
+    // 区域和排序切换
+    $scope.switchDrop = (index:number,obj:any[])=>{
+        ToolService.select(index,obj);
+        if(obj===ToolService.areaParams){
+            $scope.menuParams[1].has = false;
+            queryParams.area = ToolService.areaParams[index].id;
+            
+        }else if(obj===ToolService.doctorOrderParams){
+            $scope.menuParams[2].has = false;
+            queryParams.orderby = ToolService.doctorOrderParams[index].id;
+        }
+        $rootScope.followTip.has = false;
+        $scope.doctors = [];
+        queryParams.currentPage = 1;
+        queryDoctor();
+        $rootScope.globalProp.hasBlackBg = false;
+    }
+
+    //切换专科一级菜单
+    $scope.switchLevelOne = (index:number,obj:any[])=>{
+        ToolService.select(index,obj,true);
+    }
+
+    //缓存以选择二级菜单项
+    let selected:any = {
+        index:0,
+        obj:ToolService.professionalParams[0],
+    }
+
+    // 切换专科二级菜单
+    $scope.switchLevelTwo = (index:number,obj:any)=>{
+        if(selected.obj!==obj||(selected.obj===obj&&selected.index!=index)){
+            ToolService.select(selected.index,selected.obj.children,true);
+            selected.index = index;
+            selected.obj = obj;
+            ToolService.select(index,obj.children);
+            $scope.menuParams[0].has = false;
+            queryParams.professionId = obj.id;
+            queryParams.itemid = obj.children[index].id;
+            $rootScope.followTip.has = false;
+            $scope.doctors = [];
+            queryParams.currentPage = 1;
+            queryDoctor();
+            $rootScope.globalProp.hasBlackBg = false;
+        }
+    }
+
+    // 加载下一页数据
+    let loadNext = ()=>{
+        queryParams.currentPage++;
+        queryDoctor();
+    }
+
+    // 跳转到详情页面
+    $scope.detail = (id:any)=>{
+        ToolService.changeRoute("/doctor/detail","id="+id);
+    }
+
+    //页面初始化
+    ToolService.reset();
+    ToolService.areaParams[0].has = true;
+    ToolService.doctorOrderParams[0].has = true;
+    ToolService.professionalParams[0].has = true;
+    ToolService.professionalParams[0].children[0].has = true;
+    ToolService.onWindowListen(loadNext);
+    queryDoctor();
     
 })
 

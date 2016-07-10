@@ -13,6 +13,7 @@ declare class Tool {
     fckParams: Data.IDropParams[];
     zhongyiParams: Data.IDropParams[];
     tijianParams: Data.IDropParams[];
+    doctorOrderParams: Data.IDropParams[];
     professionalParams: Data.IDropParams[];
     private $rootScope;
     private $location;
@@ -101,7 +102,7 @@ declare class Tool {
      * 设置下拉菜单项为选择状态
      * @params index->需要设置为选择状态的下拉对象索引，container->下拉对象容器
      */
-    select(index: number, container: Array<Data.IDropParams>): void;
+    select(index: number, container: Array<Data.IDropParams>, cancel?: boolean): void;
     /**
      * 将对象转换成字符串
      * @params obj->需要转换的对象
@@ -128,5 +129,9 @@ declare class Tool {
     static loadCtrl(obj: Data.IRoutQueryObj, $controllerProvider: ag.IControllerProvider): {
         nothing: ($q: ag.IQService) => ag.IPromise<{}>;
     };
+    /**
+     * 重置全局变量
+     */
+    reset(): void;
 }
 export = Tool;

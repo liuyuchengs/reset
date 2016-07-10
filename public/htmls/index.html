@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="../stylesheets/dest/swiper.min.css">
     <title>悠康医生</title>
 </head>
-<body ng-class="{'bg-color':hasBgColor}">
+<body ng-class="{'bg-color':globalProp.hasBgColor,'overflowhide':globalProp.hasBlackBg}">
     <div class="ng-view"></div>
     <div ng-include="'section/tip.html'"></div>
 	<div ng-include="'section/loading.html'"></div>
@@ -16,4 +16,5 @@
 </html>
 <div class="cush-tip" ng-if="followTip.has" ng-bind="followTip.val"></div>
 <div class="has-menu" ng-show="navMenu.has"></div>
+<div class="black-bg" ng-show="globalProp.hasBlackBg"></div>
 <div ng-include="'section/bottom-menu.html'"></div>
