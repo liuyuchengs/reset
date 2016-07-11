@@ -228,14 +228,23 @@ declare module "IRootScope"{
 }
 
 /**
- * 微信对象
+ * Swiper插件的类型定义
  */
-declare module "WX"{
-    
+declare module "Swiper"{
+    interface Swiper{}
+    interface SwiperFactory{
+        new (name:string,obj:any):Swiper;
+    }
+    let Swiper:SwiperFactory;
+    export = Swiper;
+}
+
+
+declare namespace WX{
     /**
      * 配置对象
      */
-    export interface IConfigObject{
+    interface IConfigObject{
 
         /**
          * 调试模式
@@ -271,7 +280,7 @@ declare module "WX"{
     /**
      * 检查js对象
      */
-    export interface ICheckApiObject{
+    interface ICheckApiObject{
         /**
          * 需要检测的JS接口列表
          */
@@ -286,7 +295,7 @@ declare module "WX"{
     /**
      * 检查js结果
      */
-    export interface ICheckResult{
+    interface ICheckResult{
         checkResult:any;
         errMsg:string;
     }
@@ -294,7 +303,7 @@ declare module "WX"{
     /**
      * 地理位置对象
      */
-    export interface IGetLocationObject{
+    interface IGetLocationObject{
         type:"wgs84"|"gcj02";
         success:(res:IGetLocationResult)=>void;
         fail:()=>void;
@@ -303,7 +312,7 @@ declare module "WX"{
     /**
      * 地理位置结果
      */
-    export interface IGetLocationResult{
+    interface IGetLocationResult{
         /**
          * 纬度，浮点数，范围为90 ~ -90
          */
@@ -325,7 +334,7 @@ declare module "WX"{
     /**
      * 分享到朋友圈对象
      */
-    export interface IShareObject{
+    interface IShareObject{
         title:string;
         link:string;
         imgUrl:string;
@@ -335,13 +344,13 @@ declare module "WX"{
     /**
      * 分享到qq,qq空间,腾讯微博
      */
-    export interface IShareQQObject extends IShareObject{
+    interface IShareQQObject extends IShareObject{
         desc:string;
     }
     /**
      * 分享到朋友对象
      */
-    export interface IShareFriendObject extends IShareQQObject{
+    interface IShareFriendObject extends IShareQQObject{
         type?:"music"|"video"|"link";
         dataUrl?:string;
     }
@@ -349,7 +358,7 @@ declare module "WX"{
     /**
      * 支付对象
      */
-    export interface IPayObject{
+    interface IPayObject{
         /**
          * 支付签名时间戳
          */
@@ -384,7 +393,7 @@ declare module "WX"{
         fail:()=>void;
     }
 
-    export interface wx{
+    interface IWXObject{
         /**
          * 初始化微信对象
          */
@@ -440,7 +449,13 @@ declare module "WX"{
          */
         chooseWXPay:(obj:IPayObject)=>void;
     }
+}
 
-    
+/**
+ * 微信api对象
+ */
+declare module "WX"{
+    let WX : WX.IWXObject;
+    export = WX;
 }
 

@@ -116,11 +116,11 @@ class Tool{
          */
         this.professionalParams = [
             {has:false,val:"全部项目",id:null,children:[{has:false,val:"全部",id:""}]},
-            {has:false,val:"牙科",id:2,children:this.yakeParams},
-            {has:false,val:"医学美容",id:3,children:this.meirongParams},
-            {has:false,val:"高端妇产科",id:4,children:this.fckParams},
-            {has:false,val:"中医理疗",id:6,children:this.zhongyiParams},
-            {has:false,val:"体检",id:5,children:this.tijianParams}
+            {has:false,val:"牙科",id:2,children:this.yakeParams.slice(1)},
+            {has:false,val:"医学美容",id:3,children:this.meirongParams.slice(1)},
+            {has:false,val:"高端妇产科",id:4,children:this.fckParams.slice(1)},
+            {has:false,val:"中医理疗",id:6,children:this.zhongyiParams.slice(1)},
+            {has:false,val:"体检",id:5,children:this.tijianParams.slice(1)}
         ]
     }
 

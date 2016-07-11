@@ -13,7 +13,7 @@
 </div>
 <div class="has-header"></div>
 <div class="doctor-detail-content">
-	<div class="select-date" ng-show="time.openSelect" >
+	<div class="select-date" ng-show="time.openSelect" ng-click="hideSelect()">
 		<div class="select-date-container">
 			<div class="day-container">
 				<div class="left-arrow" ng-click="toPage('per',$event)"></div>
@@ -21,14 +21,14 @@
 				<div class="width">
 					<div class="swiper-container">
 						<div class="swiper-wrapper" >
-							<div class="swiper-slide day-item" ng-repeat="day in time.timeList" ng-class="{'select':day.has}" ng-bind="day.value.date" ng-click="switchDay(day.value.date)"></div>
+							<div class="swiper-slide day-item" ng-repeat="day in time.timeList" ng-class="{'select':day.has}" ng-bind="day.val" ng-click="switchDay($index,$event)"></div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="time-container" ng-repeat="day in time.timeList" ng-show="day.has">
-				<div class="time-item" ng-repeat="time in day.value.timeList" ng-click="selectTime(time.scheduleid,time.starttime,day.value.date)" ng-class="{'select':time.has}">
-					<span ng-bind="time.starttime"></span>
+				<div class="time-item" ng-repeat="time in day.children" ng-click="selectTime($index,day,$event)" ng-class="{'select':time.has}">
+					<span ng-bind="time.val"></span>
 				</div>
 			</div>
 		</div>
@@ -66,8 +66,8 @@
 	<div class="date" ng-click="openSelect()">
 		<span>预约时间</span>
 		<div class="arrow"></div>
-		<div class="time no-border" ng-bind="time.selectTime"></div>
-		<div class="time" ng-bind="time.selectDay"></div>
+		<div class="time no-border" ng-bind="time.selectObj.children[time.selectIndex].val"></div>
+		<div class="time" ng-bind="time.selectObj.val"></div>
 	</div>
 	<div class="product">
 		<ul>

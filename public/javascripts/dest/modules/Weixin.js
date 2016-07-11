@@ -1,10 +1,11 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
     var Weixin = (function () {
-        function Weixin($rootScope, AjaxService, ToolService) {
+        function Weixin($rootScope, AjaxService, ToolService, wx) {
             this.$rootScope = $rootScope;
             this.AjaxService = AjaxService;
             this.ToolService = ToolService;
+            this.wx = wx;
         }
         /**
          * 初始化微信对象
@@ -28,10 +29,6 @@ define(["require", "exports"], function (require, exports) {
                 params.nonceStr = data.nonceStr;
                 params.signature = data.signature;
                 _this.wx.config(params);
-            }).catch(function () {
-                _this.ToolService.alert("获取wx配置信息失败!");
-            }).finally(function () {
-                _this.$rootScope.load.has = true;
             });
         };
         /**
@@ -181,10 +178,6 @@ define(["require", "exports"], function (require, exports) {
                     else {
                         _this.wx.chooseWXPay(params);
                     }
-                }).catch(function () {
-                    _this.ToolService.alert("请求支付参数失败，请稍后再试!");
-                }).finally(function () {
-                    _this.$rootScope.load.has = false;
                 });
             }
         };

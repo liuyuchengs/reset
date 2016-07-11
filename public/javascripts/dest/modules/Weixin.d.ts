@@ -3,14 +3,13 @@
  */
 import Ajax = require("Ajax");
 import Tool = require("Tool");
-import WX = require("WX");
 import IRootScope = require("IRootScope");
 declare class Weixin {
     private $rootScope;
     private AjaxService;
     private ToolService;
     private wx;
-    constructor($rootScope: IRootScope.rootScope, AjaxService: Ajax, ToolService: Tool);
+    constructor($rootScope: IRootScope.rootScope, AjaxService: Ajax, ToolService: Tool, wx: WX.IWXObject);
     /**
      * 初始化微信对象
      */

@@ -8,8 +8,8 @@ declare class Ajax {
     private $rootScope;
     private $http;
     private $q;
-    private ToolService;
-    constructor($rootScope: IRootScope.rootScope, $http: angular.IHttpService, $q: angular.IQService, ToolService: Tool);
+    private Tool;
+    constructor($rootScope: IRootScope.rootScope, $http: angular.IHttpService, $q: angular.IQService, Tool: Tool);
     /**
      * $http get请求
      * @params obj->请求参数，obj.url->地址
@@ -20,5 +20,9 @@ declare class Ajax {
      *
      */
     post(obj: Data.IPostQuery): ng.IPromise<any>;
+    /**
+     * 文本提示
+     */
+    private alert(mess, callback?);
 }
 export = Ajax;

@@ -8,12 +8,12 @@ class Ajax{
     private $rootScope:IRootScope.rootScope;
     private $http:angular.IHttpService;
     private $q:angular.IQService;
-    private ToolService:Tool;
-    constructor($rootScope:IRootScope.rootScope,$http:angular.IHttpService,$q:angular.IQService,ToolService:Tool) {
+    private Tool:Tool;
+    constructor($rootScope:IRootScope.rootScope,$http:angular.IHttpService,$q:angular.IQService,Tool:Tool) {
         this.$rootScope = $rootScope;
         this.$http = $http;
         this.$q = $q;
-        this.ToolService = ToolService;
+        this.Tool = Tool;
     }
 
     /**
@@ -24,13 +24,20 @@ class Ajax{
         if(obj.url){
             this.$rootScope.load.has = true;
             let defered:angular.IDeferred<any> = this.$q.defer();
+            let headers:any = {};
+            if(obj.headers){
+                if(obj.headers.accessToken){
+                    headers["accessToken"] = obj.headers.accessToken;
+                }
+            }
             this.$http.get(obj.url,{
-                headers:{
-                    accessToken:obj.headers.accessToken
-                },
-            }).success(function(data){
+                headers:headers
+            }).success((data)=>{
+                this.$rootScope.load.has = false;
                 return defered.resolve(data);
-            }).error(function(data){
+            }).error((data)=>{
+                this.$rootScope.load.has = false;
+                this.alert("连接数据失败");
                 return defered.reject(data);
             })
             return defered.promise;
@@ -45,27 +52,44 @@ class Ajax{
         if(obj.url){
             this.$rootScope.load.has = true;
             let defered:angular.IDeferred<any> = this.$q.defer();
-            var headers:any={
-                "accessToken":"",
-                "Content-type":"application/x-www-form-urlencoded;charset=UTF-8",
-            }
+            var headers:any={};
             if(obj.headers){
                 if(obj.headers.contentType){
-                    headers["Content-type"] = obj.headers.contentType;
+                    headers["Content-Type"] = obj.headers.contentType;
                 }
                 if(obj.headers.accessToken){
                     headers["accessToken"] = obj.headers.accessToken;
                 }
             }
-            let paramsStr:string = this.ToolService.convertParams(obj.data);
-            this.$http.post(obj.url,paramsStr,{
+            let dataStr = this.Tool.convertParams(obj.data);
+            this.$http.post(obj.url,dataStr,{
                 headers:headers
             }).success((data)=>{
+                this.$rootScope.load.has = false;
                 return defered.resolve(data);
             }).error((data)=>{
+                this.$rootScope.load.has = false;
+                this.alert("连接数据失败");
                 return defered.reject(data);
             })
             return defered.promise;
+        }
+    }
+
+    /**
+     * 文本提示
+     */
+    private alert(mess:string,callback?:()=>void){
+        this.$rootScope.messageTip.message = mess;
+        this.$rootScope.messageTip.hasCancel = false;
+        this.$rootScope.messageTip.hasComfirm = true;
+        this.$rootScope.messageTip.has = true;
+        if(callback){
+            this.$rootScope.messageTip.comfirm = callback;
+        }else{
+            this.$rootScope.messageTip.comfirm = ()=>{
+                this.$rootScope.messageTip.has = false;
+            }
         }
     }
     

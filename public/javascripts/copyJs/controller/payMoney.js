@@ -27,8 +27,7 @@ define(function(){
                 $scope.showPay = true;
             }else{
                 Tool.alert("没有可提取余额!");
-            }
-            
+            } 
         }
 
         //隐藏支付

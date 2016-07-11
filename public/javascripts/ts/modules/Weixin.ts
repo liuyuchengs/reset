@@ -9,12 +9,14 @@ class Weixin {
     private $rootScope:IRootScope.rootScope;
     private AjaxService:Ajax;
     private ToolService:Tool;
-    private wx:WX.wx;
-    constructor($rootScope:IRootScope.rootScope,AjaxService:Ajax,ToolService:Tool) {
+    private wx:WX.IWXObject;
+    constructor($rootScope:IRootScope.rootScope,AjaxService:Ajax,ToolService:Tool,wx:WX.IWXObject) {
         this.$rootScope = $rootScope;
         this.AjaxService = AjaxService;
         this.ToolService = ToolService;
+        this.wx = wx;
     }
+
     /**
      * 初始化微信对象
      */
@@ -36,10 +38,6 @@ class Weixin {
             params.nonceStr = data.nonceStr;
             params.signature = data.signature;
             this.wx.config(params);
-        }).catch(()=>{
-            this.ToolService.alert("获取wx配置信息失败!");
-        }).finally(()=>{
-            this.$rootScope.load.has = true;
         })
     }
 
@@ -56,7 +54,7 @@ class Weixin {
              */
             this.wx.checkJsApi({
                 jsApiList:['getLocation','chooseWXPay','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareQZone','onMenuShareWeibo'],
-                success:(res)=>{
+                success:(res:any)=>{
                     if(!res.checkResult.getLocation||!res.checkResult.chooseWXPay){
                         this.ToolService.alert("客户端版本过低，请升级微信客户端");
                     }
@@ -69,7 +67,7 @@ class Weixin {
              */
             this.wx.getLocation({
                 type:"wgs84",
-                success:(res)=>{
+                success:(res:any)=>{
                     let locationInfo = {
                         latitude:res.latitude,
                         longitude:res.longitude,
@@ -91,7 +89,7 @@ class Weixin {
         /**
          * wx对象配置失败后调用此函数
          */
-        this.wx.error((res)=>{
+        this.wx.error((res:any)=>{
             this.ToolService.alert("wx初始化失败!");
         })  
     }
@@ -190,10 +188,6 @@ class Weixin {
                 }else{
                     this.wx.chooseWXPay(params);
                 }
-            }).catch(()=>{
-                this.ToolService.alert("请求支付参数失败，请稍后再试!");
-            }).finally(()=>{
-                this.$rootScope.load.has = false;
             })
         }
     }

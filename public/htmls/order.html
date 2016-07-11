@@ -9,10 +9,7 @@
 <div class="has-header"></div>
 <div class="myorder-content">
 	<div class="filter">
-		<div ng-class="{'select':filterParams.all.has}" ng-click="switchOrder('all')" class="item">全部</div>
-		<div ng-class="{'select':filterParams.toPay.has}" ng-click="switchOrder('toPay')" class="item">待付款</div>
-		<div ng-class="{'select':filterParams.toHos.has}" ng-click="switchOrder('toHos')" class="item">待就医</div>
-		<div ng-class="{'select':filterParams.toAssess.has}" ng-click="switchOrder('toAssess')" class="item">待评价</div>
+		<div ng-repeat="item in filterParams" class="item" ng-class="{'select':item.has}" ng-click="switchOrder($index)" ng-bind="item.val"></div>
 	</div>
 	<div id="order-tip" ng-show="noOrder">您还没有订单信息</div>
 	<ul id="list" class="order-list" ng-repeat="order in orders">

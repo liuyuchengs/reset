@@ -1,12 +1,14 @@
-define(["require", "exports", "angular", "./modules/Tool", "./modules/Ajax", "./modules/Weixin", "Swiper"], function (require, exports, ag, Tool, Ajax, Weixin, Swiper) {
+define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./modules/Ajax", "./modules/Weixin"], function (require, exports, ag, Swiper, wx, Tool, Ajax, Weixin) {
     "use strict";
-    var host = "http://192.168.0.104:3000";
+    var host = "http://192.168.0.102:3000";
     var app = ag.module("myApp", ['ngRoute']);
     /**
      * 配置
      * 程序启动前配置$rootScope
      */
-    app.run(function ($rootScope, $location) {
+    app.run(function ($rootScope, $location, $http) {
+        //设置默认的ajax headers
+        $http.defaults.headers.post = { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" };
         // 导航栏参数
         $rootScope.navMenu = {
             home: false,
@@ -72,7 +74,7 @@ define(["require", "exports", "angular", "./modules/Tool", "./modules/Ajax", "./
                 }
             }
             else if (item === "/user") {
-                if (!$rootScope.navMenu.interaction) {
+                if (!$rootScope.navMenu.user) {
                     $rootScope.navMenu.user = true;
                     $rootScope.navMenu.home = false;
                     $rootScope.navMenu.doctor = false;
@@ -135,196 +137,196 @@ define(["require", "exports", "angular", "./modules/Tool", "./modules/Ajax", "./
             templateUrl: "doctordetail.html",
             controller: "doctorDetailCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/doctorDetail.js",
+                url: "../../javascripts/dest/controller/doctorDetail.js",
                 name: "doctorDetailCtrl",
             }, $controllerProvider)
         }).when("/doctor/askDoctor", {
             templateUrl: "askdoctor.html",
             controller: "askDoctorCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/askDoctor.js",
+                url: "../../javascripts/dest/controller/askDoctor.js",
                 name: "askDoctorCtrl",
             }, $controllerProvider)
         }).when("/interaction/detail", {
             templateUrl: "interactiondetail.html",
             controller: "interactionDetailCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/interactionDetail.js",
+                url: "../../javascripts/dest/controller/interactionDetail.js",
                 name: "interactionDetailCtrl",
             }, $controllerProvider)
         }).when("/user/userinfo", {
             templateUrl: "userinfo.html",
             controller: "userInfoCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/userinfo.js",
+                url: "../../javascripts/dest/controller/userinfo.js",
                 name: "userInfoCtrl",
             }, $controllerProvider)
         }).when("/user/cush", {
             templateUrl: "cush.html",
             controller: "cushCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/cush.js",
+                url: "../../javascripts/dest/controller/cush.js",
                 name: "cushCtrl",
             }, $controllerProvider)
         }).when("/user/cush/read", {
             templateUrl: "cushreadme.html",
             controller: "cushCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/cush.js",
+                url: "../../javascripts/dest/controller/cush.js",
                 name: "cushCtrl",
             }, $controllerProvider)
         }).when("/user/cushover", {
             templateUrl: "cushover.html",
             controller: "cushOverCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/cushOver.js",
+                url: "../../javascripts/dest/controller/cushOver.js",
                 name: "cushOverCtrl",
             }, $controllerProvider)
         }).when("/user/userinfochange", {
             templateUrl: "userinfochange.html",
             controller: "userInfoChangeCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/userInfoChange.js",
+                url: "../../javascripts/dest/controller/userInfoChange.js",
                 name: "userInfoChangeCtrl",
             }, $controllerProvider)
         }).when("/user/order", {
             templateUrl: "order.html",
             controller: "userOrderCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/order.js",
+                url: "../../javascripts/dest/controller/order.js",
                 name: "userOrderCtrl",
             }, $controllerProvider)
         }).when("/activity", {
             templateUrl: "activity.html",
             controller: "activityCtrl",
             resolve: Tool.loadCtrl({
-                url: "../../javascripts/dest/controller/activity.js",
+                url: "../../../javascripts/dest/controller/activity.js",
                 name: "activityCtrl",
             }, $controllerProvider)
         }).when("/product/detail", {
             templateUrl: "productdetail.html",
             controller: "productDetailCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/productDetail.js",
+                url: "../../javascripts/dest/controller/productDetail.js",
                 name: "productDetailCtrl",
             }, $controllerProvider)
         }).when("/product", {
             templateUrl: "product.html",
             controller: "productCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/product.js",
+                url: "../../javascripts/dest/controller/product.js",
                 name: "productCtrl",
             }, $controllerProvider)
         }).when("/exam/detail", {
             templateUrl: "examdetail.html",
             controller: "examDetailCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/examDetail.js",
+                url: "../../javascripts/dest/controller/examDetail.js",
                 name: "examDetailCtrl",
             }, $controllerProvider)
         }).when("/discount", {
             templateUrl: "discount.html",
             controller: "discountCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/discount.js",
+                url: "../../javascripts/dest/controller/discount.js",
                 name: "discountCtrl",
             }, $controllerProvider)
         }).when("/findpwd/phone", {
             templateUrl: "findpwdphone.html",
             controller: "findPassCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/findPass.js",
+                url: "../../javascripts/dest/controller/findPass.js",
                 name: "findPassCtrl",
             }, $controllerProvider)
         }).when("/findpwd/code", {
             templateUrl: "findpwdcode.html",
             controller: "findPassCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/findPass.js",
+                url: "../../javascripts/dest/controller/findPass.js",
                 name: "findPassCtrl",
             }, $controllerProvider)
         }).when("/findpwd/pwd", {
             templateUrl: "findpwdpwd.html",
             controller: "findPassCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/findPass.js",
+                url: "../../javascripts/dest/controller/findPass.js",
                 name: "findPassCtrl",
             }, $controllerProvider)
         }).when("/grab", {
             templateUrl: "grab.html",
             controller: "grabCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/grab.js",
+                url: "../../javascripts/dest/controller/grab.js",
                 name: "grabCtrl",
             }, $controllerProvider)
         }).when("/grab/code", {
             templateUrl: "grabcode.html",
             controller: "grabCodeCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/grabCode.js",
+                url: "../../javascripts/dest/controller/grabCode.js",
                 name: "grabCodeCtrl",
             }, $controllerProvider)
         }).when("/grab/order", {
             templateUrl: "graborder.html",
             controller: "grabOrderCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/grabOrder.js",
+                url: "../../javascripts/dest/controller/grabOrder.js",
                 name: "grabOrderCtrl",
             }, $controllerProvider)
         }).when("/login", {
             templateUrl: "login.html",
             controller: "loginCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/login.js",
+                url: "../../javascripts/dest/controller/login.js",
                 name: "loginCtrl",
             }, $controllerProvider)
         }).when("/makeorder", {
             templateUrl: "makeorder.html",
             controller: "makeOrderCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/makeorder.js",
+                url: "../../javascripts/dest/controller/makeorder.js",
                 name: "makeOrderCtrl",
             }, $controllerProvider)
         }).when("/news", {
             templateUrl: "news.html",
             controller: "newsCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/news.js",
+                url: "../../javascripts/dest/controller/news.js",
                 name: "newsCtrl",
             }, $controllerProvider)
         }).when("/news/detail", {
             templateUrl: "newsdetail.html",
             controller: "newsCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/news.js",
+                url: "../../javascripts/dest/controller/news.js",
                 name: "newsCtrl",
             }, $controllerProvider)
         }).when("/order", {
             templateUrl: "order.html",
             controller: "orderCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/order.js",
+                url: "../../javascripts/dest/controller/order.js",
                 name: "orderCtrl",
             }, $controllerProvider)
         }).when("/pay", {
             templateUrl: "pay.html",
             controller: "payCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/pay.js",
+                url: "../../javascripts/dest/controller/pay.js",
                 name: "payCtrl",
             }, $controllerProvider)
         }).when("/pay/result", {
             templateUrl: "payresult.html",
             controller: "payResultCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/payResult.js",
+                url: "../../javascripts/dest/controller/payResult.js",
                 name: "payResultCtrl",
             }, $controllerProvider)
         }).when("/register", {
             templateUrl: "register.html",
             controller: "registerCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/register.js",
+                url: "../../javascripts/dest/controller/register.js",
                 name: "registerCtrl",
             }, $controllerProvider)
         }).when("/agreement", {
@@ -333,77 +335,77 @@ define(["require", "exports", "angular", "./modules/Tool", "./modules/Ajax", "./
             templateUrl: "write.html",
             controller: "writeCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/write.js",
+                url: "../../javascripts/dest/controller/write.js",
                 name: "writeCtrl",
             }, $controllerProvider)
         }).when("/write/say", {
             templateUrl: "writesay.html",
             controller: "writeCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/write.js",
+                url: "../../javascripts/dest/controller/write.js",
                 name: "writeCtrl",
             }, $controllerProvider)
         }).when("/write/note", {
             templateUrl: "writenote.html",
             controller: "writeCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/write.js",
+                url: "../../javascripts/dest/controller/write.js",
                 name: "writeCtrl",
             }, $controllerProvider)
         }).when("/user/mypost", {
             templateUrl: "mypost.html",
             controller: "myPostCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/myPost.js",
+                url: "../../javascripts/dest/controller/myPost.js",
                 name: "myPostCtrl",
             }, $controllerProvider)
         }).when("/user/mymessage", {
             templateUrl: "mymessage.html",
             controller: "myMessageCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/myMessage.js",
+                url: "../../javascripts/dest/controller/myMessage.js",
                 name: "myMessageCtrl",
             }, $controllerProvider)
         }).when("/user/myfollow", {
             templateUrl: "myfollow.html",
             controller: "myFollowCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/myFollow.js",
+                url: "../../javascripts/dest/controller/myFollow.js",
                 name: "myFollowCtrl",
             }, $controllerProvider)
         }).when("/exam", {
             templateUrl: "exam.html",
             controller: "examCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/exam.js",
+                url: "../../javascripts/dest/controller/exam.js",
                 name: "examCtrl",
             }, $controllerProvider)
         }).when("/invite/new", {
             templateUrl: "invitenew.html",
             controller: "inviteCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/invite.js",
+                url: "../../javascripts/dest/controller/invite.js",
                 name: "inviteCtrl",
             }, $controllerProvider)
         }).when("/invite/register", {
             templateUrl: "inviteregister.html",
             controller: "inviteCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/invite.js",
+                url: "../../javascripts/dest/controller/invite.js",
                 name: "inviteCtrl",
             }, $controllerProvider)
         }).when("/invite/notes", {
             templateUrl: "invitenotes.html",
             controller: "inviteNotesCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/inviteNotes.js",
+                url: "../../javascripts/dest/controller/inviteNotes.js",
                 name: "inviteNotesCtrl",
             }, $controllerProvider)
         }).when("/user/paymoney", {
             templateUrl: "paymoney.html",
             controller: "payMoneyCtrl",
             resolve: Tool.loadCtrl({
-                url: "../javascripts/dest/controller/payMoney.js",
+                url: "../../javascripts/dest/controller/payMoney.js",
                 name: "payMoneyCtrl",
             }, $controllerProvider)
         })
@@ -430,7 +432,7 @@ define(["require", "exports", "angular", "./modules/Tool", "./modules/Ajax", "./
      * 与微信jsapi交互
      */
     app.factory("WeixinService", function ($rootScope, AjaxService, ToolService) {
-        return new Weixin($rootScope, AjaxService, ToolService);
+        return new Weixin($rootScope, AjaxService, ToolService, wx);
     });
     /**
      * 指令
@@ -616,10 +618,6 @@ define(["require", "exports", "angular", "./modules/Tool", "./modules/Ajax", "./
                         $scope.items = $scope.items.concat(data.data);
                     }
                 }
-            }).catch(function () {
-                ToolService.alert("获取数据失败");
-            }).finally(function () {
-                $rootScope.load.has = false;
             });
         };
         // 获取图片轮播
@@ -631,10 +629,6 @@ define(["require", "exports", "angular", "./modules/Tool", "./modules/Ajax", "./
                 if (data.code == 0) {
                     $scope.banners = data.data;
                 }
-            }).catch(function () {
-                ToolService.alert("获取图片失败");
-            }).finally(function () {
-                $rootScope.load.has = false;
             });
         };
         // 分页查询，查询下一页
@@ -754,10 +748,6 @@ define(["require", "exports", "angular", "./modules/Tool", "./modules/Ajax", "./
                     mergeDoctor(data.data);
                     $scope.doctors = $scope.doctors.concat(data.data);
                 }
-            }).catch(function () {
-                ToolService.alert("数据加载失败");
-            }).finally(function () {
-                $rootScope.load.has = false;
             });
         };
         // 处理医生数据
@@ -779,13 +769,13 @@ define(["require", "exports", "angular", "./modules/Tool", "./modules/Ajax", "./
         // 区域和排序切换
         $scope.switchDrop = function (index, obj) {
             ToolService.select(index, obj);
-            if (obj === ToolService.areaParams) {
+            if (obj === $scope.areaParams) {
                 $scope.menuParams[1].has = false;
-                queryParams.area = ToolService.areaParams[index].id;
+                queryParams.area = $scope.areaParams[index].id;
             }
-            else if (obj === ToolService.doctorOrderParams) {
+            else if (obj === $scope.doctorOrderParams) {
                 $scope.menuParams[2].has = false;
-                queryParams.orderby = ToolService.doctorOrderParams[index].id;
+                queryParams.orderby = $scope.doctorOrderParams[index].id;
             }
             $rootScope.followTip.has = false;
             $scope.doctors = [];
@@ -800,7 +790,7 @@ define(["require", "exports", "angular", "./modules/Tool", "./modules/Ajax", "./
         //缓存以选择二级菜单项
         var selected = {
             index: 0,
-            obj: ToolService.professionalParams[0],
+            obj: $scope.professionalParams[0],
         };
         // 切换专科二级菜单
         $scope.switchLevelTwo = function (index, obj) {
@@ -874,10 +864,6 @@ define(["require", "exports", "angular", "./modules/Tool", "./modules/Ajax", "./
                     mergePost(data.data);
                     $scope.posts = $scope.posts.concat(data.data);
                 }
-            }).catch(function () {
-                ToolService.alert("获取帖子信息失败!");
-            }).finally(function () {
-                $rootScope.load.has = false;
             });
         };
         // 处理帖子数据
@@ -965,10 +951,6 @@ define(["require", "exports", "angular", "./modules/Tool", "./modules/Ajax", "./
                         $scope.countFansMan = data.data.countFansMan;
                     }
                 }
-            }).catch(function () {
-                ToolService.alert("获取粉丝信息失败");
-            }).finally(function () {
-                $rootScope.load.has = false;
             });
         };
         //跳转到选项页面
