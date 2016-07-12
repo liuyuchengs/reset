@@ -19,25 +19,36 @@ var options = {
     }
 }
 
+//解析cookies
+var parseCookie = (cookie)=>{
+    var cookies = {};
+    if(!cookie){
+        return cookies;
+    }
+    var list = cookie.split(";");
+    for(var i=0;i<list.length;i++){
+        var repair = list[i].split("=");
+        cookies[repair[0].trim()] = repair[1];
+    }
+    return cookies;
+}
+
+//生成cookies
+var serizleCookie =  (key,value,opt)=>{
+    var repairs = [key+"="+value];
+    opt = opt || {};
+    if(opt.maxAge){repairs.push("Max-Age="+opt.maxAge)};
+    if(opt.path){repairs.push("Path="+opt.path)};
+    if(opt.httpOnly){repairs.push("HttpOnly="+opt.httpOnly)};
+    return repairs.join(";");
+}
+
+
 
 http.createServer((req,res)=>{
-    var clientRequest = http.request(options,(clientRes)=>{
-        var chunks = [];
-        console.log("status:"+clientRes.statusCode);
-        clientRes.on('data',(chunk)=>{
-            chunks.push(chunk);
-        })
-        clientRes.on('end',()=>{
-            var result = null;
-            for(var i=0;i<chunks.length;i++){
-                result += chunks[i];
-            }
-            res.statusCode = clientRes.statusCode;
-            res.statusMessage = clientRes.statusMessage;
-            res.write(result);
-            res.end();
-        })
-    })
-    clientRequest.write(postData);
-    clientRequest.end();
+    if(req.headers['Content-Type']==="application/x-www-form-urlencoded"){
+        var obj = queryString.parse(req.rawBody);
+    }
+    res.write("success");
+    res.end();
 }).listen(3000);

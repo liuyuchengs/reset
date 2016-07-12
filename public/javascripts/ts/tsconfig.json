@@ -2,12 +2,11 @@
     "compilerOptions": {
         "module": "amd",
         "target": "es5",
-        "declaration":true,
+        "declaration":false,
         "noImplicitAny": true,
         "sourceMap": false,
         "outDir": "./../dest",
-        "watch":true,
-        "noResolve":false
+        "watch":true
     },
     "exclude": [
         "node_modules",

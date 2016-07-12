@@ -1,4 +1,4 @@
-<div class="header" data-ng-init="load()">
+<div class="header">
 	<div class="header-item float-left" ng-click="changeRoute('/write')">
 		<img src="../contents/svg/back.svg">
 	</div>
@@ -12,9 +12,7 @@
 <div class="has-header"></div>
 <div class="say-content">
 	<div class="switch">
-		<div class="item" ng-class="{'select':switchParams.kanya.has}" ng-click="switch('kanya')">看牙</div>
-		<div class="item" ng-class="{'select':switchParams.qiumei.has}" ng-click="switch('qiumei')">求美</div>
-		<div class="item" ng-class="{'select':switchParams.yunsheng.has}" ng-click="switch('yunsheng')">孕·生</div>
+		<div class="item" ng-repeat="item in switchParams" ng-class="{'select':item.has}" ng-bind="item.val" ng-click="switch($index)"></div>
 	</div>
 	<div class="title">
 		<div class="input-tip">标题</div>
