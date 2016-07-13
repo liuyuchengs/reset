@@ -1,5 +1,20 @@
-var router = require("koa-router")(); //koa路由
-var Ajax = require("./../../module/js/Ajax"); //http请求
+const express = require("express");
+const router = express();
+const multer = require("multer");
+var Ajax = require("./../module/js/Ajax"); //http请求
+
+//配置上传对象
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'upload/')
+    },
+    filename: function (req, file, cb) {
+        let list = file.originalname.split(".");
+        cb(null,Date.now()+"."+list[1]);
+    }
+})
+
+const upload = multer({storage:storage});
 
 // home页面
 
@@ -29,8 +44,10 @@ router.post("/wx/mycount/updateUserInfo",function *(){
 })
 
 //我的订单页面
-router.post("/wx/order/queryOrderList",function *(){
-    this.body = yield Ajax.post(this.request);
+router.post("/wx/order/queryOrderList",function (req,res){
+    var body = req.body;
+    var query = req.query;
+    res.send("");
 })
 router.post("/wx/order/orderCacel",function *(){
     this.body = yield Ajax.post(this.request);
@@ -244,8 +261,8 @@ router.post("/wx/product/queryActivity",function *(){
     this.body = yield Ajax.post(this.request);
 })
 
-router.post("/wx/post/addPost",function *(next){
-    this.body = yield Ajax.post(this.request);
+router.post("/wx/post/addPost",upload.single("img"),function (req,res){
+    res.send("success");
 })
 
 router.post("/wx/user/createReferralCode",function *(){
