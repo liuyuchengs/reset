@@ -5,6 +5,6 @@
 /// <reference path="globals/multer/index.d.ts" />
 /// <reference path="globals/mysql/index.d.ts" />
 /// <reference path="globals/node/index.d.ts" />
+/// <reference path="globals/promise/index.d.ts" />
 /// <reference path="globals/require/index.d.ts" />
-/// <reference path="modules/es6-promise/index.d.ts" />
 /// <reference path="uokang.d.ts" />
