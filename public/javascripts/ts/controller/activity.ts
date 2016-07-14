@@ -6,7 +6,6 @@ import Tool = require("./../modules/Tool");
 import Ajax = require("./../modules/Ajax");
 
 function activity($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILocationService,ToolService:Tool,AjaxService:Ajax) {
-    
     $scope.products = [];
 
     //跳转到详情页面

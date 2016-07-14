@@ -16,6 +16,7 @@ class Ajax{
         this.Tool = Tool;
     }
 
+
     /**
      * $http get请求
      * @params obj->请求参数，obj.url->地址

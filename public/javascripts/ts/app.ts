@@ -12,7 +12,7 @@ import wx = require("WX");
 import Tool = require("./modules/Tool");
 import Ajax = require("./modules/Ajax");
 import Weixin = require("./modules/Weixin");
-let host:string = "http://192.168.0.104:3000";
+let host:string = "http://192.168.0.102:3000";
 var app = ag.module("myApp",['ngRoute']);
 
 /**
@@ -966,7 +966,7 @@ app.controller("interactionCtrl",($scope:any,$rootScope:IRootScope.rootScope,Too
 
 /**
  * 控制器
- * 用户页面
+ * 用户页面控制器
  */
 app.controller("userCtrl",($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILocationService,ToolService:Tool,AjaxService:Ajax)=>{
 
@@ -1032,3 +1032,4 @@ app.controller("userCtrl",($scope:any,$rootScope:IRootScope.rootScope,$location:
 })
 
 export = app;
+
