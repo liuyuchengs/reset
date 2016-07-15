@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "module": "amd",
+        "target": "es5",
+        "declaration":false,
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "outDir": "./../dest",
+        "watch":true
+    }
+}

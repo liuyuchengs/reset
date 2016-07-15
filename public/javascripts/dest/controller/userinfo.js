@@ -1,1 +1,72 @@
-define(["require","exports"],function(require,exports){"use strict";function userinfo($scope,$rootScope,ToolService,AjaxService){$scope.phone,$scope.realname,$scope.sex,$scope.age,$scope.nickname,$scope.email,$scope.exit=function(){ToolService.clearLocal(),ToolService.changeRoute("/user")},$scope.change=function(item){var state;"wxpay"===item?(state=null===ToolService.user.wxpay||""===ToolService.user.wxpay?2:1,ToolService.changeRoute("/user/userinfochange","item="+item+"&state="+state)):"alipay"===item?(state=null===ToolService.user.alipay||""===ToolService.user.alipay?2:1,ToolService.changeRoute("/user/userinfochange","item="+item+"&state="+state)):ToolService.changeRoute("/user/userinfochange","item="+item)},ToolService.reset(),$rootScope.globalProp.hasBgColor=!0,ToolService.checkLogin()?(ToolService.loadUser(),AjaxService.post({url:ToolService.host+"/wx/mycount/getUserByToken",data:null,headers:{accessToken:ToolService.user.accessToken}}).then(function(data){ToolService.setLocal("user",data.data);var user=data.data;$scope.phone=user.phone||"",$scope.realname=user.realname||"",$scope.sex=user.sex||"",$scope.age=user.age||"",$scope.nickname=user.nickname||"",$scope.email="",$scope.face=user.face,$scope.wxpay=user.wxpay,$scope.alipay=user.alipay})):ToolService.changeRoute("/user")}return userinfo});
+define(["require", "exports"], function (require, exports) {
+    "use strict";
+    function userinfo($scope, $rootScope, ToolService, AjaxService) {
+        //用户信息
+        $scope.phone;
+        $scope.realname;
+        $scope.sex;
+        $scope.age;
+        $scope.nickname;
+        $scope.email;
+        //退出登录
+        $scope.exit = function () {
+            ToolService.clearLocal();
+            ToolService.changeRoute("/user");
+        };
+        //跳转到修改账户信息页面
+        $scope.change = function (item) {
+            var state;
+            if (item === "wxpay") {
+                if (ToolService.user.wxpay === null || ToolService.user.wxpay === "") {
+                    state = 2;
+                }
+                else {
+                    state = 1;
+                }
+                ToolService.changeRoute("/user/userinfochange", "item=" + item + "&state=" + state);
+            }
+            else if (item === "alipay") {
+                if (ToolService.user.alipay === null || ToolService.user.alipay === "") {
+                    state = 2;
+                }
+                else {
+                    state = 1;
+                }
+                ToolService.changeRoute("/user/userinfochange", "item=" + item + "&state=" + state);
+            }
+            else {
+                ToolService.changeRoute("/user/userinfochange", "item=" + item);
+            }
+        };
+        //初始化页面
+        ToolService.reset();
+        $rootScope.globalProp.hasBgColor = true;
+        if (ToolService.checkLogin()) {
+            ToolService.loadUser();
+            AjaxService.post({
+                url: ToolService.host + "/wx/mycount/getUserByToken",
+                data: { "accessToken": ToolService.user.accessToken },
+                headers: {
+                    accessToken: ToolService.user.accessToken
+                }
+            }).then(function (data) {
+                ToolService.setLocal("user", data.data);
+                var user = data.data;
+                $scope.phone = user.phone || "";
+                $scope.realname = user.realname || "";
+                $scope.sex = user.sex || "";
+                $scope.age = user.age || "";
+                $scope.nickname = user.nickname || "";
+                $scope.email = "";
+                $scope.face = user.face;
+                $scope.wxpay = user.wxpay;
+                $scope.alipay = user.alipay;
+            });
+        }
+        else {
+            ToolService.changeRoute("/user");
+        }
+    }
+    return userinfo;
+});
+//# sourceMappingURL=userinfo.js.map

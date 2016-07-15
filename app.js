@@ -5,9 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var userRoute = require('./routes/js/userRoute');
-var loginRoute = require("./routes/js/loginRoute");
+//加载路由
+var loginRoute = require("./build/routes/loginRoute");
+var focueRoute = require("./build/routes/focusRoute");
+var mycountRoute = require('./build/routes/mycountRoute');
 
 var app = express();
 
@@ -23,9 +24,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use("/wx/mycount/getUserByToken",userRoute);
 app.use("/wx/login/wxlogin",loginRoute);
+app.use("/wx/focus",focueRoute);
+app.use("/wx/mycount",mycountRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
