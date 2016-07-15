@@ -39,6 +39,8 @@ class Connect {
             connect.end();
         });
     }
+    test(value) {
+    }
 }
 module.exports = Connect;
 //# sourceMappingURL=Connect.js.map

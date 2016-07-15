@@ -1,6 +1,5 @@
 /// <reference path="./../../typings/index.d.ts" />
 import mysql = require("mysql");
-
 /**
  * Connect
  */
@@ -45,6 +44,9 @@ class Connect {
         })
     }
 
+    test(value:mysql.IMySql){
+
+    }
 }
 
 export = Connect;
