@@ -1,5 +1,5 @@
 /// <reference path="./../../typings/index.d.ts" />
-
+import fs = require("fs");
 import crypto = require("crypto");
 
 /**
@@ -46,6 +46,14 @@ class Tool {
         Tool.decipher.update(value,"hex");
         return Tool.decipher.final("utf8");
     }
+
+    /**
+     * 测试单元测试
+     */
+    static add(x:number,y:number){
+        return x+y;
+    }
+
 }
 
 export = Tool;

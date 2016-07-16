@@ -21,7 +21,7 @@ class mycountCtrl {
     static getUserByToken(params) {
         return __awaiter(this, void 0, Promise, function* () {
             let result;
-            let sql = "select * from user where id in (select user_id from user_token where access_token = '" + params.accessToken + ")";
+            let sql = "select * from user where id in (select user_id from user_token where access_token = '" + params.accessToken + "')";
             let sqlResult = yield connect.connect(sql);
             return new Promise((resolve, reject) => {
                 let filterResult = Tool.FilterResult(["id", "nickname", "phone", "face", "sex", "realname", "email", "gift_code", "alipay", "wxpay", "referralCode", "access_token"], sqlResult[0]);

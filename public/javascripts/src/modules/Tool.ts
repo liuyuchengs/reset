@@ -14,6 +14,8 @@ class Tool{
     fckParams:Data.IDropParams[];
     zhongyiParams:Data.IDropParams[];
     tijianParams:Data.IDropParams[];
+    orderParams:Data.IDropParams[];
+    sexParams:Data.IDropParams[];
     doctorOrderParams:Data.IDropParams[];
     professionalParams:Data.IDropParams[];
     private $rootScope:IRootScope.rootScope;
@@ -103,6 +105,24 @@ class Tool{
             {has:false,val:"儿童体检",id:74},
             {has:false,val:"慢病体检",id:73},
         ];
+        /**
+         * 排序参数
+         */
+        this.orderParams = [
+            {has:false,val:"全部项目",id:""},
+            {has:false,val:"价格最低",id:"prefer_price asc"},
+            {has:false,val:"价格最高",id:"prefer_price desc"},
+            {has:false,val:"评分最高",id:"hospital_score asc"},
+            {has:false,val:"销量最高",id:"sales desc"},
+        ]
+        /**
+         * 性别排序
+         */
+        this.sexParams = [
+            {has:false,val:"通用",id:""},
+            {has:false,val:"男",id:"男"},
+            {has:false,val:"女",id:"女"},
+        ]
         /**
          * 医生页面排序参数
          */

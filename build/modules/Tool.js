@@ -1,4 +1,3 @@
-/// <reference path="./../../typings/index.d.ts" />
 "use strict";
 const crypto = require("crypto");
 /**
@@ -41,6 +40,12 @@ class Tool {
     static deCrypt(value) {
         Tool.decipher.update(value, "hex");
         return Tool.decipher.final("utf8");
+    }
+    /**
+     * 测试单元测试
+     */
+    static add(x, y) {
+        return x + y;
     }
 }
 Tool.cipher = crypto.createCipher("aes192", "uk123456");

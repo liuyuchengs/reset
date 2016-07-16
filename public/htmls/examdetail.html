@@ -14,9 +14,7 @@
 		</div>
 	</div>
 	<div class="examDetail-filter">
-		<div class="item" ng-class="{'select':filterParams.product.has}" ng-click="switch('product')">套餐详情</div>
-		<div class="item" ng-class="{'select':filterParams.hospital.has}" ng-click="switch('hospital')">医院详情</div>
-		<div class="item" ng-class="{'select':filterParams.notice.has}" ng-click="switch('notice')">须知</div>
+		<div class="item" ng-repeat="item in filterParams" ng-class="{'select':item.has}" ng-click="switch($index,filterParams)" ng-bind="item.val"></div>
 	</div>
 	<div class="examDetail-content">
 		<div class="productInfo" ng-show="filterParams.product.has">
