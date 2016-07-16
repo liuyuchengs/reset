@@ -271,7 +271,6 @@ function grab($scope:any,$rootScope:IRootScope.rootScope,$window:ag.IWindowServi
 
     // 页面初始化
     ToolService.reset();
-    $rootScope.hasBgColor = false;
     $scope.getQueryParams();
     $scope.loadDate($scope.loadData);
     Weixin.wxInit($scope);
