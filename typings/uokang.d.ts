@@ -136,7 +136,7 @@ declare module "Data"{
      */
     export interface IGetQuery{
         url:string;
-        headers:IHeaders;
+        headers?:IHeaders;
     }
 
     /**
@@ -338,8 +338,8 @@ declare namespace WX{
         title:string;
         link:string;
         imgUrl:string;
-        success:string;
-        cancel:string;
+        success:()=>void;
+        cancel:()=>void;
     }
     /**
      * 分享到qq,qq空间,腾讯微博

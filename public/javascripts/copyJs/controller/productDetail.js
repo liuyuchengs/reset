@@ -17,16 +17,7 @@ define(function(){
 			hasFollow:false,
 			followText:"关注"
 		}
-		$scope.productImg = [
-			{
-				"url":"../../contents/img/p_default.png"
-			},{
-				"url":"../../contents/img/p_default.png"
-			}];
-		$scope.hospitalImg = [
-			{
-				"url":"../../contents/img/p_default.png"
-			}];
+
 		$scope.scheduleInfo = [];
 		$scope.scheduleParams = {};
 		$scope.order = {

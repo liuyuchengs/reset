@@ -114,6 +114,7 @@ class Tool{
             {has:false,val:"价格最高",id:"prefer_price desc"},
             {has:false,val:"评分最高",id:"hospital_score asc"},
             {has:false,val:"销量最高",id:"sales desc"},
+            {has:false,val:"距离最近",id:"locationes"},
         ]
         /**
          * 性别排序

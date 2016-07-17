@@ -1,6 +1,6 @@
 define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./modules/Ajax", "./modules/Weixin"], function (require, exports, ag, Swiper, wx, Tool, Ajax, Weixin) {
     "use strict";
-    var host = "http://192.168.0.120:3000";
+    var host = "http://192.168.0.104:3000";
     var app = ag.module("myApp", ['ngRoute']);
     /**
      * 配置
@@ -296,10 +296,10 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             }, $controllerProvider)
         }).when("/news/detail", {
             templateUrl: "newsdetail.html",
-            controller: "newsCtrl",
+            controller: "newsDetailCtrl",
             resolve: Tool.loadCtrl({
-                url: "../../javascripts/dest/controller/news.js",
-                name: "newsCtrl",
+                url: "../../javascripts/dest/controller/newsDetail.js",
+                name: "newsDetailCtrl",
             }, $controllerProvider)
         }).when("/order", {
             templateUrl: "order.html",
