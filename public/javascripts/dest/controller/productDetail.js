@@ -5,7 +5,6 @@ define(["require", "exports"], function (require, exports) {
         $scope.hasDoctor = false;
         $scope.noSelectTime = true;
         $scope.hasDocSchedule = "";
-        $scope.loading = false;
         $scope.selectDoc = "";
         $scope.hosId;
         $scope.proId;
@@ -91,7 +90,6 @@ define(["require", "exports"], function (require, exports) {
                 data: { type: "PRODUCT", mainId: $scope.proId }
             }).then(function (data) {
                 if (data.length > 0) {
-                    $scope.mergeImg(data);
                     $scope.productImg = data;
                 }
             });
@@ -102,6 +100,7 @@ define(["require", "exports"], function (require, exports) {
                 url: ToolService.host + "/wx/hospital/querybyid",
                 data: { id: $scope.hosId }
             }).then(function (data) {
+                $scope.hospitalInfo = data;
                 $scope.order.hospitalName = data.name;
                 $scope.order.hospitalAddress = data.address;
             });
@@ -116,7 +115,6 @@ define(["require", "exports"], function (require, exports) {
                 }
             }).then(function (data) {
                 if (data.length > 0) {
-                    $scope.mergeImg(data);
                     $scope.hospitalImg = data;
                 }
             });
@@ -165,14 +163,25 @@ define(["require", "exports"], function (require, exports) {
             queryDoctorSchedule(docId);
             $scope.selectDoc = docId;
         };
+        var selected = {
+            index: 0,
+            obj: { timeList: [] }
+        };
         // 选择具体的就医时间
-        $scope.chooseTime = function (scheId, date) {
-            ToolService.select(scheId, $scope.scheduleParams);
-            $scope.order.scheduleId = scheId;
-            $scope.order.treatmentTime = date;
-            $scope.mergeDocSelect($scope.selectDoc, date);
-            $scope.selectTime = false;
-            $scope.noSelectTime = false;
+        $scope.chooseTime = function (index, obj) {
+            if (selected.obj !== obj || (selected.obj === obj && selected.index !== index)) {
+                if (selected.obj.timeList.length > 0) {
+                    ToolService.select(selected.index, selected.obj.timeList, true);
+                }
+                selected.index = index;
+                selected.obj = obj;
+                ToolService.select(selected.index, selected.obj.timeList);
+                $scope.order.scheduleId = obj.timeList[index].scheduleid;
+                $scope.order.treatmentTime = obj.timeList[index].date;
+                $scope.mergeDocSelect($scope.selectDoc, obj.timeList[index].date);
+                $scope.selectTime = false;
+                $scope.noSelectTime = false;
+            }
         };
         // 下单按钮时间
         $scope.orderDetail = function () {

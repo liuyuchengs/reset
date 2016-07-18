@@ -8,10 +8,7 @@ function makeorder($scope:any,$rootScope:IRootScope.rootScope,ToolService:Tool,A
     $scope.hasGift = false;
     $scope.noUserInfo = true;
     $scope.giftText = "本订单无可用代金券";
-    $scope.orderInfo = ToolService.getSession("makeorder");
-    $scope.orderInfo.patientName = ToolService.getLocal("user").realname;
-    $scope.orderInfo.patientTelephone = ToolService.getLocal("user").phone;
-    $scope.userInfo;
+    $scope.orderInfo = null;
     $scope.hasDoctor = true;
 
     // 是否使用代金券
@@ -89,8 +86,15 @@ function makeorder($scope:any,$rootScope:IRootScope.rootScope,ToolService:Tool,A
     // 页面初始化
     ToolService.reset();
     $rootScope.globalProp.hasBgColor = false;
-    ToolService.loadUser();
-    checkGift();
+    if(ToolService.checkLogin()&&ToolService.getSession("makeorder")){
+        ToolService.loadUser();
+         $scope.orderInfo = ToolService.getSession("makeorder");
+        $scope.orderInfo.patientName = ToolService.getLocal("user").realname;
+        $scope.orderInfo.patientTelephone = ToolService.getLocal("user").phone;
+        checkGift();
+    }else{
+        ToolService.changeRoute("/home");
+    }
 }
 
 export = makeorder;

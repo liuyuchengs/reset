@@ -13,7 +13,7 @@
 		<p class="date" ng-bind="detail.createtimeStr"></p>
 	</div>
 	<div class="content-text">
-		<p ng-repeat="text in detail.content" ng-bind="text"></p>
+		<p ng-repeat="text in detail.content track by $index" ng-bind="text"></p>
 	</div>
 	
 </div>

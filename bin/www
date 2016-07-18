@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('../proxyApp');
 var debug = require('debug')('restart:server');
 var http = require('http');
 

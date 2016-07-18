@@ -113,6 +113,7 @@ declare module "Data"{
          */
         id?:any;
         children?:IDropParams[];
+        src?:string;
     }
 
     /**

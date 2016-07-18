@@ -12,12 +12,12 @@ function news($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILocationS
     $scope.imgStyle = {
         "width":screen.width
     }
-    $scope.navParam = [
+    $scope.navParams = [
         {has:true,val:"综合"},
-        {has:true,val:"牙科"},
-        {has:true,val:"美容"},
-        {has:true,val:"妇产科"},
-        {has:true,val:"中医理疗"},
+        {has:false,val:"牙科"},
+        {has:false,val:"美容"},
+        {has:false,val:"妇产科"},
+        {has:false,val:"中医理疗"},
     ]
 
     // 初始化图片轮播插件
@@ -36,6 +36,7 @@ function news($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILocationS
     $scope.switch = function(index:number,obj:any[]){
         ToolService.select(index,obj);
         $scope.news = [];
+        $scope.navValue = obj[index].val;
         $scope.currentPage = 1;
         $rootScope.followTip.has = false;
         loadNews();
@@ -56,7 +57,6 @@ function news($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILocationS
                     }
                     $rootScope.followTip.has = false;
                 }else{
-                    $scope.mergeImg(data.data);
                     $scope.news = $scope.news.concat(data.data);
                 }
             }else{

@@ -86,7 +86,7 @@ function exam($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILocationS
             $scope.productQueryParams.itemId = obj[index].id;
         }
         if(obj===$scope.sexParams){
-            $scope.sexParams[3].has = false;
+            $scope.menuParams[3].has = false;
             $scope.productQueryParams.specialty = obj[index].id;
         }
         $rootScope.globalProp.hasBlackBg = false;
@@ -108,7 +108,7 @@ function exam($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILocationS
                 }else{
                     $rootScope.followTip.val = $rootScope.followTip.no;
                 }
-                $rootScope.followTip.has = false;
+                $rootScope.followTip.has = true;
             }else{
                 mergeProdcut(data);
                 $scope.products = $scope.products.concat(data);

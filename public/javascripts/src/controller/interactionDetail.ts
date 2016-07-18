@@ -457,7 +457,6 @@ function interactionDetail($scope:any,$rootScope:IRootScope.rootScope,$location:
     queryPost();
     queryMessage();
     initSwiper();
-
     ToolService.onWindowListen(loadNext);
 }
 

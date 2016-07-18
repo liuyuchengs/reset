@@ -38,11 +38,7 @@ define(["require", "exports"], function (require, exports) {
                 ToolService.changeRoute("/user/userinfochange", "item=" + item);
             }
         };
-        //初始化页面
-        ToolService.reset();
-        $rootScope.globalProp.hasBgColor = true;
-        if (ToolService.checkLogin()) {
-            ToolService.loadUser();
+        var queryUserInfo = function () {
             AjaxService.post({
                 url: ToolService.host + "/wx/mycount/getUserByToken",
                 data: { "accessToken": ToolService.user.accessToken },
@@ -62,6 +58,13 @@ define(["require", "exports"], function (require, exports) {
                 $scope.wxpay = user.wxpay;
                 $scope.alipay = user.alipay;
             });
+        };
+        //初始化页面
+        ToolService.reset();
+        $rootScope.globalProp.hasBgColor = true;
+        if (ToolService.checkLogin()) {
+            ToolService.loadUser();
+            queryUserInfo();
         }
         else {
             ToolService.changeRoute("/user");

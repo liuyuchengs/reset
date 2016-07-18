@@ -12,7 +12,7 @@ import wx = require("WX");
 import Tool = require("./modules/Tool");
 import Ajax = require("./modules/Ajax");
 import Weixin = require("./modules/Weixin");
-let host:string = "http://192.168.0.104:3000";
+let host:string = "http://192.168.0.120:3000";
 var app = ag.module("myApp",['ngRoute']);
 
 /**
@@ -564,7 +564,7 @@ app.directive("zoomImage",()=>{
  */
 app.filter("defaultHeadImg",()=>{
     return (input:string,sex:string)=>{
-        if(input===null||input===""){
+        if(input===null||input===""||input===undefined){
             input = "../contents/img/men-head.png";
         }else{
             input = "../contents/img/women-head.png";
@@ -580,7 +580,7 @@ app.filter("defaultHeadImg",()=>{
  */
 app.filter("defaultImg",()=>{
     return (input:string,type:string)=>{
-        if(input===null||input===""){
+        if(input===null||input===""||input===undefined){
             if(type==="doc"){
                 input = "../contents/img/doc-head.png";
             }
@@ -731,6 +731,7 @@ app.controller("homeCtrl",($scope:any,$rootScope:IRootScope.rootScope,$http:ag.I
     $rootScope.globalProp.hasBgColor = false;
 
     //初始化页面
+    ToolService.reset();
     loadRecommend();
     queryBanners();
     initSwiper();
@@ -867,6 +868,7 @@ app.controller("doctorCtrl",($scope:any,$rootScope:IRootScope.rootScope,$http:ag
 
     //页面初始化
     ToolService.reset();
+    $rootScope.globalProp.hasBgColor = true;
     ToolService.areaParams[0].has = true;
     ToolService.doctorOrderParams[0].has = true;
     ToolService.professionalParams[0].has = true;

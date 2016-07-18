@@ -150,7 +150,7 @@ function order($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILocation
         }).then(function(data){
             if(data.code==0){
                 $scope.status = "";
-                $scope.loadOrder();
+                loadOrder();
             }else if(data.code==1){
                 ToolService.alert("订单取消失败，请稍后再试!");
             }

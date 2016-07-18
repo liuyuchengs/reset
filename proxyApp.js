@@ -1,5 +1,5 @@
 /**
- * node.js自己服务的app配置
+ * 做中转路由的app配置
  */
 var express = require('express');
 var path = require('path');
@@ -9,10 +9,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 //加载路由
-var loginRoute = require("./build/routes/loginRoute");
-var focueRoute = require("./build/routes/focusRoute");
-var mycountRoute = require('./build/routes/mycountRoute');
-
+var proxyRoute = require("./build/routes/proxyRoute");
 var app = express();
 
 // view engine setup
@@ -28,9 +25,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname+"/public/contents/img/logo.png"));
 
-app.use("/wx/login/wxlogin",loginRoute);
-app.use("/wx/focus",focueRoute);
-app.use("/wx/mycount",mycountRoute);
+//配置中转路由
+app.use(proxyRoute);
 
 
 // catch 404 and forward to error handler

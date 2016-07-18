@@ -20,36 +20,13 @@
 	</div>
 	<div class="has-header"></div>
 	<div class="detail-content" ng-class="{'overflowhide':selectTime}">
-		<!--<div class="img-wrap">
-			<div class="img">
-				<img ng-src="{{productInfo.smallImg}}" fallback-src="../contents/img/p_default.png">
-				<div class="img-description">
-					<p>[{{productInfo.title}}]</p>
-				</div>
-			</div>
-			<div class="money">
-				<div>
-					<div class="container">
-						<div class="dealMoney">
-							<div class="text">￥{{productInfo.preferPrice}}</div>
-							<div class="btn" ng-bind="productInfo.preferPriceType"></div>
-						</div>
-					</div>
-				</div>
-				<div class="sourceMoney">
-					<span>门市价:</span>
-					<span>￥{{productInfo.standPrice}}{{productInfo.pricetype}}</span>
-					<span>{{productInfo.sales}}人下单</span>
-				</div>
-			</div>
-		</div>-->
 		<div class="product">
 			<div class="product-header">
 				<span>项目介绍</span>
 			</div>
 			<div class="img products">
-				<img ng-src="{{productImg[0].url}}" fallback-src="../contents/img/p_default.png">
-				<img ng-src="{{productImg[1].url}}" fallback-src="../contents/img/p_default.png">
+				<img ng-src="{{productImg[0].url|defaultImg:'pro'}}" product-error>
+				<img ng-src="{{productImg[1].url|defaultImg:'pro'}}" product-error>
 			</div>
 			<div class="product-header" ng-bind="productInfo.title"></div>
 			<div class="text" ng-bind="productInfo.introduction"></div>
@@ -59,8 +36,8 @@
 				<span>医院介绍</span>
 			</div>
 			<div class="img">
-				<img ng-src="{{hospitalInfo.logo}}" fallback-src="../contents/img/p_default.png">
-				<img ng-src="{{hospitalImg[0].url}}" fallback-src="../contents/img/p_default.png">
+				<img ng-src="{{hospitalInfo.logo|defaultImg:'pro'}}" product-error>
+				<img ng-src="{{hospitalImg[0].url|defaultImg:'pro'}}" product-error>
 			</div>
 			<div class="hos-title">
 				<p ng-bind="hospitalInfo.name"></p>
@@ -100,9 +77,9 @@
 			<li ng-repeat="schedule in scheduleInfo">
 				<div class="day" ng-bind="schedule.date"></div>
 				<div class="time">
-					<div class="item" ng-repeat="time in schedule.timeList" ng-click="chooseTime(time.scheduleid,time.date)">
+					<div class="item" ng-repeat="time in schedule.timeList" ng-click="chooseTime($index,schedule)">
 						<span ng-bind="time.starttime"></span>
-						<div class="icon" ng-class="{'check':scheduleParams[time.scheduleid].has}"></div>
+						<div class="icon" ng-class="{'check':time.has}"></div>
 					</div>
 				</div>
 			</li>

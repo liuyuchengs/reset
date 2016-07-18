@@ -17,7 +17,7 @@
 		<div class="item" ng-repeat="item in filterParams" ng-class="{'select':item.has}" ng-click="switch($index,filterParams)" ng-bind="item.val"></div>
 	</div>
 	<div class="examDetail-content">
-		<div class="productInfo" ng-show="filterParams.product.has">
+		<div class="productInfo" ng-show="filterParams[0].has">
 			<div class="description">
 				<div class="title">套餐介绍</div>
 				<div class="text" ng-bind="product.introduction"></div>
@@ -29,7 +29,7 @@
 				</ol>
 			</div>
 		</div>
-		<div class="hospitalInfo" ng-show="filterParams.hospital.has">
+		<div class="hospitalInfo" ng-show="filterParams[1].has">
 			<div class="img">
 				<img ng-src="{{hospital.logo}}" fallback-src="../contents/img/p_default.png">
 				<img ng-src="{{hospitalImg}}" fallback-src="../contents/img/p_default.png">
@@ -46,7 +46,7 @@
 			</div>
 			<div class="text" ng-bind="hospital.description"></div>
 		</div>
-		<div class="noticeInfo" ng-show="filterParams.notice.has">
+		<div class="noticeInfo" ng-show="filterParams[2].has">
 			<div class="text" ng-bind="product.notice"></div>
 		</div>
 	</div>

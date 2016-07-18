@@ -1,0 +1,6 @@
+POST http://192.168.0.120:3000/wx/banner/query HTTP/1.1
+content-type: application/json
+
+{
+    "type":"home_banner"
+}

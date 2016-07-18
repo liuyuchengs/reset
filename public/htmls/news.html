@@ -20,15 +20,11 @@
 	<div class="swiper-pagination"></div>
 </div>
 <div class="new-nav">
-	<div class="nav-item" ng-class="{'select':navParam.all.has}" ng-click="switch('all')">综合</div>
-	<div class="nav-item" ng-class="{'select':navParam.yake.has}" ng-click="switch('yake')">牙科</div>
-	<div class="nav-item" ng-class="{'select':navParam.meirong.has}" ng-click="switch('meirong')">美容</div>
-	<div class="nav-item" ng-class="{'select':navParam.fck.has}" ng-click="switch('fck')">妇产科</div>
-	<div class="nav-item" ng-class="{'select':navParam.zhongyi.has}" ng-click="switch('zhongyi')">中医理疗</div>
+	<div class="nav-item" ng-repeat="item in navParams" ng-class="{'select':item.has}" ng-click="switch($index,navParams)" ng-bind="item.val"></div>
 </div>
 <ul class="item-container">
 	<li ng-repeat="new in news" ng-click="toDetail(new.id)">
-		<img ng-src="{{new.picture}}" fallback-src="../contents/img/p_default.png">
+		<img ng-src="{{new.picture|defaultImg:'pro'}}" product-error>
 		<div>
 			<p class="title" ng-bind="new.title"></p>
 			<p class="date" ng-bind="new.createtimeStr"></p>

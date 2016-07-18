@@ -14,14 +14,14 @@ define(["require", "exports"], function (require, exports) {
         };
         $scope.hasLocation = false;
         //菜单项变量
-        $scope.menuParams = [
-            { has: false, val: "区域" },
-            { has: false, val: "排序" },
-            { has: false, val: "分类" },
-        ];
         $scope.orderParams = ToolService.orderParams;
         $scope.areaParams = ToolService.areaParams;
         $scope.classParams = {};
+        $scope.menuParams = [
+            { has: false, val: "区域", children: $scope.areaParams },
+            { has: false, val: "排序", children: $scope.orderParams },
+            { has: false, val: "分类", children: {} },
+        ];
         $scope.productParams = {
             yake: { has: false, val: "牙科", id: 2 },
             meirong: { has: false, val: "医学美容", id: 3 },
@@ -82,9 +82,11 @@ define(["require", "exports"], function (require, exports) {
             }
             if (obj === $scope.classParams) {
                 $scope.queryParams.itemId = obj[index].id;
+                $scope.menuParams[2].has = false;
             }
             $scope.products = [];
             $rootScope.followTip.has = false;
+            $rootScope.globalProp.hasBlackBg = false;
             loadData();
         };
         // 查询数据

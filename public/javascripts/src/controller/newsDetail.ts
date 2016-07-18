@@ -14,7 +14,7 @@ function newsDetail($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILoc
             data:{id:$scope.id},
         }).then((data:any)=>{
             if(data.code==0){
-                data.data.content = $scope.mergeDetail(data.data.content);
+                data.data.content = mergeDetail(data.data.content);
                 $scope.detail = data.data;
             }else{
                 ToolService.alert("查询数据失败，请稍后再试!");
@@ -26,15 +26,18 @@ function newsDetail($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILoc
      * 对资讯信息进行排版
      */
     let mergeDetail = (str:any)=>{
-        var arrayStr = str.split("\r\n");
-        if(arrayStr.length>0){
-            for(var index in arrayStr){
-                arrayStr[index] = arrayStr[index].trim();
+        var sourceArray = str.split("\r\n");
+        var destArray:string[] = [];
+        if(sourceArray.length>0){
+            for(var index in sourceArray){
+                if(sourceArray[index].trim().length>0){
+                    destArray.push(sourceArray[index].trim());
+                }
             }
         }else{
-            arrayStr = str;
+            destArray.push(str);
         }
-        return arrayStr;
+        return destArray;
     }
 
         //初始化页面

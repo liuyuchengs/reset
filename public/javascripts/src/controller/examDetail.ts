@@ -16,7 +16,7 @@ function examDetail($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILoc
     $scope.scheduleParams = {};
     $scope.filterParams = [
         {has:true,val:"套餐详情"},
-        {has:false,val:"信息详情"},
+        {has:false,val:"医院详情"},
         {has:false,val:"须知"},
     ]
     $scope.order = {
@@ -70,7 +70,6 @@ function examDetail($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILoc
             if(data.length>0){
                 mergeSchedule(data);
                 $scope.schedules = data;
-
             }else{
                 $scope.noSchedule = true;
             }
@@ -143,7 +142,6 @@ function examDetail($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILoc
             data:{id:$scope.hospitalId},
         }).then((data:any)=>{
             if(data.code==0){
-                $scope.mergeHospital(data.data);
                 $scope.hospital = data.data;
                 $scope.order.hospitalAddress = $scope.hospital.address;
                 $scope.order.hospitalName = $scope.hospital.name;

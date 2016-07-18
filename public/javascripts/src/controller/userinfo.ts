@@ -40,11 +40,7 @@ function userinfo($scope:any,$rootScope:IRootScope.rootScope,ToolService:Tool,Aj
         }
     }
 
-    //初始化页面
-    ToolService.reset();
-    $rootScope.globalProp.hasBgColor = true;
-    if(ToolService.checkLogin()){
-        ToolService.loadUser();
+    let queryUserInfo = ()=>{
         AjaxService.post({
             url:ToolService.host+"/wx/mycount/getUserByToken",
             data:{"accessToken":ToolService.user.accessToken},
@@ -64,6 +60,14 @@ function userinfo($scope:any,$rootScope:IRootScope.rootScope,ToolService:Tool,Aj
             $scope.wxpay = user.wxpay;
             $scope.alipay = user.alipay;
         })
+    }
+
+    //初始化页面
+    ToolService.reset();
+    $rootScope.globalProp.hasBgColor = true;
+    if(ToolService.checkLogin()){
+        ToolService.loadUser();
+        queryUserInfo();
     }else{
         ToolService.changeRoute("/user");
     }

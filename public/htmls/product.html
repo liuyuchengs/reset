@@ -11,84 +11,25 @@
 <div class="has-header"></div>
 <div class="drop">
 	<div class="filter">
-		<div class="filter-item" ng-class="{'check-color':menuParams.area}" ng-click="switchMenu('area')">
-			<span class="filter-text">位置</span>
-			<div></div>
-		</div>
-		<div class="filter-item" ng-class="{'check-color':menuParams.order}" ng-click="switchMenu('order')">
-			<span class="filter-text ">排序</span>
-			<div></div>
-		</div>
-		<div class="filter-item" ng-class="{'check-color':menuParams.classes}" ng-click="switchMenu('class')">
-			<span class="filter-text">分类</span>
+		<div ng-repeat="item in menuParams" class="filter-item" ng-class="{'check-color':item.has}" ng-click="switchMenu($index,menuParams)">
+			<span class="filter-text" ng-bind="item.val"></span>
 			<div></div>
 		</div>
 	</div>
 	<div class="drop-menu">
-		<ul id="drop-order" class="drop-menu-list" ng-show="hasOrder">
-			<li ng-class="{'li-check':orderParams.default.has}" ng-click="orderSelect('default')">
-				<span>默认排序</span>
+		<ul ng-repeat="item in menuParams" class="drop-menu-list" ng-show="item.has">
+			<li ng-repeat="children in item.children" ng-class="{'li-check':children.has}" ng-click="switchDrop($index,item.children)">
+				<span ng-bind="children.val"></span>
 				<div></div>
 			</li>
-			<li ng-class="{'li-check':orderParams.price.has}" ng-click="orderSelect('price')">
-				<span>价格最低</span>
-				<div></div>
-			</li>
-			<li ng-class="{'li-check':orderParams.priceDesc.has}" ng-click="orderSelect('priceDesc')">
-				<span>价格最高</span>
-				<div></div>
-			</li>
-			<li ng-class="{'li-check':orderParams.scoreDesc.has}" ng-click="orderSelect('scoreDesc')">
-				<span>评分最高</span>
-				<div></div>
-			</li>
-			<li ng-class="{'li-check':orderParams.countDesc.has}" ng-click="orderSelect('countDesc')">
-				<span>销量最高</span>
-				<div></div>
-			</li>
-			<li ng-class="{'li-check':orderParams.locationes.has}" ng-click="orderSelect('locationes')" ng-show="hasLocation">
-				<span>距离最近</span>
-				<div></div>
 			</li>
 		</ul>
-		<ul id="drop-area" class="drop-menu-list" ng-show="hasArea">
-			<li ng-class="{'li-check':areaParams.default.has}" ng-click="areaSelect('default')">
-				<span >所有区域</span>
-				<div></div>
-			</li>
-			<li ng-class="{'li-check':areaParams.futian.has}" ng-click="areaSelect('futian')">
-				<span>福田区</span>
-				<div></div>
-			</li>
-			<li ng-class="{'li-check':areaParams.nanshan.has}" ng-click="areaSelect('nanshan')">
-				<span>南山区</span>
-				<div></div>
-			</li>
-			<li ng-class="{'li-check':areaParams.luohu.has}" ng-click="areaSelect('luohu')">
-				<span>罗湖区</span>
-				<div></div>
-			</li>
-			<li ng-class="{'li-check':areaParams.baoan.has}" ng-click="areaSelect('baoan')">
-				<span>宝安区</span>
-				<div></div>
-			</li>
-			<li ng-class="{'li-check':areaParams.longhua.has}" ng-click="areaSelect('longhua')">
-				<span>龙华新区</span>
-				<div></div>
-			</li>
-			<li ng-class="{'li-check':areaParams.longgang.has}" ng-click="areaSelect('longgang')">
-				<span>龙岗区</span>
-				<div></div>
-			</li>
-			<li ng-class="{'li-check':areaParams.yantian.has}" ng-click="areaSelect('yantian')">
-				<span>盐田区</span>
-				<div></div>
+		<ul class="drop-menu-grid" ng-show="menuParams[2].has" >
+			<li class="item" ng-repeat="item in classParams" ng-class="{'item-check':item.has}" ng-click="switchDrop($index,classParams)">
+				<img ng-src="{{item.src}}">
+				<p ng-bind="item.val"></p>
 			</li>
 		</ul>
-		<ul id="drop-class" class="drop-menu-grid" ng-show="hasClass" ng-include="'section/item-yake.html'" ng-if="productParams.yake.has"></ul>
-		<ul id="drop-class" class="drop-menu-grid" ng-show="hasClass" ng-include="'section/item-meirong.html'" ng-if="productParams.meirong.has" ></ul>
-		<ul id="drop-class" class="drop-menu-grid" ng-show="hasClass" ng-include="'section/item-fck.html'" ng-if="productParams.fck.has"></ul>
-		<ul id="drop-class" class="drop-menu-grid" ng-show="hasClass" ng-include="'section/item-zhongyi.html'" ng-if="productParams.zhongyi.has"></ul>
 	</div>
 </div>
 <ul class="prduct-container" >

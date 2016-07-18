@@ -13,7 +13,7 @@ define(["require", "exports"], function (require, exports) {
         $scope.scheduleParams = {};
         $scope.filterParams = [
             { has: true, val: "套餐详情" },
-            { has: false, val: "信息详情" },
+            { has: false, val: "医院详情" },
             { has: false, val: "须知" },
         ];
         $scope.order = {
@@ -134,7 +134,6 @@ define(["require", "exports"], function (require, exports) {
                 data: { id: $scope.hospitalId },
             }).then(function (data) {
                 if (data.code == 0) {
-                    $scope.mergeHospital(data.data);
                     $scope.hospital = data.data;
                     $scope.order.hospitalAddress = $scope.hospital.address;
                     $scope.order.hospitalName = $scope.hospital.name;

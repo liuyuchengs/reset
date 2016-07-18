@@ -28,7 +28,7 @@ class Tool{
          * 区域分类参数
          */
         this.areaParams = [
-            {has:false,val:"全部区域",id:""},
+            {has:true,val:"全部区域",id:""},
             {has:false,val:"福田区",id:"福田区"},
             {has:false,val:"南山区",id:"南山区"},
             {has:false,val:"罗湖区",id:"罗湖区"},
@@ -41,60 +41,60 @@ class Tool{
          * 牙科页面项目分类参数
          */
         this.yakeParams = [
-            {has:false,val:"全部",id:null},
-            {has:false,val:"种植牙",id:19},
-            {has:false,val:"洗牙",id:20},
-            {has:false,val:"烤瓷牙",id:80},
-            {has:false,val:"补牙",id:22},
-            {has:false,val:"拔牙",id:23},
-            {has:false,val:"牙齿美容",id:24},
-            {has:false,val:"牙齿矫正",id:64},
-            {has:false,val:"义齿",id:65},
-            {has:false,val:"牙周治疗",id:63},
-            {has:false,val:"其他",id:60},
+            {has:true,val:"全部",id:null,src:"../contents/svg/yake/all.svg"},
+            {has:false,val:"种植牙",id:19,src:"../contents/svg/yake/zzy.svg"},
+            {has:false,val:"洗牙",id:20,src:"../contents/svg/yake/xiya.svg"},
+            {has:false,val:"烤瓷牙",id:80,src:"../contents/svg/yake/kcy.svg"},
+            {has:false,val:"补牙",id:22,src:"../contents/svg/yake/buya.svg"},
+            {has:false,val:"拔牙",id:23,src:"../contents/svg/yake/baya.svg"},
+            {has:false,val:"牙齿美容",id:24,src:"../contents/svg/yake/ycmr.svg"},
+            {has:false,val:"牙齿矫正",id:64,src:"../contents/svg/yake/jiaozheng.svg"},
+            {has:false,val:"义齿",id:65,src:"../contents/svg/yake/yichi.svg"},
+            {has:false,val:"牙周治疗",id:63,src:"../contents/svg/yake/yzzl.svg"},
+            {has:false,val:"其他",id:60,src:"../contents/svg/yake/qita.svg"},
         ];
         /**
          * 美容页面项目分类参数
          */
         this.meirongParams = [
-            {has:false,val:"全部",id:null},
-            {has:false,val:"眼部整形",id:7},
-            {has:false,val:"面部整形",id:8},
-            {has:false,val:"鼻部整形",id:9},
-            {has:false,val:"胸部整形",id:45},
-            {has:false,val:"吸脂塑形",id:12},
-            {has:false,val:"私密整形",id:78},
-            {has:false,val:"注射美容",id:79},
-            {has:false,val:"激光美肤",id:80},
-            {has:false,val:"口唇整形",id:81},
-            {has:false,val:"其他",id:13},
+            {has:true,val:"全部",id:null,src:"../contents/svg/meirong/all.svg"},
+            {has:false,val:"眼部整形",id:7,src:"../contents/svg/meirong/yanmei.svg"},
+            {has:false,val:"面部整形",id:8,src:"../contents/svg/meirong/mianbu.svg"},
+            {has:false,val:"鼻部整形",id:9,src:"../contents/svg/meirong/bibu.svg"},
+            {has:false,val:"胸部整形",id:45,src:"../contents/svg/meirong/xiong.svg"},
+            {has:false,val:"吸脂塑形",id:12,src:"../contents/svg/meirong/xizhi.svg"},
+            {has:false,val:"私密整形",id:78,src:"../contents/svg/meirong/simi.svg"},
+            {has:false,val:"注射美容",id:79,src:"../contents/svg/meirong/zhushe.svg"},
+            {has:false,val:"激光美肤",id:80,src:"../contents/svg/meirong/jiguang.svg"},
+            {has:false,val:"口唇整形",id:81,src:"../contents/svg/meirong/koucun.svg"},
+            {has:false,val:"其他",id:13,src:"../contents/svg/meirong/qita.svg"},
         ];
         /**
          * 妇产科项目分类参数
          */
         this.fckParams = [
-            {has:false,val:"全部",id:null},
-            {has:false,val:"产前检查",id:48},
-            {has:false,val:"分娩",id:49}
+            {has:true,val:"全部",id:null,src:"../contents/svg/fck/all.svg"},
+            {has:false,val:"产前检查",id:48,src:"../contents/svg/fck/jiancha.svg"},
+            {has:false,val:"分娩",id:49,src:"../contents/svg/fck/fenmian.svg"}
         ];
         /**
          * 中医页面项目分类参数
          */
         this.zhongyiParams = [
-            {has:false,val:"全部",id:null},
-            {has:false,val:"头部",id:51},
-            {has:false,val:"肩颈",id:52},
-            {has:false,val:"腰部",id:53},
-            {has:false,val:"腿部",id:54},
-            {has:false,val:"全身",id:55},
-            {has:false,val:"经络",id:56},
-            {has:false,val:"其他",id:57}
+            {has:true,val:"全部",id:null,src:"../contents/svg/zhongyi/all.svg"},
+            {has:false,val:"头部",id:51,src:"../contents/svg/zhongyi/toubu.svg"},
+            {has:false,val:"肩颈",id:52,src:"../contents/svg/zhongyi/jianjing.svg"},
+            {has:false,val:"腰部",id:53,src:"../contents/svg/zhongyi/yaobu.svg"},
+            {has:false,val:"腿部",id:54,src:"../contents/svg/zhongyi/tuibu.svg"},
+            {has:false,val:"全身",id:55,src:"../contents/svg/zhongyi/quanshen.svg"},
+            {has:false,val:"经络",id:56,src:"../contents/svg/zhongyi/jingluo.svg"},
+            {has:false,val:"其他",id:57,src:"../contents/svg/zhongyi/qita.svg"}
         ];
         /**
          * 体检页面项目分类参数
          */
         this.tijianParams = [
-            {has:false,val:"全部项目",id:null},
+            {has:true,val:"全部项目",id:null},
             {has:false,val:"商业体检",id:75},
             {has:false,val:"常规体检",id:67},
             {has:false,val:"中年体检",id:69},
@@ -109,7 +109,7 @@ class Tool{
          * 排序参数
          */
         this.orderParams = [
-            {has:false,val:"全部项目",id:""},
+            {has:true,val:"全部项目",id:""},
             {has:false,val:"价格最低",id:"prefer_price asc"},
             {has:false,val:"价格最高",id:"prefer_price desc"},
             {has:false,val:"评分最高",id:"hospital_score asc"},
@@ -120,7 +120,7 @@ class Tool{
          * 性别排序
          */
         this.sexParams = [
-            {has:false,val:"通用",id:""},
+            {has:true,val:"通用",id:""},
             {has:false,val:"男",id:"男"},
             {has:false,val:"女",id:"女"},
         ]
@@ -128,7 +128,7 @@ class Tool{
          * 医生页面排序参数
          */
         this.doctorOrderParams = [
-            {has:false,val:"默认排序",id:""},
+            {has:true,val:"默认排序",id:""},
             {has:false,val:"按职称",id:"profession_title desc"},
             {has:false,val:"按评分",id:"score desc"},
         ]
@@ -136,7 +136,7 @@ class Tool{
          * 医生页面专科参数
          */
         this.professionalParams = [
-            {has:false,val:"全部项目",id:null,children:[{has:false,val:"全部",id:""}]},
+            {has:true,val:"全部项目",id:null,children:[{has:false,val:"全部",id:""}]},
             {has:false,val:"牙科",id:2,children:this.yakeParams.slice(1)},
             {has:false,val:"医学美容",id:3,children:this.meirongParams.slice(1)},
             {has:false,val:"高端妇产科",id:4,children:this.fckParams.slice(1)},
@@ -191,7 +191,7 @@ class Tool{
      * return session值
      */
     getSession(key:string){
-        return sessionStorage.getItem(key);
+        return JSON.parse(sessionStorage.getItem(key));
     }
 
     /**
@@ -242,10 +242,10 @@ class Tool{
     infoComplete(){
         if(this.getLocal("user")){
             let user:Data.IUser = <Data.IUser>this.getLocal("user");
-            if(this.emptyany(user)){
-                return true;
-            }else{
+            if(this.empty(user.phone)||this.empty(user.realname)||this.empty(user.age)||this.empty(user.age)){
                 return false;
+            }else{
+                return true;
             }
         }else{ 
             return false;
