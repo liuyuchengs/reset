@@ -12,7 +12,7 @@ import wx = require("WX");
 import Tool = require("./modules/Tool");
 import Ajax = require("./modules/Ajax");
 import Weixin = require("./modules/Weixin");
-let host:string = "http://192.168.0.120:3000";
+let host:string = "http://192.168.0.104:3000";
 var app = ag.module("myApp",['ngRoute']);
 
 /**
@@ -960,6 +960,8 @@ app.controller("interactionCtrl",($scope:any,$rootScope:IRootScope.rootScope,Too
     }
 
     // 初始化页面
+    ToolService.reset();
+    $rootScope.globalProp.hasBgColor = false;
     $rootScope.followTip.has = false;
     $rootScope.followTip.val = "";
     ToolService.onWindowListen(loadNext);

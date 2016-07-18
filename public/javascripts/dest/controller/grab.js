@@ -24,7 +24,7 @@ define(["require", "exports"], function (require, exports) {
         };
         //菜单项变量
         $scope.areaParams = ToolService.areaParams;
-        $scope.dateParams = [];
+        $scope.dataParams = [];
         $scope.classParams = [
             { has: true, val: "洁牙", id: 2 },
             { has: false, val: "美容", id: 3 },
@@ -76,15 +76,20 @@ define(["require", "exports"], function (require, exports) {
         $scope.switchDrop = function (index, obj) {
             ToolService.select(index, obj);
             if (obj === $scope.areaParams) {
+                $scope.queryParams.area = obj[index].id;
                 $scope.menuParams[0].has = false;
             }
             if (obj === $scope.classParams) {
+                $scope.queryParams.professionId = obj[index].id;
                 $scope.menuParams[1].has = false;
             }
             if (obj === $scope.dataParams) {
+                $scope.queryParams.dayDate = obj[index].val;
                 $scope.menuParams[2].has = false;
             }
-            $scope.queryParams.dayDate = obj[index].val;
+            $scope.grabs = [];
+            $rootScope.followTip.has = false;
+            loadData();
             $rootScope.globalProp.hasBlackBg = false;
         };
         // 加载数据
@@ -120,11 +125,6 @@ define(["require", "exports"], function (require, exports) {
                     item.btnMess = "立即抢";
                 }
             });
-        };
-        // 加载下一页数据
-        var loadNext = function () {
-            $scope.queryParams.currentPage++;
-            loadData();
         };
         // 抢单按钮
         $scope.writeCode = function (noamount, productId, hospitalId) {
@@ -182,7 +182,10 @@ define(["require", "exports"], function (require, exports) {
         loadDate(loadData);
         WeixinService.wxInit();
         WeixinService.wxConfig();
-        ToolService.onWindowListen(loadNext);
+        ToolService.onWindowListen(function () {
+            $scope.queryParams.currentPage++;
+            loadData();
+        });
     }
     return grab;
 });

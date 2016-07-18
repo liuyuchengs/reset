@@ -28,7 +28,7 @@ function grab($scope:any,$rootScope:IRootScope.rootScope,$window:ag.IWindowServi
     }
     //菜单项变量
     $scope.areaParams = ToolService.areaParams;
-    $scope.dateParams=[];
+    $scope.dataParams=[];
     $scope.classParams = [
         {has:true,val:"洁牙",id:2},
         {has:false,val:"美容",id:3},
@@ -83,15 +83,20 @@ function grab($scope:any,$rootScope:IRootScope.rootScope,$window:ag.IWindowServi
     $scope.switchDrop = (index:number,obj:any[])=>{
         ToolService.select(index,obj);
         if(obj===$scope.areaParams){
+            $scope.queryParams.area = obj[index].id;
             $scope.menuParams[0].has = false;
         }
         if(obj===$scope.classParams){
+            $scope.queryParams.professionId = obj[index].id;
             $scope.menuParams[1].has = false;
         }
         if(obj===$scope.dataParams){
+            $scope.queryParams.dayDate = obj[index].val;
             $scope.menuParams[2].has = false;
         }
-        $scope.queryParams.dayDate = obj[index].val;
+        $scope.grabs = [];
+        $rootScope.followTip.has = false;
+        loadData();
         $rootScope.globalProp.hasBlackBg = false;
     }
 
@@ -126,12 +131,6 @@ function grab($scope:any,$rootScope:IRootScope.rootScope,$window:ag.IWindowServi
                 item.btnMess = "立即抢";
             }
         })
-    }
-
-    // 加载下一页数据
-    let loadNext = ()=>{
-        $scope.queryParams.currentPage++;
-        loadData();
     }
 
     // 抢单按钮
@@ -189,7 +188,10 @@ function grab($scope:any,$rootScope:IRootScope.rootScope,$window:ag.IWindowServi
     loadDate(loadData);
     WeixinService.wxInit();
     WeixinService.wxConfig();
-    ToolService.onWindowListen(loadNext);
+    ToolService.onWindowListen(()=>{
+        $scope.queryParams.currentPage++;
+        loadData();
+    });
 }
 
 export = grab;
