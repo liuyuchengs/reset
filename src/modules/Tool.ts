@@ -1,6 +1,7 @@
 /// <reference path="./../../typings/index.d.ts" />
 import fs = require("fs");
 import crypto = require("crypto");
+import multer = require("multer");
 
 /**
  * Tool
@@ -48,10 +49,36 @@ class Tool {
     }
 
     /**
-     * 测试单元测试
+     * 创建multer上传对象
+     * @params path->保存上传文件的路径,默认为public/upload
      */
-    static add(x:number,y:number){
-        return x+y;
+    static getUpLoad(path?:string){
+        path=path||"public/upload";
+        var storage = multer.diskStorage({
+            destination: function (req, file, cb) {
+                cb(null, path);
+            },
+            filename: function (req, file, cb) {
+                let list = file.originalname.split(".");
+                cb(null,Date.now()+"."+list[1]);
+            }
+        })
+        return multer({storage:storage});
+    }
+
+    /**
+     * async/await读取文本
+     */
+    static readFile(path:string):Promise<Buffer>{
+        return new Promise<Buffer>((resolve:(value:Buffer)=>void,reject:(value:any)=>void)=>{
+            fs.readFile(path,(err,data)=>{
+                if(err!==null){
+                    reject(err);
+                }else{
+                    resolve(data);
+                }
+            })
+        })
     }
 
 }

@@ -1,6 +1,6 @@
 /// <reference path="./../../typings/index.d.ts" />
 import request = require("request");
-
+import fs = require("fs");
 /**
  * 发起http请求
  * @params req->express经过parse后的req对象
@@ -25,25 +25,44 @@ function proxyRequest(req:any,host:string){
             })
         }
         if(req.method==="POST"){
-            let postObj:any = {
-                url:host+req.originalUrl,
-                form:req.body,
-            }
-            if(req.headers.accesstoken){
-                postObj.headers = {
-                    "accessToken":req.headers.accesstoken,
+            if(req.body.isMulter){
+                let obj = {
+                    url:host+req.originalUrl,
+                    headers:{
+                        "accessToken":req.headers.accesstoken,
+                    },
+                    formData:req.body.formData,
                 }
-            }
-            request.post(postObj,(err:any,httpRes:any,body:any)=>{
-                if(err!==null){
-                    reject(err);
-                }else{
-                    resolve(body);
+                request.post(obj,(err:any,httpRes:any,body:any)=>{
+                    if(err!==null){
+                        reject(err);
+                    }else{
+                        resolve(body);
+                    }
+                })
+            }else{
+                let postObj:any = {
+                    url:host+req.originalUrl,
+                    form:req.body,
                 }
-            })
+                if(req.headers.accesstoken){
+                    postObj.headers = {
+                        "accessToken":req.headers.accesstoken,
+                    }
+                }
+                request.post(postObj,(err:any,httpRes:any,body:any)=>{
+                    if(err!==null){
+                        reject(err);
+                    }else{
+                        resolve(body);
+                    }
+                })
+            }
+            
         }
         
     })
 }
+
 
 export = proxyRequest;

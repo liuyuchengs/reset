@@ -26,23 +26,42 @@ function proxyRequest(req, host) {
             });
         }
         if (req.method === "POST") {
-            let postObj = {
-                url: host + req.originalUrl,
-                form: req.body,
-            };
-            if (req.headers.accesstoken) {
-                postObj.headers = {
-                    "accessToken": req.headers.accesstoken,
+            if (req.body.isMulter) {
+                let obj = {
+                    url: host + req.originalUrl,
+                    headers: {
+                        "accessToken": req.headers.accesstoken,
+                    },
+                    formData: req.body.formData,
                 };
+                request.post(obj, (err, httpRes, body) => {
+                    if (err !== null) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(body);
+                    }
+                });
             }
-            request.post(postObj, (err, httpRes, body) => {
-                if (err !== null) {
-                    reject(err);
+            else {
+                let postObj = {
+                    url: host + req.originalUrl,
+                    form: req.body,
+                };
+                if (req.headers.accesstoken) {
+                    postObj.headers = {
+                        "accessToken": req.headers.accesstoken,
+                    };
                 }
-                else {
-                    resolve(body);
-                }
-            });
+                request.post(postObj, (err, httpRes, body) => {
+                    if (err !== null) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(body);
+                    }
+                });
+            }
         }
     });
 }

@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 /// <reference path="./../../typings/index.d.ts"/>
-const express = require('express');
+const express = require("express");
 const focusCtrl = require("./../controller/focusCtrl");
 let router = express.Router();
 router.post("/focusManCount", (req, res) => __awaiter(this, void 0, void 0, function* () {

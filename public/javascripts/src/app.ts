@@ -12,7 +12,7 @@ import wx = require("WX");
 import Tool = require("./modules/Tool");
 import Ajax = require("./modules/Ajax");
 import Weixin = require("./modules/Weixin");
-let host:string = "http://192.168.0.104:3000";
+let host:string = "http://192.168.0.120:3000";
 var app = ag.module("myApp",['ngRoute']);
 
 /**
@@ -565,13 +565,16 @@ app.directive("zoomImage",()=>{
 app.filter("defaultHeadImg",()=>{
     return (input:string,sex:string)=>{
         if(input===null||input===""||input===undefined){
-            input = "../contents/img/men-head.png";
-        }else{
-            input = "../contents/img/women-head.png";
+            if(sex==="女"){
+                input = "../contents/img/women-head.png";
+            }else{
+                input = "../contents/img/men-head.png";
+            }
         }
         return input;
     }
 })
+
 
 /**
  * 过滤器

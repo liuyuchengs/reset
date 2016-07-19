@@ -1,6 +1,6 @@
 define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./modules/Ajax", "./modules/Weixin"], function (require, exports, ag, Swiper, wx, Tool, Ajax, Weixin) {
     "use strict";
-    var host = "http://192.168.0.104:3000";
+    var host = "http://192.168.0.120:3000";
     var app = ag.module("myApp", ['ngRoute']);
     /**
      * 配置
@@ -538,10 +538,12 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
     app.filter("defaultHeadImg", function () {
         return function (input, sex) {
             if (input === null || input === "" || input === undefined) {
-                input = "../contents/img/men-head.png";
-            }
-            else {
-                input = "../contents/img/women-head.png";
+                if (sex === "女") {
+                    input = "../contents/img/women-head.png";
+                }
+                else {
+                    input = "../contents/img/men-head.png";
+                }
             }
             return input;
         };

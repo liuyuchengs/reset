@@ -43,10 +43,6 @@ class Connect {
             connect.end();
         })
     }
-
-    test(value:mysql.IMySql){
-
-    }
 }
 
 export = Connect;

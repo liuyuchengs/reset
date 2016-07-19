@@ -1,5 +1,8 @@
 "use strict";
+/// <reference path="./../../typings/index.d.ts" />
+const fs = require("fs");
 const crypto = require("crypto");
+const multer = require("multer");
 /**
  * Tool
  * 工具类
@@ -42,10 +45,36 @@ class Tool {
         return Tool.decipher.final("utf8");
     }
     /**
-     * 测试单元测试
+     * 创建multer上传对象
+     * @params path->保存上传文件的路径,默认为public/upload
      */
-    static add(x, y) {
-        return x + y;
+    static getUpLoad(path) {
+        path = path || "public/upload";
+        var storage = multer.diskStorage({
+            destination: function (req, file, cb) {
+                cb(null, path);
+            },
+            filename: function (req, file, cb) {
+                let list = file.originalname.split(".");
+                cb(null, Date.now() + "." + list[1]);
+            }
+        });
+        return multer({ storage: storage });
+    }
+    /**
+     * async/await读取文本
+     */
+    static readFile(path) {
+        return new Promise((resolve, reject) => {
+            fs.readFile(path, (err, data) => {
+                if (err !== null) {
+                    reject(err);
+                }
+                else {
+                    resolve(data);
+                }
+            });
+        });
     }
 }
 Tool.cipher = crypto.createCipher("aes192", "uk123456");
