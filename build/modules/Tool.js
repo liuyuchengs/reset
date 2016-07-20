@@ -45,6 +45,13 @@ class Tool {
         return Tool.decipher.final("utf8");
     }
     /**
+     * 为图片添加host
+     * @params host->url的host部分,path->url的path部分
+     */
+    static addHost(host, path) {
+        return host + path;
+    }
+    /**
      * 创建multer上传对象
      * @params path->保存上传文件的路径,默认为public/upload
      */
@@ -72,6 +79,21 @@ class Tool {
                 }
                 else {
                     resolve(data);
+                }
+            });
+        });
+    }
+    /**
+     *  async/await修改文件名
+     */
+    static renameFile(oldPath, newPath) {
+        return new Promise((resolve, reject) => {
+            fs.rename(oldPath, newPath, (err) => {
+                if (err !== null) {
+                    reject(err);
+                }
+                else {
+                    resolve(true);
                 }
             });
         });

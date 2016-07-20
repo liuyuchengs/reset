@@ -16,3 +16,5 @@
 /// <reference path="globals/require/index.d.ts" />
 /// <reference path="globals/serve-static/index.d.ts" />
 /// <reference path="uokang.d.ts" />
+/// <reference path="Server.d.ts" />
+

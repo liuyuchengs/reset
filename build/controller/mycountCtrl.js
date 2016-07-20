@@ -9,28 +9,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /// <reference path="./../../typings/index.d.ts"/>
 const HttpResult = require("./../modules/HttpResult");
-const Connect = require("./../modules/Connect");
+const MysqlConnect = require("./../modules/MysqlConnect");
 const Tool = require("./../modules/Tool");
-let connect = new Connect();
 /**
  * mycountCtrl
  */
-class mycountCtrl {
+class MycountCtrl {
     constructor() {
     }
+    /**
+     * 根据用户token获取用户信息
+     */
     static getUserByToken(params) {
         return __awaiter(this, void 0, Promise, function* () {
             let result;
+            let sqlResult;
             let sql = "select * from user where id in (select user_id from user_token where access_token = '" + params.accessToken + "')";
-            let sqlResult = yield connect.connect(sql);
-            return new Promise((resolve, reject) => {
-                let filterResult = Tool.FilterResult(["id", "nickname", "phone", "face", "sex", "realname", "email", "gift_code", "alipay", "wxpay", "referralCode", "access_token"], sqlResult[0]);
-                filterResult["accessToken"] = params.accessToken;
-                result = HttpResult.CreateResult(filterResult, 0, "查询成功!");
-                resolve(result);
-            });
+            try {
+                sqlResult = yield MysqlConnect.query(sql);
+                return new Promise((resolve, reject) => {
+                    let filterResult = Tool.FilterResult(["id", "nickname", "phone", "face", "sex", "realname", "email", "gift_code", "alipay", "wxpay", "referralCode"], sqlResult[0]);
+                    filterResult["accessToken"] = params.accessToken;
+                    result = HttpResult.CreateResult(filterResult, 0, "查询成功!");
+                    resolve(result);
+                });
+            }
+            catch (err) {
+                return new Promise((resolve, reject) => {
+                    reject(err);
+                });
+            }
         });
     }
 }
-module.exports = mycountCtrl;
-//# sourceMappingURL=mycountCtrl.js.map
+module.exports = MycountCtrl;
+//# sourceMappingURL=MycountCtrl.js.map

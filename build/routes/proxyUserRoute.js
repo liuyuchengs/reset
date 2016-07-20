@@ -11,30 +11,34 @@ const fs = require("fs");
 const express = require("express");
 const proxyRequest = require("./../modules/ProxyRequest");
 const multer = require("multer");
+const Tool = require("./../modules/Tool");
 const router = express.Router();
 const url = "https://www.uokang.com";
 let upload = multer({ dest: "temp/upload" });
 /**
  * 修改用户信息
  */
-let params = [{ name: "headImage" }];
 router.use(upload.single("headImage"), (req, res, next) => __awaiter(this, void 0, void 0, function* () {
     if (req.file) {
-        let headImage;
+        let newPath;
         let result;
+        // 添加图片后缀
         try {
-            let formData = new Object();
-            formData.headImage = fs.createReadStream(req.file.path);
-            formData.name = "img";
-            formData.val = "img";
-            req.body.isMulter = true;
-            req.body.formData = formData;
+            newPath = req.file.path + "." + req.file.originalname.split(".")[1];
+            yield Tool.renameFile(req.file.path, newPath);
         }
         catch (err) {
             console.log(err);
             res.status(500);
         }
+        // 发起http请求
         try {
+            let formData = {};
+            formData.headImage = fs.createReadStream(newPath);
+            formData.name = "img";
+            formData.val = "img";
+            req.body.isMulter = true;
+            req.body.formData = formData;
             result = yield proxyRequest(req, url);
             res.send(result);
         }

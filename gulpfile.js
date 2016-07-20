@@ -9,13 +9,12 @@ var ts = require("gulp-typescript"); //编译typescript文件
 var paths = {
     sass:{src:"public/stylesheets/src/*.scss",dest:"public/stylesheets/css"},
     cssMin:{src:"public/stylesheets/css/*.css",dest:"public/stylesheets/dest"},
-    ug:{src:"public/javascripts/js/*.js",dest:"public/javascripts/dest"},
-    ugControll:{src:"public/javascripts/js/controller/*.js",dest:"public/javascripts/dest/controller"},
-    ugModule:{src:"public/javascripts/js/modules/*.js",dest:"public/javascripts/dest/modules"},
+    ug:{src:["public/javascripts/js/*.js","public/javascripts/js/*/*.js"],dest:"public/javascripts/dest"},
+    tsc:{src:["public/javascripts/src/*.ts","public/javascripts/src/*/*.ts"],dest:"public/javascripts/js"},
 }
 
 /**
- * 编译sass
+ * 编译前端sass
  */
 gulp.task("sass",function(){
     return gulp.src(paths.sass.src)
@@ -24,7 +23,7 @@ gulp.task("sass",function(){
 })
 
 /**
- * 压缩css
+ * 压缩前端css
  */
 gulp.task("cssMin",function(){
     return gulp.src(paths.cssMin.src)
@@ -33,7 +32,7 @@ gulp.task("cssMin",function(){
 })
 
 /**
- * 压缩dest下的js
+ * 压缩前端js文件
  */
 gulp.task("ug",function(){
     return gulp.src(paths.ug.src)
@@ -42,21 +41,17 @@ gulp.task("ug",function(){
 })
 
 /**
- * 压缩dest/module下的js
+ * 编译前端ts文件
  */
-gulp.task("ugModule",function(){
-    return gulp.src(paths.ugModule.src)
-        .pipe(uglify({mangle:false,}))
-        .pipe(gulp.dest(paths.ugModule.dest))
-})
-
-/**
- *  压缩dest/controller下的js
- */
-gulp.task("ugControll",function(){
-    return gulp.src(paths.ugControll.src)
-        .pipe(uglify({mangle:false,}))
-        .pipe(gulp.dest(paths.ugControll.dest))
+gulp.task("tsc",()=>{
+    let tsResult = gulp.src(paths.tsc.src,{base:"public/javascripts/src"}).pipe(ts({
+        module: "amd",
+        target: "es5",
+        declaration:false,
+        noImplicitAny: true,
+        sourceMap: true,
+    }));
+    return tsResult.js.pipe(gulp.dest(paths.tsc.dest));
 })
 
 //监视
@@ -64,8 +59,7 @@ gulp.task("watch",function(){
     gulp.watch(paths.sass.src,["sass"]);
     gulp.watch(paths.cssMin.src,["cssMin"]);
     gulp.watch(paths.ug.src,["ug"]);
-    gulp.watch(paths.ugModule.src,["ugModule"]);
-    gulp.watch(paths.ugControll.src,["ugControll"]);
+    gulp.watch(paths.tsc.src,["tsc"]);
 })
 
 gulp.task("default",["watch"]);

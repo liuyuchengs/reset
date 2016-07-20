@@ -40,6 +40,13 @@ class HttpResult {
      static CreateFailResult(message:string){
          return new HttpResult({},1,message);
      }
+
+     /**
+      * 静态创建成功的HttpResult对象
+      */
+      static CreateSuccessResult(obj:any){
+          return new HttpResult(obj,0,"success");
+      }
 }
 
 export = HttpResult;

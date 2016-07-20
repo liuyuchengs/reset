@@ -7,4 +7,14 @@ declare module "NodeData"{
         code:number;
         message:string;
     }
+    export interface IQueryParams{
+        city?:string;
+        area?:string;
+        professionId?:number;
+        itemId?:number;
+        order?:string;
+        currentPage?:number;
+        pageRows?:number;
+        location?:string;
+    }
 }

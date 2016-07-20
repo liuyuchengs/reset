@@ -1,6 +1,6 @@
 define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./modules/Ajax", "./modules/Weixin"], function (require, exports, ag, Swiper, wx, Tool, Ajax, Weixin) {
     "use strict";
-    var host = "http://192.168.0.102:3000";
+    var host = "http://192.168.0.120:3000";
     var app = ag.module("myApp", ['ngRoute']);
     /**
      * 配置
@@ -296,10 +296,10 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             }, $controllerProvider)
         }).when("/news/detail", {
             templateUrl: "newsdetail.html",
-            controller: "newsCtrl",
+            controller: "newsDetailCtrl",
             resolve: Tool.loadCtrl({
-                url: "../../javascripts/dest/controller/news.js",
-                name: "newsCtrl",
+                url: "../../javascripts/dest/controller/newsDetail.js",
+                name: "newsDetailCtrl",
             }, $controllerProvider)
         }).when("/order", {
             templateUrl: "order.html",
@@ -537,11 +537,13 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
      */
     app.filter("defaultHeadImg", function () {
         return function (input, sex) {
-            if (input === null || input === "") {
-                input = "../contents/img/men-head.png";
-            }
-            else {
-                input = "../contents/img/women-head.png";
+            if (input === null || input === "" || input === undefined) {
+                if (sex === "女") {
+                    input = "../contents/img/women-head.png";
+                }
+                else {
+                    input = "../contents/img/men-head.png";
+                }
             }
             return input;
         };
@@ -553,7 +555,7 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
      */
     app.filter("defaultImg", function () {
         return function (input, type) {
-            if (input === null || input === "") {
+            if (input === null || input === "" || input === undefined) {
                 if (type === "doc") {
                     input = "../contents/img/doc-head.png";
                 }
@@ -698,6 +700,7 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
         $rootScope.followTip.val = "";
         $rootScope.globalProp.hasBgColor = false;
         //初始化页面
+        ToolService.reset();
         loadRecommend();
         queryBanners();
         initSwiper();
@@ -820,6 +823,7 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
         };
         //页面初始化
         ToolService.reset();
+        $rootScope.globalProp.hasBgColor = true;
         ToolService.areaParams[0].has = true;
         ToolService.doctorOrderParams[0].has = true;
         ToolService.professionalParams[0].has = true;
@@ -904,6 +908,8 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             queryPost();
         };
         // 初始化页面
+        ToolService.reset();
+        $rootScope.globalProp.hasBgColor = false;
         $rootScope.followTip.has = false;
         $rootScope.followTip.val = "";
         ToolService.onWindowListen(loadNext);

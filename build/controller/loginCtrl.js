@@ -9,13 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /// <reference path="./../../typings/index.d.ts"/>
 const HttpResult = require("./../modules/HttpResult");
-const Connect = require("./../modules/Connect");
+const MysqlConnect = require("./../modules/MysqlConnect");
 const Tool = require("./../modules/Tool");
-let connect = new Connect();
 /**
  * loginCtrl
  */
-class loginCtrl {
+class LoginCtrl {
     constructor() {
     }
     /**
@@ -40,22 +39,31 @@ class loginCtrl {
     static login(params) {
         return __awaiter(this, void 0, Promise, function* () {
             let result;
+            let sqlResult;
             let sql = "select * from (select * from user where phone = '" + params.phone + "') as users left join user_token as token on users.id = token.user_id";
-            var sqlResult = yield connect.connect(sql);
-            return new Promise((resolve) => {
-                if (sqlResult.length > 0 && sqlResult[0].password === params.password) {
-                    let resResult = Tool.FilterResult(["id", "nickname", "phone", "face", "sex", "realname", "email", "gift_code", "alipay", "wxpay", "referralCode", "access_token"], sqlResult[0]);
-                    resResult["accessToken"] = resResult["access_token"];
-                    delete resResult["access_token"];
-                    result = HttpResult.CreateResult(resResult, 0, "登录成功!");
-                }
-                else {
-                    result = HttpResult.CreateFailResult("账号或者密码不正确!");
-                }
-                resolve(result);
-            });
+            try {
+                sqlResult = yield MysqlConnect.query(sql);
+                return new Promise((resolve) => {
+                    if (sqlResult.length > 0 && sqlResult[0].password === params.password) {
+                        let resResult = Tool.FilterResult(["id", "nickname", "phone", "face", "sex", "realname", "email", "gift_code", "alipay", "wxpay", "referralCode", "access_token"], sqlResult[0]);
+                        resResult["accessToken"] = resResult["access_token"];
+                        delete resResult["access_token"];
+                        result = HttpResult.CreateResult(resResult, 0, "登录成功!");
+                    }
+                    else {
+                        result = HttpResult.CreateFailResult("账号或者密码不正确!");
+                    }
+                    resolve(result);
+                });
+            }
+            catch (err) {
+                console.log(err);
+                return new Promise((reject) => {
+                    reject(err);
+                });
+            }
         });
     }
 }
-module.exports = loginCtrl;
-//# sourceMappingURL=loginCtrl.js.map
+module.exports = LoginCtrl;
+//# sourceMappingURL=LoginCtrl.js.map

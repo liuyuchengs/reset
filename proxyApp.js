@@ -11,6 +11,7 @@ var bodyParser = require('body-parser');
 //加载路由
 var proxyRoute = require("./build/routes/proxyRoute");
 var proxyUserRoute = require("./build/routes/proxyUserRoute");
+var proxyPostRoute = require("./build/routes/proxyPostRoute");
 var app = express();
 
 // view engine setup
@@ -20,10 +21,10 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname+"/public/contents/img/logo.png"));
 
 //配置中转路由->普通文本
@@ -85,7 +86,6 @@ app.use("/wx/product/packagedetalItem",proxyRoute);
 app.use("/wx/schedule/querybyhospitalid",proxyRoute);
 app.use("/wx/hospital/querylist",proxyRoute);
 app.use("/wx/product/queryActivity",proxyRoute);
-app.use("/wx/post/addPost",proxyRoute);
 app.use("/wx/user/createReferralCode",proxyRoute);
 app.use("/wx/share/queryById",proxyRoute);
 app.use("/wx/withDraw/bound",proxyRoute);
@@ -97,6 +97,7 @@ app.use("/wx/withdraw/myMoney",proxyRoute);
 app.use("/wx/withDraw/apply",proxyRoute);
 //配置中转路由->图片上传
 app.use("/wx/mycount/updateUserInfo",proxyUserRoute);
+app.use("/wx/post/addPost",proxyPostRoute);
 
 
 // catch 404 and forward to error handler

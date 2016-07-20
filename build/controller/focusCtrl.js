@@ -9,13 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /// <reference path="./../../typings/index.d.ts"/>
 const HttpResult = require("./../modules/HttpResult");
-const Connect = require("./../modules/Connect");
-let connect = new Connect();
+const MysqlConnect = require("./../modules/MysqlConnect");
 /**
  * focusCtrl
  * 关注路由相关的控制器
  */
-class focusCtrl {
+class FocusCtrl {
     constructor() {
     }
     /**
@@ -26,14 +25,22 @@ class focusCtrl {
             let result;
             let fansSql = "select count(fansId) as fansCount from focus where focusId in (select user_id from user_token where access_token='" + params.accessToken + "')";
             let focusSql = "select count(focusId) as focusCount from focus where fansId in (select user_id from user_token where access_token='" + params.accessToken + "')";
-            let fansResult = yield connect.connect(fansSql);
-            let focusResult = yield connect.connect(focusSql);
-            return new Promise((resolve, reject) => {
-                result = HttpResult.CreateResult({ "countFansMan": fansResult[0].fansCount, "countFocusMan": focusResult[0].focusCount }, 0, "查询成功!");
-                resolve(result);
-            });
+            try {
+                let fansResult = yield MysqlConnect.query(fansSql);
+                let focusResult = yield MysqlConnect.query(focusSql);
+                return new Promise((resolve, reject) => {
+                    result = HttpResult.CreateResult({ "countFansMan": fansResult[0].fansCount, "countFocusMan": focusResult[0].focusCount }, 0, "查询成功!");
+                    resolve(result);
+                });
+            }
+            catch (err) {
+                console.log(err);
+                return new Promise((resolve, reject) => {
+                    reject(err);
+                });
+            }
         });
     }
 }
-module.exports = focusCtrl;
-//# sourceMappingURL=focusCtrl.js.map
+module.exports = FocusCtrl;
+//# sourceMappingURL=FocusCtrl.js.map

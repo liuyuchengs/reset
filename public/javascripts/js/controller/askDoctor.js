@@ -113,8 +113,8 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             var count = 1;
             var afterCount = 3;
             var file = new Blob([""], { type: "image/jpeg" });
-            for (var index in $scope.beforeParams) {
-                var prototype = $scope.beforeParams[index];
+            for (var index in $scope.params) {
+                var prototype = $scope.params[index];
                 if (prototype.has) {
                     if (count < 4) {
                         $scope.postData.append(imgStr + count, $(prototype.val).get(0).files[0]);
@@ -187,4 +187,5 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
         }
         listen();
     }
+    return askDoctor;
 });

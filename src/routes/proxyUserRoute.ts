@@ -11,23 +11,26 @@ let upload = multer({dest:"temp/upload"});
 /**
  * 修改用户信息
  */
-let params:any[] = [{name:"headImage"}];
 router.use(upload.single("headImage"),async (req:express.Request,res:express.Response,next:express.NextFunction)=>{
     if(req.file){
-        let headImage:Buffer;
+        let newPath:string;
         let result:any;
+        // 添加图片后缀
         try{
-            let formData:any = new Object();
-            formData.headImage = fs.createReadStream(req.file.path);
-            formData.name = "img";
-            formData.val = "img";
-            req.body.isMulter = true;
-            req.body.formData = formData;
+            newPath =  req.file.path+"."+req.file.originalname.split(".")[1]
+            await Tool.renameFile(req.file.path,newPath);
         }catch(err){
             console.log(err);
             res.status(500);
         }
+        // 发起http请求
         try{
+            let formData:any = {};
+            formData.headImage = fs.createReadStream(newPath);
+            formData.name = "img";
+            formData.val = "img";
+            req.body.isMulter = true;
+            req.body.formData = formData;
             result = await proxyRequest(req,url);
             res.send(result);
         }catch(err){

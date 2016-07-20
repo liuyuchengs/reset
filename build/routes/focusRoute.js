@@ -9,12 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /// <reference path="./../../typings/index.d.ts"/>
 const express = require("express");
-const focusCtrl = require("./../controller/focusCtrl");
+const FocusCtrl = require("./../controller/FocusCtrl");
 let router = express.Router();
 router.post("/focusManCount", (req, res) => __awaiter(this, void 0, void 0, function* () {
     if (req.body.accessToken && req.body.accessToken.length > 0) {
-        let result = yield focusCtrl.getUserFocusCount(req.body);
-        res.send(result);
+        try {
+            let result = yield FocusCtrl.getUserFocusCount(req.body);
+            res.send(result);
+        }
+        catch (err) {
+            console.log(err);
+            res.status(500).end();
+        }
     }
     else {
         res.status(400).end();

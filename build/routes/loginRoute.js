@@ -10,13 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 /// <reference path="./../../typings/index.d.ts"/>
 const express = require('express');
 const HttpResult = require("./../modules/HttpResult");
-const loginCtrl = require("./../controller/loginCtrl");
+const LoginCtrl = require("./../controller/LoginCtrl");
 let router = express.Router();
 router.post("", (req, res) => __awaiter(this, void 0, void 0, function* () {
     if (req.body.phone && req.body.password) {
         let result;
-        if (loginCtrl.check(req.body)) {
-            result = yield loginCtrl.login(req.body);
+        if (LoginCtrl.check(req.body)) {
+            try {
+                result = yield LoginCtrl.login(req.body);
+            }
+            catch (err) {
+                console.log(err);
+                res.status(500).end();
+            }
         }
         else {
             result = HttpResult.CreateFailResult("请输入正确的账号或者密码!");

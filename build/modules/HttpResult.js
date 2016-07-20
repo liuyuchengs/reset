@@ -26,6 +26,12 @@ class HttpResult {
     static CreateFailResult(message) {
         return new HttpResult({}, 1, message);
     }
+    /**
+     * 静态创建成功的HttpResult对象
+     */
+    static CreateSuccessResult(obj) {
+        return new HttpResult(obj, 0, "success");
+    }
 }
 module.exports = HttpResult;
 //# sourceMappingURL=HttpResult.js.map

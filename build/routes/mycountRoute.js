@@ -9,12 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /// <reference path="./../../typings/index.d.ts"/>
 const express = require('express');
-const mycountCtrl = require("./../controller/mycountCtrl");
+const MycountCtrl = require("./../controller/MycountCtrl");
 let router = express.Router();
 router.post("/getUserByToken", (req, res) => __awaiter(this, void 0, void 0, function* () {
     if (req.body.accessToken) {
-        let result = yield mycountCtrl.getUserByToken(req.body);
-        res.send(result);
+        try {
+            let result = yield MycountCtrl.getUserByToken(req.body);
+            res.send(result);
+        }
+        catch (err) {
+            console.log(err);
+            res.status(500).end();
+        }
     }
     else {
         res.status(400).end();
