@@ -2,6 +2,10 @@
  * node.js的自定义类型信息
  */
 declare module "NodeData"{
+    interface location{
+        latitude:number,
+        longitude:number,
+    }
     export interface HttpResult{
         data:any;
         code:number;
@@ -15,6 +19,6 @@ declare module "NodeData"{
         order?:string;
         currentPage?:number;
         pageRows?:number;
-        location?:string;
+        location?:location;
     }
 }

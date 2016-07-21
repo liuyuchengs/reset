@@ -12,6 +12,7 @@ var focueRoute = require("./build/routes/focusRoute");
 var mycountRoute = require('./build/routes/mycountRoute');
 var bannerRoute = require("./build/routes/bannerRoute");
 var productRoute = require("./build/routes/productRoute");
+var imageRoute = require("./build/routes/imageRoute");
 
 var app = express();
 // 日志输出流
@@ -35,6 +36,7 @@ app.use("/wx/focus",focueRoute);
 app.use("/wx/mycount",mycountRoute);
 app.use("/wx/banner",bannerRoute);
 app.use("/wx/product",productRoute);
+app.use("/wx/image",imageRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

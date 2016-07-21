@@ -27,6 +27,19 @@ class Tool {
         return result;
     }
     /**
+     * 使用req.body初始化对象
+     */
+    static initObject(source, dest) {
+        for (let prop in dest) {
+            if (source[prop]) {
+                dest[prop] = source[prop];
+            }
+            else {
+                dest[prop] = null;
+            }
+        }
+    }
+    /**
      * 对数据进行加密
      * @params value->需要加密的字符串
      * @return 加密后的字符串

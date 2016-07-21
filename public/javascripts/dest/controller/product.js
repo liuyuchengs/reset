@@ -85,6 +85,7 @@ define(["require", "exports"], function (require, exports) {
                 $scope.menuParams[2].has = false;
             }
             $scope.products = [];
+            $scope.queryParams.currentPage = 1;
             $rootScope.followTip.has = false;
             $rootScope.globalProp.hasBlackBg = false;
             loadData();
