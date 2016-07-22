@@ -13,7 +13,7 @@ const ProductCtrl = require("./../controller/ProductCtrl");
 let router = express.Router();
 /**
  * 查询热门专区
- * @params currentPage->分页页码
+ * @param currentPage->分页页码
  */
 router.post("/queryrecommend", (req, res) => __awaiter(this, void 0, void 0, function* () {
     if (req.body.currentPage) {
@@ -34,9 +34,8 @@ router.post("/queryrecommend", (req, res) => __awaiter(this, void 0, void 0, fun
 }));
 /**
  * 查询项目列表
- * @params:
- * 必要参数:currentPage->分页页码,professionId->项目分类,牙科，美容等
- * 非必要参数:city,area,itemId,order等
+ * @param 必要参数:currentPage->分页页码,professionId->项目分类,牙科，美容等
+ * @param 非必要参数:city,area,itemId,order等
  */
 router.post("/querylist", (req, res) => __awaiter(this, void 0, void 0, function* () {
     if (req.body.currentPage && req.body.professionId) {
@@ -56,7 +55,7 @@ router.post("/querylist", (req, res) => __awaiter(this, void 0, void 0, function
 }));
 /**
  * 查询项目详情
- * @params accessToken->用户token,productId->项目id
+ * @param accessToken->用户token,productId->项目id
  */
 router.post("/querybyid", (req, res) => __awaiter(this, void 0, void 0, function* () {
     if (req.body.accessToken && req.body.productId) {

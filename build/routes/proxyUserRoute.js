@@ -39,7 +39,7 @@ router.use(upload.single("headImage"), (req, res, next) => __awaiter(this, void 
             formData.val = "img";
             req.body.isMulter = true;
             req.body.formData = formData;
-            result = yield proxyRequest(req, url);
+            result = yield proxyRequest.request(req, url);
             res.send(result);
         }
         catch (err) {

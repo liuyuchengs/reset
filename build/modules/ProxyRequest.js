@@ -1,11 +1,15 @@
 "use strict";
 /// <reference path="./../../typings/index.d.ts" />
-const request = require("request");
+const requests = require("request");
+/**
+ * @module ProxyRequest
+ */
 /**
  * 发起http请求
- * @params req->express经过parse后的req对象
+ * @param {any} req - 经过express parse后的req对象
+ * @param {string} host - 需要发起http请求的url host
  */
-function proxyRequest(req, host) {
+function request(req, host) {
     return new Promise((resolve, reject) => {
         if (req.method === "GET") {
             let getObj = {
@@ -16,7 +20,7 @@ function proxyRequest(req, host) {
                     "accessToken": req.headers.accessToken,
                 };
             }
-            request.get(getObj, (err, httpRes, body) => {
+            requests.get(getObj, (err, httpRes, body) => {
                 if (err !== null) {
                     reject(err);
                 }
@@ -34,7 +38,7 @@ function proxyRequest(req, host) {
                     },
                     formData: req.body.formData,
                 };
-                request.post(obj, (err, httpRes, body) => {
+                requests.post(obj, (err, httpRes, body) => {
                     if (err !== null) {
                         reject(err);
                     }
@@ -53,7 +57,7 @@ function proxyRequest(req, host) {
                         "accessToken": req.headers.accesstoken,
                     };
                 }
-                request.post(postObj, (err, httpRes, body) => {
+                requests.post(postObj, (err, httpRes, body) => {
                     if (err !== null) {
                         reject(err);
                     }
@@ -65,5 +69,5 @@ function proxyRequest(req, host) {
         }
     });
 }
-module.exports = proxyRequest;
+exports.request = request;
 //# sourceMappingURL=ProxyRequest.js.map

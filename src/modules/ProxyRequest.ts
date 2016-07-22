@@ -1,11 +1,15 @@
 /// <reference path="./../../typings/index.d.ts" />
-import request = require("request");
+import requests= require("request");
 import fs = require("fs");
 /**
- * 发起http请求
- * @params req->express经过parse后的req对象
+ * @module ProxyRequest
  */
-function proxyRequest(req:any,host:string){
+/**
+ * 发起http请求
+ * @param {any} req - 经过express parse后的req对象
+ * @param {string} host - 需要发起http请求的url host
+ */
+export function request(req:any,host:string){
     return new Promise<any>((resolve:(value:any)=>void,reject:(value:any)=>void)=>{
         if(req.method==="GET"){
             let getObj:any = {
@@ -16,7 +20,7 @@ function proxyRequest(req:any,host:string){
                     "accessToken":req.headers.accessToken,
                 }
             }
-            request.get(getObj,(err:any,httpRes:any,body:any)=>{
+            requests.get(getObj,(err:any,httpRes:any,body:any)=>{
                 if(err!==null){
                     reject(err);
                 }else{
@@ -33,7 +37,7 @@ function proxyRequest(req:any,host:string){
                     },
                     formData:req.body.formData,
                 }
-                request.post(obj,(err:any,httpRes:any,body:any)=>{
+                requests.post(obj,(err:any,httpRes:any,body:any)=>{
                     if(err!==null){
                         reject(err);
                     }else{
@@ -50,7 +54,7 @@ function proxyRequest(req:any,host:string){
                         "accessToken":req.headers.accesstoken,
                     }
                 }
-                request.post(postObj,(err:any,httpRes:any,body:any)=>{
+                requests.post(postObj,(err:any,httpRes:any,body:any)=>{
                     if(err!==null){
                         reject(err);
                     }else{
@@ -58,11 +62,6 @@ function proxyRequest(req:any,host:string){
                     }
                 })
             }
-            
         }
-        
     })
 }
-
-
-export = proxyRequest;

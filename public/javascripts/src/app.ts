@@ -15,6 +15,7 @@ import Weixin = require("./modules/Weixin");
 let host:string = "http://192.168.0.120:3000";
 var app = ag.module("myApp",['ngRoute']);
 
+
 /**
  * 配置
  * 程序启动前配置$rootScope

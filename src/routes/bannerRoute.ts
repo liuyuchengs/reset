@@ -3,6 +3,10 @@ import HttpResult = require("./../modules/HttpResult");
 import BannerCtrl = require("./../controller/BannerCtrl");
 
 let router = express.Router();
+
+/**
+ * 查询banner图
+ */
 router.post("/query",async (req:express.Request,res:express.Response)=>{
     if(req.body.type!==null||req.body.type!==undefined){
         let result:HttpResult;

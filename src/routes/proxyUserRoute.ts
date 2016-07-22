@@ -31,7 +31,7 @@ router.use(upload.single("headImage"),async (req:express.Request,res:express.Res
             formData.val = "img";
             req.body.isMulter = true;
             req.body.formData = formData;
-            result = await proxyRequest(req,url);
+            result = await proxyRequest.request(req,url);
             res.send(result);
         }catch(err){
             console.log(err);

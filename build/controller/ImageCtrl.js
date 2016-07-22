@@ -9,35 +9,37 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const MysqlConnect = require("./../modules/MysqlConnect");
 /**
- * ImageCtrl
+ * 图片查询相关模块
+ * @module ImageCtrl
  */
-class ImageCtrl {
-    constructor() {
-    }
-    static queryImage(params) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let sql = null;
-            if (params.type === "PRODUCT") {
-                sql = "select path as url from product_image where flag = 1 and productid = " + params.mainId;
+/**
+ * 查询医院或者项目图片
+ * @param {any} params - 经过express parser转换后的req.body,需有mainId和type属性
+ * @returns {HttpResult|any} 查询结果，异常时返回error异常对象
+ */
+function queryImage(params) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let sql = null;
+        if (params.type === "PRODUCT") {
+            sql = "select path as url from product_image where flag = 1 and productid = " + params.mainId;
+        }
+        else if (params.type === "HOSPITAL") {
+            sql = "select path as url from hospital_image where hospital_id = " + params.mainId;
+        }
+        if (sql) {
+            try {
+                let result = yield MysqlConnect.query(sql);
+                return new Promise((resolve) => {
+                    resolve(result);
+                });
             }
-            else if (params.type === "HOSPITAL") {
-                sql = "select path as url from hospital_image where hospital_id = " + params.mainId;
+            catch (err) {
+                return new Promise((resolve, reject) => {
+                    reject(err);
+                });
             }
-            if (sql) {
-                try {
-                    let result = yield MysqlConnect.query(sql);
-                    return new Promise((resolve) => {
-                        resolve(result);
-                    });
-                }
-                catch (err) {
-                    return new Promise((resolve, reject) => {
-                        reject(err);
-                    });
-                }
-            }
-        });
-    }
+        }
+    });
 }
-module.exports = ImageCtrl;
+exports.queryImage = queryImage;
 //# sourceMappingURL=ImageCtrl.js.map

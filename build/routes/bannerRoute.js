@@ -11,6 +11,9 @@ const express = require('express');
 const HttpResult = require("./../modules/HttpResult");
 const BannerCtrl = require("./../controller/BannerCtrl");
 let router = express.Router();
+/**
+ * 查询banner图
+ */
 router.post("/query", (req, res) => __awaiter(this, void 0, void 0, function* () {
     if (req.body.type !== null || req.body.type !== undefined) {
         let result;

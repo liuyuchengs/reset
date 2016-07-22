@@ -13,7 +13,7 @@ const proxyRequest = require("./../modules/proxyRequest");
 const router = express.Router();
 const url = "https://www.uokang.com";
 router.use((req, res, next) => __awaiter(this, void 0, void 0, function* () {
-    let result = yield proxyRequest(req, url);
+    let result = yield proxyRequest.request(req, url);
     res.send(result);
 }));
 module.exports = router;

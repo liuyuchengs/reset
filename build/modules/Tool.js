@@ -2,17 +2,17 @@
 /// <reference path="./../../typings/index.d.ts" />
 const fs = require("fs");
 const crypto = require("crypto");
-const multer = require("multer");
 /**
- * Tool
- * 工具类
+ * @classdesc 各种辅助用的小工具
  */
 class Tool {
     constructor() {
     }
     /**
      * 过滤查询数据库得到的数据
-     * @params dest:需要得到的字段，source:需要过滤的源数据
+     * @param {string} dest:需要得到的字段
+     * @param {any} source:需要过滤的源数据
+     * @returns {any} 过滤后的结果
      */
     static FilterResult(dest, source) {
         let result = {};
@@ -27,7 +27,9 @@ class Tool {
         return result;
     }
     /**
-     * 使用req.body初始化对象
+     * 将source上的属性值转换到dest的同名属性上
+     * @param {any} source - 数据源(req.body)
+     * @param {any} dest - 接受数据的对象
      */
     static initObject(source, dest) {
         for (let prop in dest) {
@@ -41,8 +43,8 @@ class Tool {
     }
     /**
      * 对数据进行加密
-     * @params value->需要加密的字符串
-     * @return 加密后的字符串
+     * @param {string} value - 需要加密的字符串
+     * @return {string} 加密后的字符串
      */
     static enCrypt(value) {
         Tool.cipher.update(value, "utf8");
@@ -50,8 +52,8 @@ class Tool {
     }
     /**
      * 对数据进行解密
-     * @params value->需要解密的字符串
-     * @return 解密后的字符串
+     * @param {string} value - 需要解密的字符串
+     * @return {string} 解密后的字符串
      */
     static deCrypt(value) {
         Tool.decipher.update(value, "hex");
@@ -59,30 +61,16 @@ class Tool {
     }
     /**
      * 为图片添加host
-     * @params host->url的host部分,path->url的path部分
+     * @param {string} host - url的host部分
+     * @param {string} path - url的path部分
      */
     static addHost(host, path) {
         return host + path;
     }
     /**
-     * 创建multer上传对象
-     * @params path->保存上传文件的路径,默认为public/upload
-     */
-    static getUpLoad(path) {
-        path = path || "public/upload";
-        var storage = multer.diskStorage({
-            destination: function (req, file, cb) {
-                cb(null, path);
-            },
-            filename: function (req, file, cb) {
-                let list = file.originalname.split(".");
-                cb(null, Date.now() + "." + list[1]);
-            }
-        });
-        return multer({ storage: storage });
-    }
-    /**
-     * async/await读取文本
+     * async/await读取文件
+     * @param {string} path - 文件的path
+     * @returns {Buffer} Buffer格式的文件数据
      */
     static readFile(path) {
         return new Promise((resolve, reject) => {
@@ -97,7 +85,10 @@ class Tool {
         });
     }
     /**
-     *  async/await修改文件名
+     * async/await修改文件名
+     * @param {string} oldPath - 源文件的path
+     * @param {string} newPath - 新文件的path
+     * @returns {Buffer} Buffer格式的文件数据
      */
     static renameFile(oldPath, newPath) {
         return new Promise((resolve, reject) => {

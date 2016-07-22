@@ -9,7 +9,7 @@ let router = express.Router();
 
 /**
  * 查询热门专区
- * @params currentPage->分页页码
+ * @param currentPage->分页页码
  */
 router.post("/queryrecommend",async (req:express.Request,res:express.Response)=>{
     if(req.body.currentPage){
@@ -29,9 +29,8 @@ router.post("/queryrecommend",async (req:express.Request,res:express.Response)=>
 
 /**
  * 查询项目列表
- * @params:
- * 必要参数:currentPage->分页页码,professionId->项目分类,牙科，美容等
- * 非必要参数:city,area,itemId,order等
+ * @param 必要参数:currentPage->分页页码,professionId->项目分类,牙科，美容等
+ * @param 非必要参数:city,area,itemId,order等
  */
 router.post("/querylist",async (req:express.Request,res:express.Response)=>{
     if(req.body.currentPage&&req.body.professionId){
@@ -50,7 +49,7 @@ router.post("/querylist",async (req:express.Request,res:express.Response)=>{
 
 /**
  * 查询项目详情
- * @params accessToken->用户token,productId->项目id
+ * @param accessToken->用户token,productId->项目id
  */
 router.post("/querybyid",async (req:express.Request,res:express.Response)=>{
     if(req.body.accessToken&&req.body.productId){
@@ -66,9 +65,5 @@ router.post("/querybyid",async (req:express.Request,res:express.Response)=>{
         res.status(400);
     }
 })
-
-/**
- * 
- */
 
 export = router;

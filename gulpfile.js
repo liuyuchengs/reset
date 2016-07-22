@@ -4,13 +4,14 @@ var sass = require("gulp-sass"); //编译sass->css
 var cssMin = require("gulp-cssmin") //压缩css
 var uglify = require("gulp-uglify");
 var sourcemaps = require("gulp-sourcemaps"); //压缩时建立map文件
-var ts = require("gulp-typescript"); //编译typescript文件
+var jsdoc = require("gulp-jsdoc3");  //生成jsdoc文档
+var jsdocConfig = require("./jsdocconfig.json");
 
 var paths = {
     sass:{src:"public/stylesheets/src/*.scss",dest:"public/stylesheets/css"},
     cssMin:{src:"public/stylesheets/css/*.css",dest:"public/stylesheets/dest"},
     ug:{src:["public/javascripts/js/*.js","public/javascripts/js/*/*.js"],dest:"public/javascripts/dest"},
-    tsc:{src:["public/javascripts/src/*.ts","public/javascripts/src/*/*.ts"],dest:"public/javascripts/js"},
+    jsdoc:{src:["build/**/*.js"],dest:"doc/"},
 }
 
 /**
@@ -40,26 +41,18 @@ gulp.task("ug",function(){
         .pipe(gulp.dest(paths.ug.dest))
 })
 
-/**
- * 编译前端ts文件
- */
-gulp.task("tsc",()=>{
-    let tsResult = gulp.src(paths.tsc.src,{base:"public/javascripts/src"}).pipe(ts({
-        module: "amd",
-        target: "es5",
-        declaration:false,
-        noImplicitAny: true,
-        sourceMap: true,
-    }));
-    return tsResult.js.pipe(gulp.dest(paths.tsc.dest));
+gulp.task("jsdoc",()=>{
+    return gulp.src(paths.jsdoc.src)
+        .pipe(jsdoc(jsdocConfig));
 })
 
 //监视
 gulp.task("watch",function(){
     gulp.watch(paths.sass.src,["sass"]);
     gulp.watch(paths.cssMin.src,["cssMin"]);
-    gulp.watch(paths.ug.src,["ug"]);
-    gulp.watch(paths.tsc.src,["tsc"]);
+    gulp.watch(paths.jsdoc.src,["jsdoc"]);
+    //gulp.watch(paths.ug.src,["ug"]);
+    
 })
 
 gulp.task("default",["watch"]);

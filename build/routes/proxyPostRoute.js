@@ -59,7 +59,7 @@ router.use(upload.fields(params), (req, res) => __awaiter(this, void 0, void 0, 
             }
             req.body.formData = formData;
             req.body.isMulter = true;
-            result = yield proxyRequest(req, url);
+            result = yield proxyRequest.request(req, url);
             res.send(result);
         }
         catch (err) {

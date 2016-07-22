@@ -2,11 +2,13 @@
 /// <reference path="./../../typings/index.d.ts" />
 const mysql = require("mysql");
 /**
- * Connect
+ * @classdesc 数据库连接对象
+ * @requries module:mysql
  */
 class MysqlConnect {
     /**
      * 获取连接池配置对象
+     * @returns {mysql.IPoolConfig} 连接池配置对象
      */
     static getOptions() {
         if (MysqlConnect._options === null || MysqlConnect._options === undefined) {
@@ -21,6 +23,7 @@ class MysqlConnect {
     }
     /**
      * 获取连接池对象
+     * @returns {mysql.IPool} 连接池对象
      */
     static getPool() {
         if (MysqlConnect._pool === null || MysqlConnect._pool === undefined) {
@@ -29,7 +32,9 @@ class MysqlConnect {
         return MysqlConnect._pool;
     }
     /**
-     * 使用连接池执行查询操作
+     * 使用连接池执行查询操作，通过Promise对象返回结果
+     * @param {string} sql - sql查询语句
+     * @returns {any} 查询结果
      */
     static query(sql) {
         let pool = MysqlConnect.getPool();

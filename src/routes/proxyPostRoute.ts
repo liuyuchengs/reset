@@ -51,7 +51,7 @@ router.use(upload.fields(params),async (req:express.Request,res:express.Response
             }
             req.body.formData = formData;
             req.body.isMulter = true;
-            result = await proxyRequest(req,url);
+            result = await proxyRequest.request(req,url);
             res.send(result);
         }catch(err){
             console.log(err);
