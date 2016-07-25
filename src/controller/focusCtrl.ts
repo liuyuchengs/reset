@@ -12,15 +12,13 @@ import MysqlConnect = require("./../modules/MysqlConnect");
  * @param {any} params - 经过express parser转换的req.body，需有accessToken属性
  * @returns {HttpResult|any} 查询结果，异常时返回error异常对象
  */
-export async function getUserFocusCount(params:any):Promise<HttpResult>{
+export async function getUserFocusCount(accessToken:string):Promise<HttpResult>{
     let result:HttpResult;
-    let fansSql = "select count(fansId) as fansCount from focus where focusId in (select user_id from user_token where access_token='"+params.accessToken+"')";
-    let focusSql = "select count(focusId) as focusCount from focus where fansId in (select user_id from user_token where access_token='"+params.accessToken+"')";
+    let sql = "select count(fansId) as countFansMan,(select count(focusId) from focus where fansId in (select user_id from user_token where access_token='"+accessToken+"')) as countFocusMan from focus where focusId in (select user_id from user_token where access_token='"+accessToken+"')";
     try{
-        let fansResult = await MysqlConnect.query(fansSql);
-        let focusResult = await MysqlConnect.query(focusSql);
+        let queryResult = await MysqlConnect.query(sql);
         return new Promise<HttpResult>((resolve:(value:HttpResult)=>void,reject:(value:any)=>void)=>{
-            result = HttpResult.CreateResult({"countFansMan":fansResult[0].fansCount,"countFocusMan":focusResult[0].focusCount},0,"查询成功!");
+            result = HttpResult.CreateSuccessResult(queryResult[0]);
             resolve(result);
         })
     }catch(err){

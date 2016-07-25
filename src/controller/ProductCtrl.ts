@@ -128,11 +128,7 @@ class ProductCtrl {
                         "from product as p where id = "+productId;
         try{
             let productResult = await MysqlConnect.query(productSql);
-            if(productResult.length>0){
-                productResult[0].focusCount>0?productResult[]    
-            }else if(productResult.length>0){
-                productResult[0].focusState = 2;
-            }
+            productResult[0].focusCount>0?productResult[0].focusState = 1:productResult[0].focusState = 2;
             return new Promise<HttpResult>((resolve:(value:HttpResult)=>void)=>{
                 resolve(HttpResult.CreateSuccessResult(productResult[0]));
             })

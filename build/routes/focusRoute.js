@@ -29,7 +29,7 @@ function focusManCount(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         if (req.body.accessToken && req.body.accessToken.length > 0) {
             try {
-                let result = yield FocusCtrl.getUserFocusCount(req.body);
+                let result = yield FocusCtrl.getUserFocusCount(req.body.accessToken);
                 res.send(result);
             }
             catch (err) {

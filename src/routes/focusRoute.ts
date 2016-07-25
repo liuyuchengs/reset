@@ -22,7 +22,7 @@ let router = express.Router();
 async function focusManCount(req:any,res:any){
     if(req.body.accessToken&&req.body.accessToken.length>0){
         try{
-            let result:HttpResult = await FocusCtrl.getUserFocusCount(req.body);
+            let result:HttpResult = await FocusCtrl.getUserFocusCount(req.body.accessToken);
             res.send(result);
         }catch(err){
             console.log(err);

@@ -40,9 +40,8 @@ class ProductCtrl {
         return __awaiter(this, void 0, Promise, function* () {
             this.queryParams.currentPage = currentPage;
             let sql = "select p.id,p.title,p.stand_price as standPrice,p.prefer_price as preferPrice,p.pricetype,p.priceunit,p.sales,p.samllimg,p.profession_id,p.hospital_id,h.name as hospitalname " +
-                "from (select p.id,p.title,p.stand_price,p.prefer_price,p.pricetype,p.priceunit,p.sales,p.samllimg,p.profession_id,p.hospital_id " +
-                "from product as p inner join (select product_id from product_ext where param_name = 'recommend') as r on p.id = r.product_id) as p " +
-                "left join hospital as h on p.hospital_id = h.id limit " + (this.queryParams.currentPage - 1) * this.queryParams.pageRows + "," + this.queryParams.currentPage * this.queryParams.pageRows;
+                "from product as p left join hospital as h on p.hospital_id = h.id where p.id in (select product_id from product_ext where param_name = 'recommend') " +
+                "limit " + (this.queryParams.currentPage - 1) * this.queryParams.pageRows + "," + this.queryParams.currentPage * this.queryParams.pageRows;
             try {
                 let queryResult = yield MysqlConnect.query(sql);
                 return new Promise((resolve) => {
@@ -136,24 +135,12 @@ class ProductCtrl {
             let productId = params.productId || null;
             let accessToken = params.accessToken || null;
             let focusSql = null;
-            if (accessToken) {
-                focusSql = "select count(*) as count from focus where focus.flag = 3 and focus.focusId = " + productId + " and focus.fansId in (select user_id from user_token where access_token = '" + accessToken + "') ";
-            }
-            let productSql = "select p.id,p.title,p.introduction,p.hospital_id as hospitalId,p.pricetype,p.priceunit,p.samllimg,p.sales,p.stand_price as standPrice,p.prefer_price as preferPrice,p.samllimg from product as p where id = " + productId;
+            let productSql = "select p.id,p.title,p.introduction,p.hospital_id as hospitalId,p.pricetype,p.priceunit,p.samllimg,p.sales,p.stand_price as standPrice,p.prefer_price as preferPrice,p.samllimg, " +
+                +"(select count(*) from focus where flag = 3 and focusId = '" + productId + "' and fansId in (select user_id from user_token where access_token = '" + accessToken + "')) as focusCount";
+            "from product as p where id = " + productId;
             try {
                 let productResult = yield MysqlConnect.query(productSql);
-                if (accessToken) {
-                    let focusResult = yield MysqlConnect.query(focusSql);
-                    if (focusResult.length > 0 && focusResult[0].count > 0 && productResult.length > 0) {
-                        productResult[0].focusState = 1;
-                    }
-                    else if (productResult.length > 0) {
-                        productResult[0].focusState = 2;
-                    }
-                }
-                else {
-                    productResult[0].focusState = 2;
-                }
+                productResult[0].focusCount > 0 ? productResult[0].focusState = 1 : productResult[0].focusState = 2;
                 return new Promise((resolve) => {
                     resolve(HttpResult.CreateSuccessResult(productResult[0]));
                 });

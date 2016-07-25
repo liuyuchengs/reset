@@ -19,16 +19,14 @@ const MysqlConnect = require("./../modules/MysqlConnect");
  * @param {any} params - 经过express parser转换的req.body，需有accessToken属性
  * @returns {HttpResult|any} 查询结果，异常时返回error异常对象
  */
-function getUserFocusCount(params) {
+function getUserFocusCount(accessToken) {
     return __awaiter(this, void 0, Promise, function* () {
         let result;
-        let fansSql = "select count(fansId) as fansCount from focus where focusId in (select user_id from user_token where access_token='" + params.accessToken + "')";
-        let focusSql = "select count(focusId) as focusCount from focus where fansId in (select user_id from user_token where access_token='" + params.accessToken + "')";
+        let sql = "select count(fansId) as countFansMan,(select count(focusId) from focus where fansId in (select user_id from user_token where access_token='" + accessToken + "')) as countFocusMan from focus where focusId in (select user_id from user_token where access_token='" + accessToken + "')";
         try {
-            let fansResult = yield MysqlConnect.query(fansSql);
-            let focusResult = yield MysqlConnect.query(focusSql);
+            let queryResult = yield MysqlConnect.query(sql);
             return new Promise((resolve, reject) => {
-                result = HttpResult.CreateResult({ "countFansMan": fansResult[0].fansCount, "countFocusMan": focusResult[0].focusCount }, 0, "查询成功!");
+                result = HttpResult.CreateSuccessResult(queryResult[0]);
                 resolve(result);
             });
         }
@@ -41,4 +39,4 @@ function getUserFocusCount(params) {
     });
 }
 exports.getUserFocusCount = getUserFocusCount;
-//# sourceMappingURL=FocusCtrl.js.map
+//# sourceMappingURL=focusCtrl.js.map
