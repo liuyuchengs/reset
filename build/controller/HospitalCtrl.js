@@ -9,25 +9,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const MysqlConnect = require("./../modules/MysqlConnect");
 /**
- * 医学相关模块
+ * 医院相关模块
  * @module
  */
 /**
- * 根据医院id查询医院信息
+ * 查询医院详细信息
  * @param {number} id - 医院id
- * @returns {Object|Error} 返回查询结果
+ * @returns {object|error} 返回查询结果
  */
 function queryById(id) {
     return __awaiter(this, void 0, Promise, function* () {
-        let sql = "select h.name,h.address,h.description,h.logo from hospital as h where id = " + id;
+        let sql = "SELECT h.name,h.address,h.description,h.logo FROM hospital as h WHERE id = '" + id + "'";
         try {
             let queryResult = yield MysqlConnect.query(sql);
             return new Promise((resolve) => {
                 if (queryResult.length > 0) {
-                    resolve(queryResult[0]);
+                    return resolve(queryResult[0]);
                 }
                 else {
-                    resolve({});
+                    return resolve({});
                 }
             });
         }
