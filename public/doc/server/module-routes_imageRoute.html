@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Classes</title>
+	<title>Documentation Module: routes/imageRoute</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -33,14 +33,14 @@
 			<li class="dropdown">
 				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="module-BannerCtrl.html">BannerCtrl</a></li><li><a href="module-FocusCtrl.html">FocusCtrl</a></li><li><a href="module-ImageCtrl.html">ImageCtrl</a></li><li><a href="module-LoginCtrl.html">LoginCtrl</a></li><li><a href="module-MycountCtrl.html">MycountCtrl</a></li><li><a href="module-ProxyRequest.html">ProxyRequest</a></li>
+					<li><a href="module-controller_BannerCtrl.html">controller/BannerCtrl</a></li><li><a href="module-controller_focusCtrl.html">controller/focusCtrl</a></li><li><a href="module-controller_HospitalCtrl.html">controller/HospitalCtrl</a></li><li><a href="module-controller_ImageCtrl.html">controller/ImageCtrl</a></li><li><a href="module-controller_loginCtrl.html">controller/loginCtrl</a></li><li><a href="module-controller_mycountCtrl.html">controller/mycountCtrl</a></li><li><a href="module-modules_MysqlConnect.html">modules/MysqlConnect</a></li><li><a href="module-modules_ProxyRequest.html">modules/ProxyRequest</a></li><li><a href="module-modules_Tool.html">modules/Tool</a></li><li><a href="module-routes_bannerRoute.html">routes/bannerRoute</a></li><li><a href="module-routes_focusRoute.html">routes/focusRoute</a></li><li><a href="module-routes_hospitalRoute.html">routes/hospitalRoute</a></li><li><a href="module-routes_imageRoute.html">routes/imageRoute</a></li><li><a href="module-routes_loginRoute.html">routes/loginRoute</a></li><li><a href="module-routes_mycountRoute.html">routes/mycountRoute</a></li><li><a href="module-routes_productRoute.html">routes/productRoute</a></li><li><a href="module-routes_proxyPostRoute.html">routes/proxyPostRoute</a></li><li><a href="module-routes_proxyRoute.html">routes/proxyRoute</a></li><li><a href="module-routes_proxyUserRoute.html">routes/proxyUserRoute</a></li>
 				</ul>
 			</li>
 			
 			<li class="dropdown">
 				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="HttpResult.html">HttpResult</a></li><li><a href="MysqlConnect.html">MysqlConnect</a></li><li><a href="ProductCtrl.html">ProductCtrl</a></li><li><a href="Tool.html">Tool</a></li>
+					<li><a href="HttpResult.html">HttpResult</a></li><li><a href="ProductCtrl.html">ProductCtrl</a></li>
 				</ul>
 			</li>
 			
@@ -77,15 +77,10 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Classes</h1>
+	<h1 class="page-title">Module: routes/imageRoute</h1>
 <section>
 
 <header>
-    
-        <h2>
-        
-        </h2>
-        
     
 </header>
 
@@ -93,6 +88,8 @@
 <article>
     <div class="container-overview">
     
+        
+            <div class="description"><p>图片相关接口</p></div>
         
 
         
@@ -144,29 +141,178 @@
     
 
     
-        <h3 class="subsection-title">Classes</h3>
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
 
         <dl>
-            <dt><a href="HttpResult.html">HttpResult</a></dt>
-            <dd></dd>
+            
+<hr>
+<dt>
+    <h4 class="name" id="~querybymainid"><span class="type-signature">&lt;inner> </span>querybymainid(type)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>/wx/image/querybymainid - 查询医院或者项目的图片</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
         
-            <dt><a href="MysqlConnect.html">MysqlConnect</a></dt>
-            <dd></dd>
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
         
-            <dt><a href="ProductCtrl.html">ProductCtrl</a></dt>
-            <dd></dd>
+        <th>Name</th>
         
-            <dt><a href="Tool.html">Tool</a></dt>
-            <dd></dd>
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>&quot;HOSPITAL&quot;:医院,&quot;PRODUCT&quot;:项目</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>返回查询结果，异常时返回500错误</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="HttpResult.html">HttpResult</a></span>
+|
+
+<span class="param-type">Error</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">// 请求参数type=PRODUCT&amp;mainId=10017// 响应结果[{&quot;url&quot;:&quot;upload/image/hospital/dental/10017/d4fc0009ec37494ea3c82292080b8d89.png&quot;}]</pre>
+
+
+    
+</dd>
+
         </dl>
-    
-
-    
-
-    
-
-    
-
     
 
     
@@ -214,7 +360,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
-		on July 22nd 2016, 5:15:36 pm
+		on July 23rd 2016, 6:11:47 pm
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

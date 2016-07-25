@@ -4,8 +4,9 @@ import MysqlConnect = require("./../modules/MysqlConnect");
 
 /**
  * 关注相关的模块
- * @module FocusCtrl
+ * @module
  */
+
 /**
  * 根据accessToken获取用户的粉丝数量和关注数量
  * @param {any} params - 经过express parser转换的req.body，需有accessToken属性

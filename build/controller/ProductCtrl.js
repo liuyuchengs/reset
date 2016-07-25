@@ -11,6 +11,7 @@ const HttpResult = require("./../modules/HttpResult");
 const MysqlConnect = require("./../modules/MysqlConnect");
 const Tool = require("./../modules/Tool");
 /**
+ * 项目相关模块
  * ProductCtrl
  */
 class ProductCtrl {
@@ -107,9 +108,7 @@ class ProductCtrl {
             sql += "limit " + (this.queryParams.currentPage - 1) * this.queryParams.pageRows + "," + this.queryParams.currentPage * this.queryParams.pageRows;
             try {
                 queryResult = yield MysqlConnect.query(sql);
-                /**
-                 * 为了兼容之前java后台数据格式，需对数据进行改动
-                 */
+                // 为了兼容之前java后台数据格式，需对数据进行改动
                 for (let item of queryResult) {
                     item.hospital = {
                         "name": item.hospitalname,
@@ -134,20 +133,26 @@ class ProductCtrl {
      */
     querybyid(params) {
         return __awaiter(this, void 0, void 0, function* () {
-            let productId;
-            let accessToken;
-            params.productId ? productId = params.productId : null;
-            params.accessToken ? accessToken = params.accessToken : null;
-            let focusSql = "select count(*) as count from focus where focus.flag = 3 and focus.focusId = " + productId + " and focus.fansId in (select user_id from user_token where access_token = '" + accessToken + "') ";
+            let productId = params.productId || null;
+            let accessToken = params.accessToken || null;
+            let focusSql = null;
+            if (accessToken) {
+                focusSql = "select count(*) as count from focus where focus.flag = 3 and focus.focusId = " + productId + " and focus.fansId in (select user_id from user_token where access_token = '" + accessToken + "') ";
+            }
             let productSql = "select p.id,p.title,p.introduction,p.hospital_id as hospitalId,p.pricetype,p.priceunit,p.samllimg,p.sales,p.stand_price as standPrice,p.prefer_price as preferPrice,p.samllimg from product as p where id = " + productId;
             try {
-                let focusResult = yield MysqlConnect.query(focusSql);
                 let productResult = yield MysqlConnect.query(productSql);
-                if (focusResult.count > 0 && productResult[0]) {
-                    productResult[0].focusState = 2;
+                if (accessToken) {
+                    let focusResult = yield MysqlConnect.query(focusSql);
+                    if (focusResult.length > 0 && focusResult[0].count > 0 && productResult.length > 0) {
+                        productResult[0].focusState = 1;
+                    }
+                    else if (productResult.length > 0) {
+                        productResult[0].focusState = 2;
+                    }
                 }
-                else if (productResult[0]) {
-                    productResult[0].focusState = 1;
+                else {
+                    productResult[0].focusState = 2;
                 }
                 return new Promise((resolve) => {
                     resolve(HttpResult.CreateSuccessResult(productResult[0]));

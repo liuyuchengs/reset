@@ -12,7 +12,7 @@ const HttpResult = require("./../modules/HttpResult");
 const MysqlConnect = require("./../modules/MysqlConnect");
 /**
  * banner图相关的模块
- * @module BannerCtrl
+ * @module
  */
 /**
  * 查询banner图

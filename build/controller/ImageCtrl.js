@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const MysqlConnect = require("./../modules/MysqlConnect");
 /**
  * 图片查询相关模块
- * @module ImageCtrl
+ * @module
  */
 /**
  * 查询医院或者项目图片

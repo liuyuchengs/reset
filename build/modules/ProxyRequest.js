@@ -2,7 +2,7 @@
 /// <reference path="./../../typings/index.d.ts" />
 const requests = require("request");
 /**
- * @module ProxyRequest
+ * @module
  */
 /**
  * 发起http请求

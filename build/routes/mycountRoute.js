@@ -10,21 +10,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 /// <reference path="./../../typings/index.d.ts"/>
 const express = require('express');
 const MycountCtrl = require("./../controller/MycountCtrl");
+/**
+ * 账号相关接口
+ * @module
+ */
 let router = express.Router();
-router.post("/getUserByToken", (req, res) => __awaiter(this, void 0, void 0, function* () {
-    if (req.body.accessToken) {
-        try {
-            let result = yield MycountCtrl.getUserByToken(req.body);
-            res.send(result);
+/**
+ * /wx/mycount/getUserByToken - 根据accessToken查询用户信息
+ * @param {string} accessToken - 用户accessToken
+ * @returns {HttpResult|Error} 查询结果,异常时返回500
+ * @example
+ * // 请求参数
+ * accessToken=c0925312c3d549d3a51d83ab1c58f157
+ * // 响应结果
+ * {"data":{"countFansMan":0,"countFocusMan":1},"code":0,"message":"查询成功!"}
+ */
+function getUserByToken(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (req.body.accessToken) {
+            try {
+                let result = yield MycountCtrl.getUserByToken(req.body);
+                res.send(result);
+            }
+            catch (err) {
+                console.log(err);
+                res.status(500).end();
+            }
         }
-        catch (err) {
-            console.log(err);
-            res.status(500).end();
+        else {
+            res.status(400).end();
         }
-    }
-    else {
-        res.status(400).end();
-    }
-}));
+    });
+}
+router.post("/getUserByToken", getUserByToken);
 module.exports = router;
 //# sourceMappingURL=mycountRoute.js.map

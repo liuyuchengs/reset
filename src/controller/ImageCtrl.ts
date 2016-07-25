@@ -4,7 +4,7 @@ import MysqlConnect = require("./../modules/MysqlConnect");
 import Tool = require("./../modules/Tool");
 /**
  * 图片查询相关模块
- * @module ImageCtrl
+ * @module
  */
 
 /**

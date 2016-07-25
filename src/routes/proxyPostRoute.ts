@@ -4,12 +4,32 @@ import proxyRequest = require("./../modules/ProxyRequest");
 import multer = require("multer");
 import Tool = require("./../modules/Tool");
 
+/**
+ * 帖子相关接口
+ * @module
+ */
 const router:express.Router = express.Router();
 let upload = multer({dest:"temp/upload"});
 const url = "https://www.uokang.com";
 
 let params = [{name:"img1"},{name:"img2"},{name:"img3"},{name:"p1"},{name:"p2"},{name:"p3"}];
-router.use(upload.fields(params),async (req:express.Request,res:express.Response)=>{
+/**
+ * /wx/post/addPost - 发布帖子
+ * @param {blob} img1 - 术前图片一
+ * @param {blob} img2 - 术前图片二
+ * @param {blob} img3 - 术前图片三
+ * @param {blob} p1 - 术后图片一
+ * @param {blob} p2 - 术后图片二
+ * @param {blob} p3 - 术后图片三
+ * @param {string} postName - 帖子标题
+ * @param {string} postContent - 帖子内容
+ * @param {string} postFlags - 帖子类型,1：看牙,2：求美，3：孕生
+ * @param {number} doctorId - 医生id
+ * @param {number} productId - 项目id
+ * @param {number} hospitalId - 医院id
+ * @returns {HttpResult|Error} 查询结果,异常时返回500   
+ */ 
+async function proxy(req:express.Request,res:express.Response){
     if(req.files){
         let oldPaths:string[] = [];
         let newPaths:string[] = [];
@@ -60,6 +80,7 @@ router.use(upload.fields(params),async (req:express.Request,res:express.Response
     }else{
         res.status(400).end();
     }
-})
+}
+router.use(upload.fields(params),proxy);
 
 export = router;

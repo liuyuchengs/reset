@@ -10,11 +10,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const express = require("express");
 const proxyRequest = require("./../modules/proxyRequest");
+/**
+ * 普通代理转发
+ * @module
+ */
 const router = express.Router();
 const url = "https://www.uokang.com";
-router.use((req, res, next) => __awaiter(this, void 0, void 0, function* () {
-    let result = yield proxyRequest.request(req, url);
-    res.send(result);
-}));
+/**
+ * 普通文本接口转发到java服务器
+ * @param {any} any
+ */
+function proxy(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let result = yield proxyRequest.request(req, url);
+        res.send(result);
+    });
+}
+router.use();
 module.exports = router;
 //# sourceMappingURL=proxyRoute.js.map

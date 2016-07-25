@@ -12,7 +12,8 @@ const HttpResult = require("./../modules/HttpResult");
 const MysqlConnect = require("./../modules/MysqlConnect");
 const Tool = require("./../modules/Tool");
 /**
- * @module MycountCtrl
+ * 账户相关模块
+ * @module
  */
 /**
  * 根据用户token获取用户信息
@@ -41,4 +42,4 @@ function getUserByToken(params) {
     });
 }
 exports.getUserByToken = getUserByToken;
-//# sourceMappingURL=MycountCtrl.js.map
+//# sourceMappingURL=mycountCtrl.js.map

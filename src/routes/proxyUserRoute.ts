@@ -4,14 +4,21 @@ import proxyRequest = require("./../modules/ProxyRequest");
 import multer = require("multer");
 import Tool = require("./../modules/Tool");
 
+/**
+ * 用户信息修改转发
+ * @module
+ */
 const router = express.Router();
 const url = "https://www.uokang.com";
 let upload = multer({dest:"temp/upload"});
 
 /**
  * 修改用户信息
+ * @param {blob} headImage - 头像
+ * @param {string} name - 修改的字段,修改头像时可不填
+ * @param {string} val - 修改的字段的值
  */
-router.use(upload.single("headImage"),async (req:express.Request,res:express.Response,next:express.NextFunction)=>{
+async function proxyUser(req:express.Request,res:express.Response,next:express.NextFunction){
     if(req.file){
         let newPath:string;
         let result:any;
@@ -40,7 +47,8 @@ router.use(upload.single("headImage"),async (req:express.Request,res:express.Res
     }else{
         res.status(400);
     }
-})
+}
+router.use(upload.single("headImage"),proxyUser);
 
 
 export = router;

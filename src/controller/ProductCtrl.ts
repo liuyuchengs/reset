@@ -3,6 +3,7 @@ import HttpResult = require("./../modules/HttpResult");
 import MysqlConnect = require("./../modules/MysqlConnect");
 import Tool = require("./../modules/Tool");
 /**
+ * 项目相关模块
  * ProductCtrl
  */
 class ProductCtrl {
@@ -31,9 +32,8 @@ class ProductCtrl {
     async queryRecommend(currentPage:number):Promise<HttpResult>{
         this.queryParams.currentPage = currentPage;
         let sql = "select p.id,p.title,p.stand_price as standPrice,p.prefer_price as preferPrice,p.pricetype,p.priceunit,p.sales,p.samllimg,p.profession_id,p.hospital_id,h.name as hospitalname "+
-                    "from (select p.id,p.title,p.stand_price,p.prefer_price,p.pricetype,p.priceunit,p.sales,p.samllimg,p.profession_id,p.hospital_id "+
-	                "from product as p inner join (select product_id from product_ext where param_name = 'recommend') as r on p.id = r.product_id) as p "+
-                    "left join hospital as h on p.hospital_id = h.id limit "+(this.queryParams.currentPage-1)*this.queryParams.pageRows+","+this.queryParams.currentPage*this.queryParams.pageRows;
+                    "from product as p left join hospital as h on p.hospital_id = h.id where p.id in (select product_id from product_ext where param_name = 'recommend') "+
+                    "limit "+(this.queryParams.currentPage-1)*this.queryParams.pageRows+","+this.queryParams.currentPage*this.queryParams.pageRows;
         try{
             let queryResult = await MysqlConnect.query(sql);
             return new Promise<HttpResult>((resolve:(value:HttpResult)=>void)=>{
@@ -97,9 +97,7 @@ class ProductCtrl {
         sql += "limit "+(this.queryParams.currentPage-1)*this.queryParams.pageRows+","+this.queryParams.currentPage*this.queryParams.pageRows;
         try{
             queryResult = await MysqlConnect.query(sql);
-            /**
-             * 为了兼容之前java后台数据格式，需对数据进行改动
-             */
+            // 为了兼容之前java后台数据格式，需对数据进行改动
             for(let item of queryResult){
                 item.hospital = {
                     "name":item.hospitalname,
@@ -122,19 +120,18 @@ class ProductCtrl {
      * 查询项目详情页面的
      */
     async querybyid(params:any){
-        let productId:number;
-        let accessToken:string;
-        params.productId?productId=params.productId:null;
-        params.accessToken?accessToken=params.accessToken:null;
-        let focusSql = "select count(*) as count from focus where focus.flag = 3 and focus.focusId = "+productId+" and focus.fansId in (select user_id from user_token where access_token = '"+accessToken+"') ";
-        let productSql = "select p.id,p.title,p.introduction,p.hospital_id as hospitalId,p.pricetype,p.priceunit,p.samllimg,p.sales,p.stand_price as standPrice,p.prefer_price as preferPrice,p.samllimg from product as p where id = "+productId;
+        let productId:number = params.productId||null;
+        let accessToken:string = params.accessToken||null;
+        let focusSql:string = null;
+        let productSql = "select p.id,p.title,p.introduction,p.hospital_id as hospitalId,p.pricetype,p.priceunit,p.samllimg,p.sales,p.stand_price as standPrice,p.prefer_price as preferPrice,p.samllimg, "+
+                        +"(select count(*) from focus where flag = 3 and focusId = '"+productId+"' and fansId in (select user_id from user_token where access_token = '"+accessToken+"')) as focusCount"
+                        "from product as p where id = "+productId;
         try{
-            let focusResult = await MysqlConnect.query(focusSql);
             let productResult = await MysqlConnect.query(productSql);
-            if(focusResult.count>0&&productResult[0]){
+            if(productResult.length>0){
+                productResult[0].focusCount>0?productResult[]    
+            }else if(productResult.length>0){
                 productResult[0].focusState = 2;
-            }else if(productResult[0]){
-                productResult[0].focusState = 1;
             }
             return new Promise<HttpResult>((resolve:(value:HttpResult)=>void)=>{
                 resolve(HttpResult.CreateSuccessResult(productResult[0]));

@@ -13,6 +13,7 @@ var mycountRoute = require('./build/routes/mycountRoute');
 var bannerRoute = require("./build/routes/bannerRoute");
 var productRoute = require("./build/routes/productRoute");
 var imageRoute = require("./build/routes/imageRoute");
+var hospitalRoute = require("./build/routes/hospitalRoute");
 
 var app = express();
 // 日志输出流
@@ -31,12 +32,13 @@ app.use(cookieParser());
 app.use(favicon(__dirname+"/public/contents/img/logo.png"));
 
 // 配置路由
-app.use("/wx/login/wxlogin",loginRoute);
+app.use("/wx/login",loginRoute);
 app.use("/wx/focus",focueRoute);
 app.use("/wx/mycount",mycountRoute);
 app.use("/wx/banner",bannerRoute);
 app.use("/wx/product",productRoute);
 app.use("/wx/image",imageRoute);
+app.use("/wx/hospital",hospitalRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

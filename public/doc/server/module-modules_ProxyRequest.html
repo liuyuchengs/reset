@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Class: LoginCtrl</title>
+	<title>Documentation Module: modules/ProxyRequest</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -33,21 +33,21 @@
 			<li class="dropdown">
 				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="module-BannerCtrl.html">BannerCtrl</a></li><li><a href="module-FocusCtrl.html">FocusCtrl</a></li><li><a href="module-ImageCtrl.html">ImageCtrl</a></li>
+					<li><a href="module-controller_BannerCtrl.html">controller/BannerCtrl</a></li><li><a href="module-controller_focusCtrl.html">controller/focusCtrl</a></li><li><a href="module-controller_HospitalCtrl.html">controller/HospitalCtrl</a></li><li><a href="module-controller_ImageCtrl.html">controller/ImageCtrl</a></li><li><a href="module-controller_loginCtrl.html">controller/loginCtrl</a></li><li><a href="module-controller_mycountCtrl.html">controller/mycountCtrl</a></li><li><a href="module-modules_MysqlConnect.html">modules/MysqlConnect</a></li><li><a href="module-modules_ProxyRequest.html">modules/ProxyRequest</a></li><li><a href="module-modules_Tool.html">modules/Tool</a></li><li><a href="module-routes_bannerRoute.html">routes/bannerRoute</a></li><li><a href="module-routes_focusRoute.html">routes/focusRoute</a></li><li><a href="module-routes_hospitalRoute.html">routes/hospitalRoute</a></li><li><a href="module-routes_imageRoute.html">routes/imageRoute</a></li><li><a href="module-routes_loginRoute.html">routes/loginRoute</a></li><li><a href="module-routes_mycountRoute.html">routes/mycountRoute</a></li><li><a href="module-routes_productRoute.html">routes/productRoute</a></li><li><a href="module-routes_proxyPostRoute.html">routes/proxyPostRoute</a></li><li><a href="module-routes_proxyRoute.html">routes/proxyRoute</a></li><li><a href="module-routes_proxyUserRoute.html">routes/proxyUserRoute</a></li>
 				</ul>
 			</li>
 			
 			<li class="dropdown">
 				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="HttpResult.html">HttpResult</a></li><li><a href="LoginCtrl.html">LoginCtrl</a></li><li><a href="MycountCtrl.html">MycountCtrl</a></li><li><a href="MysqlConnect.html">MysqlConnect</a></li><li><a href="ProductCtrl.html">ProductCtrl</a></li><li><a href="Tool.html">Tool</a></li>
+					<li><a href="HttpResult.html">HttpResult</a></li><li><a href="ProductCtrl.html">ProductCtrl</a></li>
 				</ul>
 			</li>
 			
 			<li class="dropdown">
 				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="global.html#params">params</a></li><li><a href="global.html#proxyRequest">proxyRequest</a></li><li><a href="global.html#request">request</a></li>
+					<li><a href="global.html#params">params</a></li>
 				</ul>
 			</li>
 			
@@ -77,17 +77,10 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Class: LoginCtrl</h1>
+	<h1 class="page-title">Module: modules/ProxyRequest</h1>
 <section>
 
 <header>
-    
-        <h2>
-        LoginCtrl
-        </h2>
-        
-            <div class="class-description"><p>loginCtrl</p></div>
-        
     
 </header>
 
@@ -96,24 +89,8 @@
     <div class="container-overview">
     
         
-<hr>
-<dt>
-    <h4 class="name" id="LoginCtrl"><span class="type-signature"></span>new LoginCtrl()</h4>
-    
-    
-</dt>
-<dd>
 
-    
-
-    
-
-    
-
-    
-    
-
-    
+        
 <dl class="details">
     
 
@@ -153,21 +130,7 @@
 </dl>
 
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
+        
     
     </div>
 
@@ -190,7 +153,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id=".check"><span class="type-signature">&lt;static> </span>check()</h4>
+    <h4 class="name" id="~request"><span class="type-signature">&lt;inner> </span>request(req, host)</h4>
     
     
 </dt>
@@ -198,7 +161,7 @@
 
     
     <div class="description">
-        <p>检查账号密码是否符合要求</p>
+        <p>发起http请求</p>
     </div>
     
 
@@ -208,83 +171,79 @@
 
     
     
+        <h5>Parameters:</h5>
+        
 
-    
-<dl class="details">
-    
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
+        <th>Type</th>
 
         
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
             
-<hr>
-<dt>
-    <h4 class="name" id=".login"><span class="type-signature">&lt;static> </span>login()</h4>
-    
-    
-</dt>
-<dd>
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>经过express parse后的req对象</p></td>
+        </tr>
 
     
-    <div class="description">
-        <p>登录操作</p>
-    </div>
-    
+
+        <tr>
+            
+                <td class="name"><code>host</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>需要发起http请求的url host</p></td>
+        </tr>
 
     
+    </tbody>
+</table>
 
-    
-
-    
     
 
     
@@ -390,7 +349,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
-		on July 22nd 2016, 4:38:58 pm
+		on July 23rd 2016, 6:11:47 pm
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

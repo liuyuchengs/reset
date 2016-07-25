@@ -4,8 +4,10 @@ import MysqlConnect = require("./../modules/MysqlConnect");
 import Tool = require("./../modules/Tool");
 
 /**
- * @module MycountCtrl
+ * 账户相关模块
+ * @module
  */
+
 /**
  * 根据用户token获取用户信息
  * @param {any} params - 经过express parser转换的req.body,需要accessToken字段

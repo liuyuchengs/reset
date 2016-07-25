@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Module: BannerCtrl</title>
+	<title>Documentation Module: routes/proxyPostRoute</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -33,14 +33,14 @@
 			<li class="dropdown">
 				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="module-BannerCtrl.html">BannerCtrl</a></li><li><a href="module-FocusCtrl.html">FocusCtrl</a></li><li><a href="module-ImageCtrl.html">ImageCtrl</a></li><li><a href="module-LoginCtrl.html">LoginCtrl</a></li><li><a href="module-MycountCtrl.html">MycountCtrl</a></li><li><a href="module-ProxyRequest.html">ProxyRequest</a></li>
+					<li><a href="module-controller_BannerCtrl.html">controller/BannerCtrl</a></li><li><a href="module-controller_focusCtrl.html">controller/focusCtrl</a></li><li><a href="module-controller_HospitalCtrl.html">controller/HospitalCtrl</a></li><li><a href="module-controller_ImageCtrl.html">controller/ImageCtrl</a></li><li><a href="module-controller_loginCtrl.html">controller/loginCtrl</a></li><li><a href="module-controller_mycountCtrl.html">controller/mycountCtrl</a></li><li><a href="module-modules_MysqlConnect.html">modules/MysqlConnect</a></li><li><a href="module-modules_ProxyRequest.html">modules/ProxyRequest</a></li><li><a href="module-modules_Tool.html">modules/Tool</a></li><li><a href="module-routes_bannerRoute.html">routes/bannerRoute</a></li><li><a href="module-routes_focusRoute.html">routes/focusRoute</a></li><li><a href="module-routes_hospitalRoute.html">routes/hospitalRoute</a></li><li><a href="module-routes_imageRoute.html">routes/imageRoute</a></li><li><a href="module-routes_loginRoute.html">routes/loginRoute</a></li><li><a href="module-routes_mycountRoute.html">routes/mycountRoute</a></li><li><a href="module-routes_productRoute.html">routes/productRoute</a></li><li><a href="module-routes_proxyPostRoute.html">routes/proxyPostRoute</a></li><li><a href="module-routes_proxyRoute.html">routes/proxyRoute</a></li><li><a href="module-routes_proxyUserRoute.html">routes/proxyUserRoute</a></li>
 				</ul>
 			</li>
 			
 			<li class="dropdown">
 				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="HttpResult.html">HttpResult</a></li><li><a href="MysqlConnect.html">MysqlConnect</a></li><li><a href="ProductCtrl.html">ProductCtrl</a></li><li><a href="Tool.html">Tool</a></li>
+					<li><a href="HttpResult.html">HttpResult</a></li><li><a href="ProductCtrl.html">ProductCtrl</a></li>
 				</ul>
 			</li>
 			
@@ -77,7 +77,7 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Module: BannerCtrl</h1>
+	<h1 class="page-title">Module: routes/proxyPostRoute</h1>
 <section>
 
 <header>
@@ -89,7 +89,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>banner图相关的模块</p></div>
+            <div class="description"><p>帖子相关接口</p></div>
         
 
         
@@ -155,7 +155,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id=".queryBanner"><span class="type-signature">&lt;static> </span>queryBanner(type, host)</h4>
+    <h4 class="name" id="~proxy"><span class="type-signature">&lt;inner> </span>proxy(img1, img2, img3, p1, p2, p3, postName, postContent, postFlags, doctorId, productId, hospitalId)</h4>
     
     
 </dt>
@@ -163,7 +163,7 @@
 
     
     <div class="description">
-        <p>查询banner图</p>
+        <p>/wx/post/addPost - 发布帖子</p>
     </div>
     
 
@@ -198,13 +198,13 @@
 
         <tr>
             
-                <td class="name"><code>type</code></td>
+                <td class="name"><code>img1</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">blob</span>
 
 
 
@@ -215,14 +215,134 @@
 
             
 
-            <td class="description last"><p>banner图的类型</p></td>
+            <td class="description last"><p>术前图片一</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>host</code></td>
+                <td class="name"><code>img2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">blob</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>术前图片二</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>img3</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">blob</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>术前图片三</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>p1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">blob</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>术后图片一</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>p2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">blob</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>术后图片二</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>p3</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">blob</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>术后图片三</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>postName</code></td>
             
 
             <td class="type">
@@ -239,7 +359,127 @@
 
             
 
-            <td class="description last"><p>图片url添加host，修改成绝对路径</p></td>
+            <td class="description last"><p>帖子标题</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>postContent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>帖子内容</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>postFlags</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>帖子类型,1：看牙,2：求美，3：孕生</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>doctorId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>医生id</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>productId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>项目id</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>hospitalId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>医院id</p></td>
         </tr>
 
     
@@ -303,7 +543,7 @@
     
             
 <div class="param-desc">
-    <p>查询得到的结果，异常时返回error异常信息</p>
+    <p>查询结果,异常时返回500</p>
 </div>
 
 
@@ -317,7 +557,7 @@
 <span class="param-type"><a href="HttpResult.html">HttpResult</a></span>
 |
 
-<span class="param-type">any</span>
+<span class="param-type">Error</span>
 
 
 
@@ -378,7 +618,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
-		on July 22nd 2016, 5:15:36 pm
+		on July 23rd 2016, 6:11:47 pm
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

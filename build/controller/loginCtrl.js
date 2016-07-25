@@ -13,7 +13,7 @@ const MysqlConnect = require("./../modules/MysqlConnect");
 const Tool = require("./../modules/Tool");
 /**
  * 登录相关模块
- * @module LoginCtrl
+ * @module
  */
 /**
  * 检查账号密码是否符合要求
@@ -68,4 +68,4 @@ function login(params) {
     });
 }
 exports.login = login;
-//# sourceMappingURL=LoginCtrl.js.map
+//# sourceMappingURL=loginCtrl.js.map

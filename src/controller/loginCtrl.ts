@@ -5,8 +5,9 @@ import Tool = require("./../modules/Tool");
 
 /**
  * 登录相关模块
- * @module LoginCtrl
+ * @module
  */
+
 /**
  * 检查账号密码是否符合要求
  * @param {any} params - 经过express parser转换的req.body,需要phone和password字段

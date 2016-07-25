@@ -2,7 +2,7 @@
 import requests= require("request");
 import fs = require("fs");
 /**
- * @module ProxyRequest
+ * @module
  */
 /**
  * 发起http请求

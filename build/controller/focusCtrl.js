@@ -12,7 +12,7 @@ const HttpResult = require("./../modules/HttpResult");
 const MysqlConnect = require("./../modules/MysqlConnect");
 /**
  * 关注相关的模块
- * @module FocusCtrl
+ * @module
  */
 /**
  * 根据accessToken获取用户的粉丝数量和关注数量

@@ -6,7 +6,7 @@
     "excludePattern": "(^|\\/|\\\\)_"
   },
   "opts": {
-    "destination": "./public/doc"
+    "destination": "./public/doc/server"
   },
   "plugins": [
     "plugins/markdown"
