@@ -13,6 +13,10 @@ var mycountRoute = require('./build/routes/mycountRoute');
 var bannerRoute = require("./build/routes/bannerRoute");
 var productRoute = require("./build/routes/productRoute");
 var imageRoute = require("./build/routes/imageRoute");
+var hospitalRoute = require("./build/routes/hospitalRoute");
+var doctorRoute = require("./build/routes/doctorRoute");
+var scheduleRoute = require("./build/routes/scheduleRoute");
+var orderRoute = require("./build/routes/scheduleRoute");
 
 var app = express();
 // 日志输出流
@@ -37,6 +41,10 @@ app.use("/wx/mycount",mycountRoute);
 app.use("/wx/banner",bannerRoute);
 app.use("/wx/product",productRoute);
 app.use("/wx/image",imageRoute);
+app.use("/wx/hospital",hospitalRoute);
+app.use("/wx/doctor",doctorRoute);
+app.use("/wx/schedule",scheduleRoute);
+app.use("/wx/order",orderRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
