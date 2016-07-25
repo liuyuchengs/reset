@@ -62,4 +62,5 @@ function proxyUser(req, res, next) {
 }
 router.use(upload.single("headImage"), proxyUser);
 module.exports = router;
+
 //# sourceMappingURL=proxyUserRoute.js.map

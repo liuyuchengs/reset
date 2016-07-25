@@ -51,4 +51,5 @@ function queryschedule(req, res) {
 }
 router.use("/queryscheduledoctorbyproductid", queryschedule);
 module.exports = router;
+
 //# sourceMappingURL=doctorRoute.js.map

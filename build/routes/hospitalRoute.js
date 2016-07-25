@@ -48,4 +48,5 @@ function querybyid(req, res) {
 }
 router.post("/querybyid", querybyid);
 module.exports = router;
+
 //# sourceMappingURL=hospitalRoute.js.map

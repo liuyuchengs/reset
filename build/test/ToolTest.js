@@ -16,4 +16,5 @@ describe("Tool", () => {
             });
         });
 });
+
 //# sourceMappingURL=ToolTest.js.map

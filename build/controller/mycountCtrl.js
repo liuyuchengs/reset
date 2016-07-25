@@ -42,4 +42,5 @@ function getUserByToken(params) {
     });
 }
 exports.getUserByToken = getUserByToken;
+
 //# sourceMappingURL=mycountCtrl.js.map

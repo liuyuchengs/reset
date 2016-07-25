@@ -53,4 +53,5 @@ function query(sql) {
     });
 }
 exports.query = query;
+
 //# sourceMappingURL=MysqlConnect.js.map

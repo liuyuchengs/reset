@@ -39,4 +39,5 @@ function getUserFocusCount(accessToken) {
     });
 }
 exports.getUserFocusCount = getUserFocusCount;
+
 //# sourceMappingURL=focusCtrl.js.map

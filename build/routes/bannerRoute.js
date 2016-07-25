@@ -56,4 +56,5 @@ function query(req, res) {
 }
 router.post("/query", query);
 module.exports = router;
+
 //# sourceMappingURL=bannerRoute.js.map

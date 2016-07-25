@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Module: controller/ImageCtrl</title>
+	<title>Documentation Module: 医院相关接口</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -70,7 +70,7 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Module: controller/ImageCtrl</h1>
+	<h1 class="page-title">Module: 医院相关接口</h1>
 <section>
 
 <header>
@@ -81,8 +81,6 @@
 <article>
     <div class="container-overview">
     
-        
-            <div class="description"><p>图片查询相关模块</p></div>
         
 
         
@@ -148,7 +146,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="~queryImage"><span class="type-signature">&lt;inner> </span>queryImage(params)</h4>
+    <h4 class="name" id="~querybyid"><span class="type-signature">&lt;inner> </span>querybyid(id)</h4>
     
     
 </dt>
@@ -156,7 +154,7 @@
 
     
     <div class="description">
-        <p>查询医院或者项目图片</p>
+        <p>/wx/hospital/querybyid - 查询医院信息</p>
     </div>
     
 
@@ -191,13 +189,13 @@
 
         <tr>
             
-                <td class="name"><code>params</code></td>
+                <td class="name"><code>id</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">any</span>
+<span class="param-type">number</span>
 
 
 
@@ -208,7 +206,7 @@
 
             
 
-            <td class="description last"><p>经过express parser转换后的req.body,需有mainId和type属性</p></td>
+            <td class="description last"><p>医院id</p></td>
         </tr>
 
     
@@ -272,7 +270,7 @@
     
             
 <div class="param-desc">
-    <p>查询结果，异常时返回error异常对象</p>
+    <p>返回查询结果</p>
 </div>
 
 
@@ -286,7 +284,7 @@
 <span class="param-type"><a href="HttpResult.html">HttpResult</a></span>
 |
 
-<span class="param-type">any</span>
+<span class="param-type">Error</span>
 
 
 
@@ -295,6 +293,20 @@
 
 
         
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">// 发起请求
+id=10072
+// 响应结果
+{
+   &quot;name&quot;:&quot;友睦齿科福田时代科技店&quot;,
+   &quot;address&quot;:&quot;深圳市福田区深南大道7028号...&quot;,
+   &quot;description&quot;:&quot;友睦齿科成立于2006年...,
+   &quot;logo&quot;:&quot;upload/image/hospital/logo/youmuchikefutianshidaikejidian/142808792.png&quot;
+}</pre>
+
 
     
 </dd>

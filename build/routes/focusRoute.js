@@ -44,4 +44,5 @@ function focusManCount(req, res) {
 }
 router.post("/focusManCount", focusManCount);
 module.exports = router;
+
 //# sourceMappingURL=focusRoute.js.map

@@ -33,4 +33,5 @@ function querybydoctorid(req, res) {
 }
 router.use("/querybydoctorid", querybydoctorid);
 module.exports = router;
+
 //# sourceMappingURL=scheduleRoute.js.map

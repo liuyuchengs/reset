@@ -42,4 +42,5 @@ function queryImage(params) {
     });
 }
 exports.queryImage = queryImage;
+
 //# sourceMappingURL=ImageCtrl.js.map

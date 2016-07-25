@@ -32,4 +32,5 @@ function querySchedule(id) {
     });
 }
 exports.querySchedule = querySchedule;
+
 //# sourceMappingURL=DoctorCtrl.js.map

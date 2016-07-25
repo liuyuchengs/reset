@@ -123,12 +123,10 @@ class ProductCtrl {
         let productId:number = params.productId||null;
         let accessToken:string = params.accessToken||null;
         let focusSql:string = null;
-        let productSql = "select p.id,p.title,p.introduction,p.hospital_id as hospitalId,p.pricetype,p.priceunit,p.samllimg,p.sales,p.stand_price as standPrice,p.prefer_price as preferPrice,p.samllimg, "+
-                        +"(select count(*) from focus where flag = 3 and focusId = '"+productId+"' and fansId in (select user_id from user_token where access_token = '"+accessToken+"')) as focusCount"
-                        "from product as p where id = "+productId;
+        let productSql = "select p.id,p.title,p.introduction,p.hospital_id as hospitalId,p.pricetype,p.priceunit,p.samllimg,p.sales,p.stand_price as standPrice,p.prefer_price as preferPrice,p.samllimg,"+
+                "(select count(*) from focus where flag = 3 and focusId = '"+productId+"' and fansId in (select user_id from user_token where access_token = '"+accessToken+"')) as focusCount from product as p where id = '"+productId+"'";
         try{
             let productResult = await MysqlConnect.query(productSql);
-            productResult[0].focusCount>0?productResult[0].focusState = 1:productResult[0].focusState = 2;
             return new Promise<HttpResult>((resolve:(value:HttpResult)=>void)=>{
                 resolve(HttpResult.CreateSuccessResult(productResult[0]));
             })

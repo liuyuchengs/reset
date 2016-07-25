@@ -69,4 +69,5 @@ function wxlogin(req, res) {
 }
 router.post("/wxlogin", wxlogin);
 module.exports = router;
+
 //# sourceMappingURL=loginRoute.js.map

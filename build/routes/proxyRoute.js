@@ -28,4 +28,5 @@ function proxy(req, res, next) {
 }
 router.use();
 module.exports = router;
+
 //# sourceMappingURL=proxyRoute.js.map

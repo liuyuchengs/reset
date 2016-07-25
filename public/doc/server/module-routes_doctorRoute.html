@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Documentation Module: controller/ImageCtrl</title>
+	<title>Documentation Module: routes/doctorRoute</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -70,7 +70,7 @@
 		<div id="main">
 			
 
-	<h1 class="page-title">Module: controller/ImageCtrl</h1>
+	<h1 class="page-title">Module: routes/doctorRoute</h1>
 <section>
 
 <header>
@@ -82,7 +82,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>图片查询相关模块</p></div>
+            <div class="description"><p>医生相关接口</p></div>
         
 
         
@@ -148,7 +148,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="~queryImage"><span class="type-signature">&lt;inner> </span>queryImage(params)</h4>
+    <h4 class="name" id="~queryschedule"><span class="type-signature">&lt;inner> </span>queryschedule(productId)</h4>
     
     
 </dt>
@@ -156,7 +156,7 @@
 
     
     <div class="description">
-        <p>查询医院或者项目图片</p>
+        <p>查询项目的排班信息</p>
     </div>
     
 
@@ -191,13 +191,13 @@
 
         <tr>
             
-                <td class="name"><code>params</code></td>
+                <td class="name"><code>productId</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">any</span>
+<span class="param-type">string</span>
 
 
 
@@ -208,7 +208,7 @@
 
             
 
-            <td class="description last"><p>经过express parser转换后的req.body,需有mainId和type属性</p></td>
+            <td class="description last"><p>项目id</p></td>
         </tr>
 
     
@@ -272,7 +272,9 @@
     
             
 <div class="param-desc">
-    <p>查询结果，异常时返回error异常对象</p>
+    <ul>
+<li>返回查询结果</li>
+</ul>
 </div>
 
 
@@ -283,10 +285,10 @@
     </dt>
     <dd>
         
-<span class="param-type"><a href="HttpResult.html">HttpResult</a></span>
+<span class="param-type">Object</span>
 |
 
-<span class="param-type">any</span>
+<span class="param-type">Error</span>
 
 
 
@@ -295,6 +297,23 @@
 
 
         
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">{
+  &quot;list&quot;:[
+      {
+          &quot;id&quot;:10014,
+          &quot;doctorname&quot;:&quot;陈钢&quot;,
+          &quot;hobby&quot;:&quot;各种复杂种植、疑难种植、全口无牙颌种植、微创无痛种植。&quot;,
+          &quot;score&quot;:null,
+          &quot;hospitalid&quot;:10002,
+          &quot;face&quot;:&quot;upload/image/doctor/20151015/10002/chengang/165027610.jpg&quot;
+      }
+  ]
+}</pre>
+
 
     
 </dd>

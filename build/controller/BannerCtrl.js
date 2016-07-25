@@ -42,4 +42,5 @@ exports.queryBanner = function (type, host) {
         }
     });
 };
+
 //# sourceMappingURL=BannerCtrl.js.map

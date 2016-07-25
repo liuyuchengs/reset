@@ -33,7 +33,7 @@
 			<li class="dropdown">
 				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="module-controller_BannerCtrl.html">controller/BannerCtrl</a></li><li><a href="module-controller_focusCtrl.html">controller/focusCtrl</a></li><li><a href="module-controller_HospitalCtrl.html">controller/HospitalCtrl</a></li><li><a href="module-controller_ImageCtrl.html">controller/ImageCtrl</a></li><li><a href="module-controller_loginCtrl.html">controller/loginCtrl</a></li><li><a href="module-controller_mycountCtrl.html">controller/mycountCtrl</a></li><li><a href="module-modules_MysqlConnect.html">modules/MysqlConnect</a></li><li><a href="module-modules_ProxyRequest.html">modules/ProxyRequest</a></li><li><a href="module-modules_Tool.html">modules/Tool</a></li><li><a href="module-routes_bannerRoute.html">routes/bannerRoute</a></li><li><a href="module-routes_focusRoute.html">routes/focusRoute</a></li><li><a href="module-routes_hospitalRoute.html">routes/hospitalRoute</a></li><li><a href="module-routes_imageRoute.html">routes/imageRoute</a></li><li><a href="module-routes_loginRoute.html">routes/loginRoute</a></li><li><a href="module-routes_mycountRoute.html">routes/mycountRoute</a></li><li><a href="module-routes_productRoute.html">routes/productRoute</a></li><li><a href="module-routes_proxyPostRoute.html">routes/proxyPostRoute</a></li><li><a href="module-routes_proxyRoute.html">routes/proxyRoute</a></li><li><a href="module-routes_proxyUserRoute.html">routes/proxyUserRoute</a></li>
+					<li><a href="module-controller_BannerCtrl.html">controller/BannerCtrl</a></li><li><a href="module-controller_DoctorCtrl.html">controller/DoctorCtrl</a></li><li><a href="module-controller_focusCtrl.html">controller/focusCtrl</a></li><li><a href="module-controller_HospitalCtrl.html">controller/HospitalCtrl</a></li><li><a href="module-controller_ImageCtrl.html">controller/ImageCtrl</a></li><li><a href="module-controller_loginCtrl.html">controller/loginCtrl</a></li><li><a href="module-controller_mycountCtrl.html">controller/mycountCtrl</a></li><li><a href="module-modules_MysqlConnect.html">modules/MysqlConnect</a></li><li><a href="module-modules_ProxyRequest.html">modules/ProxyRequest</a></li><li><a href="module-modules_Tool.html">modules/Tool</a></li><li><a href="module-routes_bannerRoute.html">routes/bannerRoute</a></li><li><a href="module-routes_doctorRoute.html">routes/doctorRoute</a></li><li><a href="module-routes_focusRoute.html">routes/focusRoute</a></li><li><a href="module-routes_imageRoute.html">routes/imageRoute</a></li><li><a href="module-routes_loginRoute.html">routes/loginRoute</a></li><li><a href="module-routes_mycountRoute.html">routes/mycountRoute</a></li><li><a href="module-routes_productRoute.html">routes/productRoute</a></li><li><a href="module-routes_proxyPostRoute.html">routes/proxyPostRoute</a></li><li><a href="module-routes_proxyRoute.html">routes/proxyRoute</a></li><li><a href="module-routes_proxyUserRoute.html">routes/proxyUserRoute</a></li><li><a href="module-%25E5%258C%25BB%25E9%2599%25A2%25E7%259B%25B8%25E5%2585%25B3%25E6%258E%25A5%25E5%258F%25A3.html">医院相关接口</a></li><li><a href="module-%25E6%258E%2592%25E7%258F%25AD%25E7%259B%25B8%25E5%2585%25B3%25E6%258E%25A5%25E5%258F%25A3.html">排班相关接口</a></li>
 				</ul>
 			</li>
 			
@@ -41,13 +41,6 @@
 				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
 					<li><a href="HttpResult.html">HttpResult</a></li><li><a href="ProductCtrl.html">ProductCtrl</a></li>
-				</ul>
-			</li>
-			
-			<li class="dropdown">
-				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
-				<ul class="dropdown-menu ">
-					<li><a href="global.html#params">params</a></li>
 				</ul>
 			</li>
 			
@@ -330,7 +323,27 @@
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">// 请求参数phone=18124792560&amp;password=uokang123// 响应结果{  &quot;data&quot;:    {      &quot;id&quot;:11326,      &quot;nickname&quot;:&quot;小绿皮&quot;,      &quot;phone&quot;:&quot;18124792560&quot;,      &quot;face&quot;:&quot;upload/image/post/20160701/3df467e43f2d4a11aeba237b715e5a54.jpeg&quot;,      &quot;sex&quot;:&quot;男&quot;,      &quot;realname&quot;:&quot;123&quot;,      &quot;email&quot;:null,      &quot;gift_code&quot;:1,      &quot;alipay&quot;:&quot;liuyuchengs&quot;,      &quot;wxpay&quot;:&quot;399865&quot;,      &quot;referralCode&quot;:17802,      &quot;accessToken&quot;:&quot;c0925312c3d549d3a51d83ab1c58f157&quot;    },  &quot;code&quot;:0,  &quot;message&quot;:&quot;登录成功!&quot;}</pre>
+    <pre class="sunlight-highlight-javascript">// 请求参数
+phone=18124792560&amp;password=uokang123
+// 响应结果
+{
+  &quot;data&quot;:
+    {
+      &quot;id&quot;:11326,
+      &quot;nickname&quot;:&quot;小绿皮&quot;,
+      &quot;phone&quot;:&quot;18124792560&quot;,
+      &quot;face&quot;:&quot;upload/image/post/20160701/3df467e43f2d4a11aeba237b715e5a54.jpeg&quot;,
+      &quot;sex&quot;:&quot;男&quot;,
+      &quot;realname&quot;:&quot;123&quot;,
+      &quot;email&quot;:null,
+      &quot;gift_code&quot;:1,
+      &quot;alipay&quot;:&quot;liuyuchengs&quot;,
+      &quot;wxpay&quot;:&quot;399865&quot;,
+      &quot;referralCode&quot;:17802,
+      &quot;accessToken&quot;:&quot;c0925312c3d549d3a51d83ab1c58f157&quot;
+    },
+  &quot;code&quot;:0,
+  &quot;message&quot;:&quot;登录成功!&quot;}</pre>
 
 
     
@@ -384,7 +397,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
-		on July 23rd 2016, 6:11:47 pm
+		on July 25th 2016, 11:44:09 pm
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

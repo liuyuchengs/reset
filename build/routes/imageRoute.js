@@ -44,4 +44,5 @@ function querybymainid(req, res) {
 }
 router.post("/querybymainid", querybymainid);
 module.exports = router;
+
 //# sourceMappingURL=imageRoute.js.map

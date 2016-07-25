@@ -39,4 +39,5 @@ function queryById(id) {
     });
 }
 exports.queryById = queryById;
+
 //# sourceMappingURL=HospitalCtrl.js.map

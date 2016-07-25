@@ -44,4 +44,5 @@ function getUserByToken(req, res) {
 }
 router.post("/getUserByToken", getUserByToken);
 module.exports = router;
+
 //# sourceMappingURL=mycountRoute.js.map
