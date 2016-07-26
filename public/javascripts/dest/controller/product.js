@@ -142,4 +142,3 @@ define(["require", "exports"], function (require, exports) {
     }
     return product;
 });
-//# sourceMappingURL=product.js.map

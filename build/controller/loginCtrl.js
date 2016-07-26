@@ -41,12 +41,12 @@ exports.check = check;
  */
 function login(params) {
     return __awaiter(this, void 0, Promise, function* () {
-        let result;
-        let sqlResult;
-        let sql = "select * from (select * from user where phone = '" + params.phone + "') as users left join user_token as token on users.id = token.user_id";
-        try {
-            sqlResult = yield MysqlConnect.query(sql);
-            return new Promise((resolve) => {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            let result;
+            let sqlResult;
+            let sql = "select * from (select * from user where phone = '" + params.phone + "') as users left join user_token as token on users.id = token.user_id";
+            try {
+                sqlResult = yield MysqlConnect.query(sql);
                 if (sqlResult.length > 0 && sqlResult[0].password === params.password) {
                     let resResult = Tool.FilterResult(["id", "nickname", "phone", "face", "sex", "realname", "email", "gift_code", "alipay", "wxpay", "referralCode", "access_token"], sqlResult[0]);
                     resResult["accessToken"] = resResult["access_token"];
@@ -57,16 +57,12 @@ function login(params) {
                     result = HttpResult.CreateFailResult("账号或者密码不正确!");
                 }
                 resolve(result);
-            });
-        }
-        catch (err) {
-            console.log(err);
-            return new Promise((reject) => {
+            }
+            catch (err) {
                 reject(err);
-            });
-        }
+            }
+        }));
     });
 }
 exports.login = login;
-
 //# sourceMappingURL=loginCtrl.js.map

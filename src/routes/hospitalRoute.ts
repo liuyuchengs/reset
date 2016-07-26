@@ -1,10 +1,10 @@
 import express = require("express");
 import HttpResult = require("./../modules/HttpResult");
-import HospitalCtrl = require("./../controller/HospitalCtrl");
+import hospitalCtrl = require("./../controller/hospitalCtrl");
 
 /**
- * @module
  * 医院相关接口
+ * @module
  */
 let router = express.Router();
 
@@ -26,7 +26,7 @@ let router = express.Router();
 async function querybyid(req:express.Request,res:express.Response){
     if(req.body.id){
         try{
-            let result:HttpResult = await HospitalCtrl.queryById(req.body.id);
+            let result:HttpResult = await hospitalCtrl.queryById(req.body.id);
             res.send(result);
         }catch(error){
             console.log(error);

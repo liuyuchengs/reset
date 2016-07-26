@@ -189,4 +189,3 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
     }
     return askDoctor;
 });
-//# sourceMappingURL=askDoctor.js.map

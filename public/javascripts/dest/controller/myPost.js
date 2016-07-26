@@ -173,4 +173,3 @@ define(["require", "exports"], function (require, exports) {
     }
     return myPost;
 });
-//# sourceMappingURL=myPost.js.map

@@ -8,10 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const express = require("express");
-const HospitalCtrl = require("./../controller/HospitalCtrl");
+const hospitalCtrl = require("./../controller/hospitalCtrl");
 /**
- * @module
  * 医院相关接口
+ * @module
  */
 let router = express.Router();
 /**
@@ -33,7 +33,7 @@ function querybyid(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         if (req.body.id) {
             try {
-                let result = yield HospitalCtrl.queryById(req.body.id);
+                let result = yield hospitalCtrl.queryById(req.body.id);
                 res.send(result);
             }
             catch (error) {
@@ -48,5 +48,4 @@ function querybyid(req, res) {
 }
 router.post("/querybyid", querybyid);
 module.exports = router;
-
 //# sourceMappingURL=hospitalRoute.js.map

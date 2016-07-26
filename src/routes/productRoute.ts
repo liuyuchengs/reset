@@ -1,7 +1,7 @@
 /// <reference path="./../../typings/index.d.ts" />
 import express = require("express");
 import HttpResult = require("./../modules/HttpResult");
-import ProductCtrl = require("./../controller/ProductCtrl");
+import productCtrl = require("./../controller/productCtrl");
 import Tool = require("./../modules/Tool");
 import NodeData = require("NodeData");
 
@@ -42,7 +42,6 @@ let router = express.Router();
 async function queryrecommend(req:express.Request,res:express.Response){
     if(req.body.currentPage){
         let result:HttpResult;
-        let productCtrl:ProductCtrl = new ProductCtrl();
         try{
             result = await productCtrl.queryRecommend(req.body.currentPage);
             res.send(result);
@@ -86,7 +85,6 @@ router.post("/queryrecommend",queryrecommend);
  */
 async function queryList(req:express.Request,res:express.Response){
     if(req.body.currentPage&&req.body.professionId){
-        let productCtrl:ProductCtrl = new ProductCtrl();
         try{
             let result:HttpResult = await productCtrl.queryList(req.body);
             res.send(result);
@@ -118,7 +116,6 @@ router.post("/querylist",queryList);
  */
 async function querybyid(req:express.Request,res:express.Response){
     if(req.body.productId){
-        let productCtrl:ProductCtrl = new ProductCtrl();
         try{
             let result:HttpResult = await productCtrl.querybyid(req.body);
             res.send(result);

@@ -10,22 +10,20 @@ import Tool = require("./../modules/Tool");
 /**
  * 查询医院详细信息
  * @param {number} id - 医院id
- * @returns {object|error} 返回查询结果
+ * @returns {object} 返回查询结果
  */
 export async function queryById(id:number):Promise<any>{
-    let sql = "SELECT h.name,h.address,h.description,h.logo FROM hospital as h WHERE id = '"+id+"'";
-    try{
-        let queryResult = await MysqlConnect.query(sql);
-        return new Promise<any>((resolve:(value:any)=>void)=>{
+    return new Promise<any>(async (resolve:(value:any)=>void,reject:(value:Error)=>void)=>{
+        let sql = "SELECT h.name,h.address,h.description,h.logo FROM hospital as h WHERE id = '"+id+"'";
+        try{
+            let queryResult = await MysqlConnect.query(sql);
             if(queryResult.length>0){
-                return resolve(queryResult[0]);
+                resolve(queryResult[0]);
             }else{
-                return resolve({});
+                resolve({});
             }
-        })
-    }catch(err){
-        return new Promise<any>((resolve:(value:any)=>void,reject:(value:any)=>void)=>{
+        }catch(err){
             reject(err);
-        })
-    }
+        }
+    })
 }

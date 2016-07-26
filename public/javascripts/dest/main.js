@@ -22,4 +22,3 @@ require.config({
 requirejs(["angular", "angular-route", "jquery", "Swiper", "WX", "app",], function (angular) {
     angular.bootstrap(document, ['myApp']);
 });
-//# sourceMappingURL=main.js.map

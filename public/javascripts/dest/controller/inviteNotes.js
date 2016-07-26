@@ -40,4 +40,3 @@ define(["require", "exports"], function (require, exports) {
     }
     return inviteNotes;
 });
-//# sourceMappingURL=inviteNotes.js.map

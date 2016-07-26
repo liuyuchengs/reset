@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const express = require('express');
 const HttpResult = require("./../modules/HttpResult");
-const BannerCtrl = require("./../controller/BannerCtrl");
+const bannerCtrl = require("./../controller/bannerCtrl");
 /**
  * banner图相关接口
  * @module
@@ -37,7 +37,7 @@ function query(req, res) {
             let result;
             if (req.body.type === "home_banner") {
                 try {
-                    result = yield BannerCtrl.queryBanner(req.body.type, req.headers["origin"]);
+                    result = yield bannerCtrl.queryBanner(req.body.type, req.headers["origin"]);
                     res.send(result);
                 }
                 catch (err) {
@@ -56,5 +56,4 @@ function query(req, res) {
 }
 router.post("/query", query);
 module.exports = router;
-
 //# sourceMappingURL=bannerRoute.js.map

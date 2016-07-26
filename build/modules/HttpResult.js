@@ -47,5 +47,4 @@ class HttpResult {
     }
 }
 module.exports = HttpResult;
-
 //# sourceMappingURL=HttpResult.js.map

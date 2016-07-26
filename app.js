@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var fs = require("fs");
+
 //加载路由
 var loginRoute = require("./build/routes/loginRoute");
 var focueRoute = require("./build/routes/focusRoute");
@@ -16,7 +17,7 @@ var imageRoute = require("./build/routes/imageRoute");
 var hospitalRoute = require("./build/routes/hospitalRoute");
 var doctorRoute = require("./build/routes/doctorRoute");
 var scheduleRoute = require("./build/routes/scheduleRoute");
-var orderRoute = require("./build/routes/scheduleRoute");
+var orderRoute = require("./build/routes/orderRoute");
 
 var app = express();
 // 日志输出流

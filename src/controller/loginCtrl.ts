@@ -30,12 +30,12 @@ export function check(params:any){
  * @returns {HttpResult} 返回登录结果,异常时返回error异常对象
  */
 export async function login(params:any):Promise<HttpResult>{
-    let result:HttpResult;
-    let sqlResult:any;
-    let sql = "select * from (select * from user where phone = '"+params.phone+"') as users left join user_token as token on users.id = token.user_id";
-    try{
-        sqlResult = await MysqlConnect.query(sql);
-        return new Promise<HttpResult>((resolve:(value:HttpResult)=>void)=>{
+    return new Promise<HttpResult>(async (resolve:(value:HttpResult)=>void,reject:(value:Error)=>void)=>{
+        let result:HttpResult;
+        let sqlResult:any;
+        let sql = "select * from (select * from user where phone = '"+params.phone+"') as users left join user_token as token on users.id = token.user_id";
+        try{
+            sqlResult = await MysqlConnect.query(sql);
             if(sqlResult.length>0&&sqlResult[0].password===params.password){
                 let resResult = Tool.FilterResult(["id","nickname","phone","face","sex","realname","email","gift_code","alipay","wxpay","referralCode","access_token"],sqlResult[0]);
                 resResult["accessToken"] = resResult["access_token"];
@@ -45,12 +45,9 @@ export async function login(params:any):Promise<HttpResult>{
                 result = HttpResult.CreateFailResult("账号或者密码不正确!");
             }
             resolve(result);
-        })
-    }catch(err){
-        console.log(err);
-        return new Promise<HttpResult>((reject:(value:any)=>void)=>{
+        }catch(err){
             reject(err);
-        })
-    }
+        }
+    })
 }
 

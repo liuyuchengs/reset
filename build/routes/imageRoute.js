@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /// <reference path="./../../typings/index.d.ts" />
 const express = require("express");
-const ImageCtrl = require("./../controller/ImageCtrl");
+const imageCtrl = require("./../controller/imageCtrl");
 /**
  * 图片相关接口
  * @module
@@ -29,7 +29,7 @@ function querybymainid(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         if (req.body.type && req.body.mainId) {
             try {
-                let result = yield ImageCtrl.queryImage(req.body);
+                let result = yield imageCtrl.queryImage(req.body);
                 res.send(result);
             }
             catch (err) {
@@ -44,5 +44,4 @@ function querybymainid(req, res) {
 }
 router.post("/querybymainid", querybymainid);
 module.exports = router;
-
 //# sourceMappingURL=imageRoute.js.map

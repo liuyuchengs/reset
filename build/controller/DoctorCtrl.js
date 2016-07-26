@@ -12,25 +12,22 @@ const MysqlConnect = require("./../modules/MysqlConnect");
  * 医生相关模块
  * @module
  * @pamra {number} id - 项目id
- * @returns {Object|Error} 返回查询结果
+ * @returns {Object} 返回查询结果
  */
 function querySchedule(id) {
     return __awaiter(this, void 0, Promise, function* () {
-        let date = new Date();
-        let sql = "SELECT d.id,d.doctorname,d.hobby,d.score,d.hospitalid,d.face FROM doctor as d WHERE d.id in (SELECT doctorid FROM schedule WHERE hospital_id in (SELECT hospital_id FROM product WHERE id = '" + id + "') AND YEAR(date)= '" + date.getFullYear() + "' AND MONTH(date)= '" + (date.getMonth() + 1) + "' AND DAY(date) >= '" + date.getDate() + "')";
-        try {
-            let queryResult = yield MysqlConnect.query(sql);
-            return new Promise((resolve) => {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            let date = new Date();
+            let sql = "SELECT d.id,d.doctorname,d.hobby,d.score,d.hospitalid,d.face FROM doctor as d WHERE d.id in (SELECT doctorid FROM schedule WHERE hospital_id in (SELECT hospital_id FROM product WHERE id = '" + id + "') AND YEAR(date)= '" + date.getFullYear() + "' AND MONTH(date)= '" + (date.getMonth() + 1) + "' AND DAY(date) >= '" + date.getDate() + "')";
+            try {
+                let queryResult = yield MysqlConnect.query(sql);
                 resolve({ list: queryResult });
-            });
-        }
-        catch (err) {
-            return new Promise((resovle, reject) => {
+            }
+            catch (err) {
                 reject(err);
-            });
-        }
+            }
+        }));
     });
 }
 exports.querySchedule = querySchedule;
-
-//# sourceMappingURL=DoctorCtrl.js.map
+//# sourceMappingURL=doctorCtrl.js.map

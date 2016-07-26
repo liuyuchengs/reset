@@ -33,21 +33,21 @@
 			<li class="dropdown">
 				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="module-controller_BannerCtrl.html">controller/BannerCtrl</a></li><li><a href="module-controller_focusCtrl.html">controller/focusCtrl</a></li><li><a href="module-controller_HospitalCtrl.html">controller/HospitalCtrl</a></li><li><a href="module-controller_ImageCtrl.html">controller/ImageCtrl</a></li><li><a href="module-controller_loginCtrl.html">controller/loginCtrl</a></li><li><a href="module-controller_mycountCtrl.html">controller/mycountCtrl</a></li><li><a href="module-modules_MysqlConnect.html">modules/MysqlConnect</a></li><li><a href="module-modules_ProxyRequest.html">modules/ProxyRequest</a></li><li><a href="module-modules_Tool.html">modules/Tool</a></li><li><a href="module-routes_bannerRoute.html">routes/bannerRoute</a></li><li><a href="module-routes_focusRoute.html">routes/focusRoute</a></li><li><a href="module-routes_hospitalRoute.html">routes/hospitalRoute</a></li><li><a href="module-routes_imageRoute.html">routes/imageRoute</a></li><li><a href="module-routes_loginRoute.html">routes/loginRoute</a></li><li><a href="module-routes_mycountRoute.html">routes/mycountRoute</a></li><li><a href="module-routes_productRoute.html">routes/productRoute</a></li><li><a href="module-routes_proxyPostRoute.html">routes/proxyPostRoute</a></li><li><a href="module-routes_proxyRoute.html">routes/proxyRoute</a></li><li><a href="module-routes_proxyUserRoute.html">routes/proxyUserRoute</a></li>
+					<li><a href="module-controller_BannerCtrl.html">controller/BannerCtrl</a></li><li><a href="module-controller_DoctorCtrl.html">controller/DoctorCtrl</a></li><li><a href="module-controller_focusCtrl.html">controller/focusCtrl</a></li><li><a href="module-controller_HospitalCtrl.html">controller/HospitalCtrl</a></li><li><a href="module-controller_ImageCtrl.html">controller/ImageCtrl</a></li><li><a href="module-controller_loginCtrl.html">controller/loginCtrl</a></li><li><a href="module-controller_mycountCtrl.html">controller/mycountCtrl</a></li><li><a href="module-controller_orderCtrl.html">controller/orderCtrl</a></li><li><a href="module-modules_MysqlConnect.html">modules/MysqlConnect</a></li><li><a href="module-modules_ProxyRequest.html">modules/ProxyRequest</a></li><li><a href="module-modules_Tool.html">modules/Tool</a></li><li><a href="module-routes_bannerRoute.html">routes/bannerRoute</a></li><li><a href="module-routes_doctorRoute.html">routes/doctorRoute</a></li><li><a href="module-routes_focusRoute.html">routes/focusRoute</a></li><li><a href="module-routes_hospitalRoute.html">routes/hospitalRoute</a></li><li><a href="module-routes_imageRoute.html">routes/imageRoute</a></li><li><a href="module-routes_loginRoute.html">routes/loginRoute</a></li><li><a href="module-routes_mycountRoute.html">routes/mycountRoute</a></li><li><a href="module-routes_orderRoute.html">routes/orderRoute</a></li><li><a href="module-routes_productRoute.html">routes/productRoute</a></li><li><a href="module-routes_proxyPostRoute.html">routes/proxyPostRoute</a></li><li><a href="module-routes_proxyRoute.html">routes/proxyRoute</a></li><li><a href="module-routes_proxyUserRoute.html">routes/proxyUserRoute</a></li><li><a href="module-routes_scheduleRoute.html">routes/scheduleRoute</a></li>
 				</ul>
 			</li>
 			
 			<li class="dropdown">
 				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="HttpResult.html">HttpResult</a></li><li><a href="ProductCtrl.html">ProductCtrl</a></li>
+					<li><a href="HttpResult.html">HttpResult</a></li>
 				</ul>
 			</li>
 			
 			<li class="dropdown">
 				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="global.html#params">params</a></li>
+					<li><a href="global.html#querybyid">querybyid</a></li><li><a href="global.html#queryList">queryList</a></li><li><a href="global.html#queryParams">queryParams</a></li><li><a href="global.html#queryRecommend">queryRecommend</a></li>
 				</ul>
 			</li>
 			
@@ -155,7 +155,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id="~queryByid"><span class="type-signature">&lt;inner> </span>queryByid(id)</h4>
+    <h4 class="name" id="~querybyid"><span class="type-signature">&lt;inner> </span>querybyid(id)</h4>
     
     
 </dt>
@@ -163,7 +163,7 @@
 
     
     <div class="description">
-        <p>/wx/hospital/querybyid - 根据医院id查询医院信息</p>
+        <p>/wx/hospital/querybyid - 查询医院信息</p>
     </div>
     
 
@@ -290,7 +290,7 @@
     </dt>
     <dd>
         
-<span class="param-type">object</span>
+<span class="param-type"><a href="HttpResult.html">HttpResult</a></span>
 |
 
 <span class="param-type">Error</span>
@@ -306,7 +306,7 @@
     
         <h5>Example</h5>
         
-    <pre class="sunlight-highlight-javascript">// 请求参数id = 10002// 响应结果{ &quot;name&quot;: &quot;友睦齿科福田时...&quot; //医院名称 &quot;address&quot;: &quot;深圳市福田区...&quot; //医院地址 &quot;description&quot;: &quot;友睦齿科...&quot; //医院详情 &quot;logo&quot;: &quot;upload/image/h...&quot;  //医院logo图片}</pre>
+    <pre class="sunlight-highlight-javascript">// 发起请求id=10072// 响应结果{   &quot;name&quot;:&quot;友睦齿科福田时代科技店&quot;,   &quot;address&quot;:&quot;深圳市福田区深南大道7028号...&quot;,   &quot;description&quot;:&quot;友睦齿科成立于2006年...,   &quot;logo&quot;:&quot;upload/image/hospital/logo/youmuchikefutianshidaikejidian/142808792.png&quot;}</pre>
 
 
     
@@ -360,7 +360,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
-		on July 23rd 2016, 6:11:47 pm
+		on July 26th 2016, 3:36:22 pm
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const express = require("express");
-const DoctorCtrl = require("./../controller/DoctorCtrl");
+const doctorCtrl = require("./../controller/doctorCtrl");
 /**
  * 医生相关接口
  * @module
@@ -36,7 +36,7 @@ function queryschedule(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         if (req.body.productId) {
             try {
-                let result = yield DoctorCtrl.querySchedule(req.body.productId);
+                let result = yield doctorCtrl.querySchedule(req.body.productId);
                 res.send(result);
             }
             catch (err) {
@@ -51,5 +51,4 @@ function queryschedule(req, res) {
 }
 router.use("/queryscheduledoctorbyproductid", queryschedule);
 module.exports = router;
-
 //# sourceMappingURL=doctorRoute.js.map

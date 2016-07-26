@@ -215,4 +215,3 @@ define(["require", "exports"], function (require, exports) {
     }
     return examDetail;
 });
-//# sourceMappingURL=examDetail.js.map

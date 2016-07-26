@@ -78,4 +78,3 @@ define(["require", "exports"], function (require, exports) {
     }
     return payMoney;
 });
-//# sourceMappingURL=payMoney.js.map

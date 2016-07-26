@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /// <reference path="./../../typings/index.d.ts" />
 const express = require("express");
-const ProductCtrl = require("./../controller/ProductCtrl");
+const productCtrl = require("./../controller/productCtrl");
 /**
  * 项目相关接口
  * @module
@@ -47,7 +47,6 @@ function queryrecommend(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         if (req.body.currentPage) {
             let result;
-            let productCtrl = new ProductCtrl();
             try {
                 result = yield productCtrl.queryRecommend(req.body.currentPage);
                 res.send(result);
@@ -94,7 +93,6 @@ router.post("/queryrecommend", queryrecommend);
 function queryList(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         if (req.body.currentPage && req.body.professionId) {
-            let productCtrl = new ProductCtrl();
             try {
                 let result = yield productCtrl.queryList(req.body);
                 res.send(result);
@@ -129,7 +127,6 @@ router.post("/querylist", queryList);
 function querybyid(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         if (req.body.productId) {
-            let productCtrl = new ProductCtrl();
             try {
                 let result = yield productCtrl.querybyid(req.body);
                 res.send(result);
@@ -146,5 +143,4 @@ function querybyid(req, res) {
 }
 router.post("/querybyid", querybyid);
 module.exports = router;
-
 //# sourceMappingURL=productRoute.js.map

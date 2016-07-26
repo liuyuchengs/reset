@@ -1,7 +1,7 @@
 /// <reference path="./../../typings/index.d.ts" />
 import express = require("express");
 import HttpResult = require("./../modules/HttpResult");
-import ImageCtrl = require("./../controller/ImageCtrl");
+import imageCtrl = require("./../controller/imageCtrl");
 import Tool = require("./../modules/Tool");
 import NodeData = require("NodeData");
 
@@ -24,7 +24,7 @@ let router = express.Router();
 async function querybymainid(req:express.Request,res:express.Response){
     if(req.body.type&&req.body.mainId){
         try{
-            let result:HttpResult = await ImageCtrl.queryImage(req.body);
+            let result:HttpResult = await imageCtrl.queryImage(req.body);
             res.send(result);
         }catch(err){
             console.log(err);

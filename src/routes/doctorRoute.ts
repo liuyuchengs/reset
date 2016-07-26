@@ -1,6 +1,6 @@
 import express = require("express");
 import HttpResult = require("./../modules/HttpResult");
-import DoctorCtrl = require("./../controller/DoctorCtrl");
+import doctorCtrl = require("./../controller/doctorCtrl");
 
 /**
  * 医生相关接口
@@ -29,7 +29,7 @@ let router = express.Router();
 async function queryschedule(req:express.Request,res:express.Response){
     if(req.body.productId){
         try{
-            let result = await DoctorCtrl.querySchedule(req.body.productId);
+            let result = await doctorCtrl.querySchedule(req.body.productId);
             res.send(result);
         }catch(err){
             console.log(err);
@@ -40,5 +40,6 @@ async function queryschedule(req:express.Request,res:express.Response){
     }
 }
 router.use("/queryscheduledoctorbyproductid",queryschedule);
+
 
 export = router;

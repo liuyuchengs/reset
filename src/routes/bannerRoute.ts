@@ -1,6 +1,6 @@
 import express = require('express');
 import HttpResult = require("./../modules/HttpResult");
-import BannerCtrl = require("./../controller/BannerCtrl");
+import bannerCtrl = require("./../controller/bannerCtrl");
 
 /**
  * banner图相关接口
@@ -29,7 +29,7 @@ async function query(req:express.Request,res:express.Response){
         let result:HttpResult;
         if(req.body.type==="home_banner"){
             try{
-                result = await BannerCtrl.queryBanner(req.body.type,req.headers["origin"]);
+                result = await bannerCtrl.queryBanner(req.body.type,req.headers["origin"]);
                 res.send(result);
             }catch(err){
                 console.log(err);

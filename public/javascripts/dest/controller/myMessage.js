@@ -147,4 +147,3 @@ define(["require", "exports"], function (require, exports) {
     }
     return myMessage;
 });
-//# sourceMappingURL=myMessage.js.map

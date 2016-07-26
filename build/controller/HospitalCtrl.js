@@ -15,29 +15,26 @@ const MysqlConnect = require("./../modules/MysqlConnect");
 /**
  * 查询医院详细信息
  * @param {number} id - 医院id
- * @returns {object|error} 返回查询结果
+ * @returns {object} 返回查询结果
  */
 function queryById(id) {
     return __awaiter(this, void 0, Promise, function* () {
-        let sql = "SELECT h.name,h.address,h.description,h.logo FROM hospital as h WHERE id = '" + id + "'";
-        try {
-            let queryResult = yield MysqlConnect.query(sql);
-            return new Promise((resolve) => {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            let sql = "SELECT h.name,h.address,h.description,h.logo FROM hospital as h WHERE id = '" + id + "'";
+            try {
+                let queryResult = yield MysqlConnect.query(sql);
                 if (queryResult.length > 0) {
-                    return resolve(queryResult[0]);
+                    resolve(queryResult[0]);
                 }
                 else {
-                    return resolve({});
+                    resolve({});
                 }
-            });
-        }
-        catch (err) {
-            return new Promise((resolve, reject) => {
+            }
+            catch (err) {
                 reject(err);
-            });
-        }
+            }
+        }));
     });
 }
 exports.queryById = queryById;
-
-//# sourceMappingURL=HospitalCtrl.js.map
+//# sourceMappingURL=hospitalCtrl.js.map

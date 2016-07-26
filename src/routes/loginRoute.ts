@@ -1,7 +1,7 @@
 /// <reference path="./../../typings/index.d.ts"/>
 import express = require('express');
 import HttpResult = require("./../modules/HttpResult");
-import LoginCtrl = require("./../controller/LoginCtrl");
+import loginCtrl = require("./../controller/loginCtrl");
 
 /**
  * 登录相关接口
@@ -40,9 +40,9 @@ let router = express.Router();
 async function wxlogin(req:any,res:any){
     if (req.body.phone && req.body.password) {
         let result:HttpResult;
-        if(LoginCtrl.check(req.body)){
+        if(loginCtrl.check(req.body)){
             try{
-                result =  await LoginCtrl.login(req.body);
+                result =  await loginCtrl.login(req.body);
             }catch(err){
                 console.log(err);
                 res.status(500).end();

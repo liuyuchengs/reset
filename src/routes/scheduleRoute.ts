@@ -4,8 +4,8 @@ import Tool = require("./../modules/Tool");
 import scheduleCtrl = require("./../controller/scheduleCtrl");
 
 /**
- * @module
  * 排班相关接口
+ * @module
  */
 let router = express.Router();
 

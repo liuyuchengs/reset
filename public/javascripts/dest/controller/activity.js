@@ -82,4 +82,3 @@ define(["require", "exports"], function (require, exports) {
     }
     return activity;
 });
-//# sourceMappingURL=activity.js.map

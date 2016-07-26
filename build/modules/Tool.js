@@ -109,5 +109,4 @@ function renameFile(oldPath, newPath) {
     });
 }
 exports.renameFile = renameFile;
-
 //# sourceMappingURL=Tool.js.map

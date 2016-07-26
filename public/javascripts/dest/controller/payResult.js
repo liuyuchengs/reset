@@ -36,4 +36,3 @@ define(["require", "exports"], function (require, exports) {
     }
     return payResult;
 });
-//# sourceMappingURL=payResult.js.map

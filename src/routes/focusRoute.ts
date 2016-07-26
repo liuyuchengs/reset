@@ -1,7 +1,7 @@
 /// <reference path="./../../typings/index.d.ts"/>
 import express =  require("express");
 import HttpResult = require("./../modules/HttpResult");
-import FocusCtrl = require("./../controller/FocusCtrl");
+import focusCtrl = require("./../controller/focusCtrl");
 
 /**
  * 关注相关接口
@@ -22,7 +22,7 @@ let router = express.Router();
 async function focusManCount(req:any,res:any){
     if(req.body.accessToken&&req.body.accessToken.length>0){
         try{
-            let result:HttpResult = await FocusCtrl.getUserFocusCount(req.body.accessToken);
+            let result:HttpResult = await focusCtrl.getUserFocusCount(req.body.accessToken);
             res.send(result);
         }catch(err){
             console.log(err);

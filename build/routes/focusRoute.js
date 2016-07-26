@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /// <reference path="./../../typings/index.d.ts"/>
 const express = require("express");
-const FocusCtrl = require("./../controller/FocusCtrl");
+const focusCtrl = require("./../controller/focusCtrl");
 /**
  * 关注相关接口
  * @module
@@ -29,7 +29,7 @@ function focusManCount(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         if (req.body.accessToken && req.body.accessToken.length > 0) {
             try {
-                let result = yield FocusCtrl.getUserFocusCount(req.body.accessToken);
+                let result = yield focusCtrl.getUserFocusCount(req.body.accessToken);
                 res.send(result);
             }
             catch (err) {
@@ -44,5 +44,4 @@ function focusManCount(req, res) {
 }
 router.post("/focusManCount", focusManCount);
 module.exports = router;
-
 //# sourceMappingURL=focusRoute.js.map

@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const express = require("express");
 const scheduleCtrl = require("./../controller/scheduleCtrl");
 /**
- * @module
  * 排班相关接口
+ * @module
  */
 let router = express.Router();
 function querybydoctorid(req, res) {
@@ -33,5 +33,4 @@ function querybydoctorid(req, res) {
 }
 router.use("/querybydoctorid", querybydoctorid);
 module.exports = router;
-
 //# sourceMappingURL=scheduleRoute.js.map

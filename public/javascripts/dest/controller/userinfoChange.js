@@ -252,4 +252,3 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
     }
     return userChange;
 });
-//# sourceMappingURL=userinfoChange.js.map

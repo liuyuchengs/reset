@@ -1,7 +1,7 @@
 /// <reference path="./../../typings/index.d.ts"/>
 import express = require('express');
 import HttpResult = require("./../modules/HttpResult");
-import MycountCtrl = require("./../controller/MycountCtrl");
+import mycountCtrl = require("./../controller/mycountCtrl");
 
 /**
  * 账号相关接口
@@ -22,7 +22,7 @@ let router = express.Router();
 async function getUserByToken(req:express.Request,res:express.Response){
     if(req.body.accessToken){
         try{
-            let result:HttpResult = await MycountCtrl.getUserByToken(req.body);
+            let result:HttpResult = await mycountCtrl.getUserByToken(req.body);
             res.send(result);
         }catch(err){
             console.log(err);

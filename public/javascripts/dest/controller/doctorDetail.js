@@ -379,4 +379,3 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
     }
     return doctorDetail;
 });
-//# sourceMappingURL=doctorDetail.js.map

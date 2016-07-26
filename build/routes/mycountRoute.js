@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /// <reference path="./../../typings/index.d.ts"/>
 const express = require('express');
-const MycountCtrl = require("./../controller/MycountCtrl");
+const mycountCtrl = require("./../controller/mycountCtrl");
 /**
  * 账号相关接口
  * @module
@@ -29,7 +29,7 @@ function getUserByToken(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         if (req.body.accessToken) {
             try {
-                let result = yield MycountCtrl.getUserByToken(req.body);
+                let result = yield mycountCtrl.getUserByToken(req.body);
                 res.send(result);
             }
             catch (err) {
@@ -44,5 +44,4 @@ function getUserByToken(req, res) {
 }
 router.post("/getUserByToken", getUserByToken);
 module.exports = router;
-
 //# sourceMappingURL=mycountRoute.js.map

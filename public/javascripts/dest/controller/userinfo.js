@@ -72,4 +72,3 @@ define(["require", "exports"], function (require, exports) {
     }
     return userinfo;
 });
-//# sourceMappingURL=userinfo.js.map

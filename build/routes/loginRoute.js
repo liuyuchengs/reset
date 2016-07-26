@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 /// <reference path="./../../typings/index.d.ts"/>
 const express = require('express');
 const HttpResult = require("./../modules/HttpResult");
-const LoginCtrl = require("./../controller/LoginCtrl");
+const loginCtrl = require("./../controller/loginCtrl");
 /**
  * 登录相关接口
  * @module
@@ -48,9 +48,9 @@ function wxlogin(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         if (req.body.phone && req.body.password) {
             let result;
-            if (LoginCtrl.check(req.body)) {
+            if (loginCtrl.check(req.body)) {
                 try {
-                    result = yield LoginCtrl.login(req.body);
+                    result = yield loginCtrl.login(req.body);
                 }
                 catch (err) {
                     console.log(err);
@@ -69,5 +69,4 @@ function wxlogin(req, res) {
 }
 router.post("/wxlogin", wxlogin);
 module.exports = router;
-
 //# sourceMappingURL=loginRoute.js.map
