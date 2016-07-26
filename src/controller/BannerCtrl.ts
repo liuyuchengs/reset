@@ -1,7 +1,6 @@
 /// <reference path="./../../typings/index.d.ts"/>
 import HttpResult = require("./../modules/HttpResult");
 import MysqlConnect = require("./../modules/MysqlConnect");
-import stringFormat = require("string-format");
 /**
  * banner图相关的模块
  * @module
@@ -14,8 +13,7 @@ import stringFormat = require("string-format");
  * @returns {HttpResult} 查询得到的结果，异常时返回error异常信息 
  */
 export let queryBanner = async function(type:string,host:string):Promise<HttpResult>{
-    let sql = "select path from tb_image_banner where type = '{0}'";
-    sql = stringFormat.format(sql,type);
+    let sql = `select path from tb_image_banner where type = '${type}'`;
     return new Promise<HttpResult>(async (resolve:(value:HttpResult)=>void,reject:(vlaue:Error)=>void)=>{
         try{
             let sqlResult = await MysqlConnect.query(sql);

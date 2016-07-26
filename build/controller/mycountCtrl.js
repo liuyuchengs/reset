@@ -25,7 +25,7 @@ function getUserByToken(params) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             let result;
             let sqlResult;
-            let sql = "select * from user where id in (select user_id from user_token where access_token = '" + params.accessToken + "')";
+            let sql = `select * from user where id in (select user_id from user_token where access_token = '${params.accessToken}')`;
             try {
                 sqlResult = yield MysqlConnect.query(sql);
                 let filterResult = Tool.FilterResult(["id", "nickname", "phone", "face", "sex", "realname", "email", "gift_code", "alipay", "wxpay", "referralCode"], sqlResult[0]);

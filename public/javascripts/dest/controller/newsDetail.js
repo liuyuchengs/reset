@@ -48,3 +48,4 @@ define(["require", "exports"], function (require, exports) {
     }
     return newsDetail;
 });
+//# sourceMappingURL=newsDetail.js.map

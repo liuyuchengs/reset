@@ -18,7 +18,7 @@ function querySchedule(id) {
     return __awaiter(this, void 0, Promise, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             let date = new Date();
-            let sql = "SELECT d.id,d.doctorname,d.hobby,d.score,d.hospitalid,d.face FROM doctor as d WHERE d.id in (SELECT doctorid FROM schedule WHERE hospital_id in (SELECT hospital_id FROM product WHERE id = '" + id + "') AND YEAR(date)= '" + date.getFullYear() + "' AND MONTH(date)= '" + (date.getMonth() + 1) + "' AND DAY(date) >= '" + date.getDate() + "')";
+            let sql = `SELECT d.id,d.doctorname,d.hobby,d.score,d.hospitalid,d.face FROM doctor as d WHERE d.id in (SELECT doctorid FROM schedule WHERE hospital_id in (SELECT hospital_id FROM product WHERE id = '${id}') AND YEAR(date)= '${date.getFullYear()}' AND MONTH(date)= '${(date.getMonth() + 1)}' AND DAY(date) >= '${date.getDate()}')`;
             try {
                 let queryResult = yield MysqlConnect.query(sql);
                 resolve({ list: queryResult });
@@ -30,4 +30,4 @@ function querySchedule(id) {
     });
 }
 exports.querySchedule = querySchedule;
-//# sourceMappingURL=doctorCtrl.js.map
+//# sourceMappingURL=DoctorCtrl.js.map

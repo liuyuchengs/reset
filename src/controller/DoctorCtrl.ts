@@ -11,7 +11,7 @@ import MysqlConnect = require("./../modules/MysqlConnect");
 export async function querySchedule(id:number):Promise<any>{
     return new Promise<any>(async (resolve:(value:any)=>void,reject:(value:Error)=>void)=>{
         let date = new Date();
-        let sql = "SELECT d.id,d.doctorname,d.hobby,d.score,d.hospitalid,d.face FROM doctor as d WHERE d.id in (SELECT doctorid FROM schedule WHERE hospital_id in (SELECT hospital_id FROM product WHERE id = '"+id+"') AND YEAR(date)= '"+date.getFullYear()+"' AND MONTH(date)= '"+(date.getMonth()+1)+"' AND DAY(date) >= '"+date.getDate()+"')";
+        let sql = `SELECT d.id,d.doctorname,d.hobby,d.score,d.hospitalid,d.face FROM doctor as d WHERE d.id in (SELECT doctorid FROM schedule WHERE hospital_id in (SELECT hospital_id FROM product WHERE id = '${id}') AND YEAR(date)= '${date.getFullYear()}' AND MONTH(date)= '${(date.getMonth()+1)}' AND DAY(date) >= '${date.getDate()}')`;
         try{
             let queryResult = await MysqlConnect.query(sql);
             resolve({list:queryResult});

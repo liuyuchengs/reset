@@ -134,3 +134,4 @@ define(["require", "exports"], function (require, exports) {
     }
     return invite;
 });
+//# sourceMappingURL=invite.js.map

@@ -242,3 +242,4 @@ define(["require", "exports"], function (require, exports) {
     }
     return myFollow;
 });
+//# sourceMappingURL=myFollow.js.map

@@ -15,7 +15,7 @@ import MysqlConnect = require("./../modules/MysqlConnect");
 export async function getUserFocusCount(accessToken:string):Promise<HttpResult>{
     return new Promise<HttpResult>(async (resolve:(value:HttpResult)=>void,reject:(value:Error)=>void)=>{
         let result:HttpResult;
-        let sql = "select count(fansId) as countFansMan,(select count(focusId) from focus where fansId in (select user_id from user_token where access_token='"+accessToken+"')) as countFocusMan from focus where focusId in (select user_id from user_token where access_token='"+accessToken+"')";
+        let sql = `select count(fansId) as countFansMan,(select count(focusId) from focus where fansId in (select user_id from user_token where access_token='${accessToken}')) as countFocusMan from focus where focusId in (select user_id from user_token where access_token='${accessToken}')`;
         try{
             let queryResult = await MysqlConnect.query(sql);
             result = HttpResult.CreateSuccessResult(queryResult[0]);

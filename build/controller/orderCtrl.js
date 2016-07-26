@@ -7,6 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments)).next());
     });
 };
+const HttpResult = require("./../modules/HttpResult");
 const MysqlConnect = require("./../modules/MysqlConnect");
 /**
  * 订单相关接口
@@ -20,7 +21,7 @@ const MysqlConnect = require("./../modules/MysqlConnect");
 function checkCodeMoney(productId) {
     return __awaiter(this, void 0, Promise, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-            let sql = "SELECT prefer_price as realMoney, prefer_price*0.1 as dealMoney,prefer_price*0.9 as payMoney,0 as giftMoney FROM product WHERE id = '" + productId + "'";
+            let sql = `SELECT prefer_price as realMoney, prefer_price*0.1 as dealMoney,prefer_price*0.9 as payMoney,0 as giftMoney FROM product WHERE id = '${productId}'`;
             try {
                 let queryResult = yield MysqlConnect.query(sql);
                 if (queryResult.length > 0) {
@@ -52,20 +53,29 @@ exports.checkCodeMoney = checkCodeMoney;
 function make(params) {
     return __awaiter(this, void 0, void 0, function* () {
         let orderNo = convertDate(new Date());
-        try {
-            let userId;
-            let queryUserId = yield MysqlConnect.query("SELECT id FROM alluser WHERE access_token = " + params.headers.accesstoken);
-            if (queryUserId.length > 0) {
-                userId = queryUserId[0];
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                let userId;
+                let schedule;
+                let queryUserId = yield MysqlConnect.query(`SELECT id FROM alluser WHERE access_token = '${params.headers.accesstoken}'`);
+                if (queryUserId.length > 0) {
+                    userId = queryUserId[0];
+                }
+                else {
+                    resolve(HttpResult.CreateFailResult("用户信息异常"));
+                }
+                let querySchedule = yield MysqlConnect.query(`SELECT doctorId,hospital_id FROM schedule WHERE id = '${params.scheduleId}'`);
+                if (querySchedule.length > 0) {
+                    schedule = querySchedule[0];
+                }
+                else {
+                    resolve(HttpResult.CreateSuccessResult("排班信息异常"));
+                }
             }
-        }
-        catch (err) {
-            console.log(err);
-        }
-        /*
-        let sql = "INSERT INTO order_main (orderno, user_id, vistor_id, usertype, doctor_id, hospital_id, createtime, status, optype, productType,orderSource, product_id, scheduleid, treatmenttime, originalprice, discountprice, telephone, operatorid,isReviewDoctor,isReviewhospital, isAllowReDoctor, isAllowReHospital, isAllowAsk, isAllowUploadBill,payStatus, dealMoney, payMoney, giftMoney) "+
-                    "VALUES ('"+orderNo+"', '11326', '11326', '4', '10027', '10006', '2016-07-07 14:13:11', '0', '4', '2', '1', '10021', '40081', '2016-07-30 10:20', '14080', '14080', '18575600158', '11301', '0', '0', '1', '1', '0', '1', '0', '2816', '11264', '0')";
-        */
+            catch (err) {
+                reject(err);
+            }
+        }));
     });
 }
 exports.make = make;

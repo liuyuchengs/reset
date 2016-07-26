@@ -95,3 +95,4 @@ define(["require", "exports"], function (require, exports) {
     }
     return discount;
 });
+//# sourceMappingURL=discount.js.map

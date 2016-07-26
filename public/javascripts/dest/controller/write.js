@@ -400,3 +400,4 @@ define(["require", "exports"], function (require, exports) {
     }
     return write;
 });
+//# sourceMappingURL=write.js.map

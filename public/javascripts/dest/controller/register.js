@@ -132,3 +132,4 @@ define(["require", "exports"], function (require, exports) {
     }
     return register;
 });
+//# sourceMappingURL=register.js.map

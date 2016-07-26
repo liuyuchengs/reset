@@ -20,7 +20,7 @@ const MysqlConnect = require("./../modules/MysqlConnect");
 function querybydoctorid(id) {
     return __awaiter(this, void 0, void 0, function* () {
         let date = new Date();
-        let sql = "SELECT id as scheduleid,starttime,date as dateStr FROM schedule WHERE doctorid = '" + id + "' AND YEAR(date)= '" + date.getFullYear() + "' AND MONTH(date)= '" + (date.getMonth() + 1) + "' AND DAY(date) >= '" + date.getDate() + "'";
+        let sql = `SELECT id as scheduleid,starttime,date as dateStr FROM schedule WHERE doctorid = '${id}' AND YEAR(date)= '${date.getFullYear()}' AND MONTH(date)= '${(date.getMonth() + 1)}' AND DAY(date) >= '${date.getDate()}'`;
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             try {
                 let queryResult = yield MysqlConnect.query(sql);

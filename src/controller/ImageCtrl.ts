@@ -16,9 +16,9 @@ export async function queryImage(params:any):Promise<HttpResult|any>{
     return new Promise<HttpResult>(async (resolve:(value:HttpResult)=>void,reject:(value:any)=>void)=>{
         let sql:string = null;
         if(params.type==="PRODUCT"){
-            sql = "select path as url from product_image where flag = 1 and productid = "+ params.mainId;
+            sql = `select path as url from product_image where flag = 1 and productid = '${params.mainId}'`;
         }else if(params.type==="HOSPITAL"){
-            sql = "select path as url from hospital_image where hospital_id = "+ params.mainId;
+            sql = `select path as url from hospital_image where hospital_id = '${params.mainId}'`;
         }
         if(sql){
             try{

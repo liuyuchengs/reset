@@ -20,7 +20,7 @@ const MysqlConnect = require("./../modules/MysqlConnect");
 function queryById(id) {
     return __awaiter(this, void 0, Promise, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-            let sql = "SELECT h.name,h.address,h.description,h.logo FROM hospital as h WHERE id = '" + id + "'";
+            let sql = `SELECT h.name,h.address,h.description,h.logo FROM hospital as h WHERE id = '${id}'`;
             try {
                 let queryResult = yield MysqlConnect.query(sql);
                 if (queryResult.length > 0) {
@@ -37,4 +37,4 @@ function queryById(id) {
     });
 }
 exports.queryById = queryById;
-//# sourceMappingURL=hospitalCtrl.js.map
+//# sourceMappingURL=HospitalCtrl.js.map

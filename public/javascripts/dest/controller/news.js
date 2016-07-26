@@ -75,3 +75,4 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
     }
     return news;
 });
+//# sourceMappingURL=news.js.map

@@ -33,7 +33,7 @@ export async function login(params:any):Promise<HttpResult>{
     return new Promise<HttpResult>(async (resolve:(value:HttpResult)=>void,reject:(value:Error)=>void)=>{
         let result:HttpResult;
         let sqlResult:any;
-        let sql = "select * from (select * from user where phone = '"+params.phone+"') as users left join user_token as token on users.id = token.user_id";
+        let sql = `select * from (select * from user where phone = '${params.phone}') as users left join user_token as token on users.id = token.user_id`;
         try{
             sqlResult = await MysqlConnect.query(sql);
             if(sqlResult.length>0&&sqlResult[0].password===params.password){

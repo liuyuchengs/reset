@@ -22,10 +22,10 @@ function queryImage(params) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             let sql = null;
             if (params.type === "PRODUCT") {
-                sql = "select path as url from product_image where flag = 1 and productid = " + params.mainId;
+                sql = `select path as url from product_image where flag = 1 and productid = '${params.mainId}'`;
             }
             else if (params.type === "HOSPITAL") {
-                sql = "select path as url from hospital_image where hospital_id = " + params.mainId;
+                sql = `select path as url from hospital_image where hospital_id = '${params.mainId}'`;
             }
             if (sql) {
                 try {
@@ -43,4 +43,4 @@ function queryImage(params) {
     });
 }
 exports.queryImage = queryImage;
-//# sourceMappingURL=imageCtrl.js.map
+//# sourceMappingURL=ImageCtrl.js.map

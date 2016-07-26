@@ -12,7 +12,7 @@ import MysqlConnect = require("./../modules/MysqlConnect");
  */
 export async function querybydoctorid(id:number){
     let date = new Date();
-    let sql = "SELECT id as scheduleid,starttime,date as dateStr FROM schedule WHERE doctorid = '"+id+"' AND YEAR(date)= '"+date.getFullYear()+"' AND MONTH(date)= '"+(date.getMonth()+1)+"' AND DAY(date) >= '"+date.getDate()+"'";
+    let sql = `SELECT id as scheduleid,starttime,date as dateStr FROM schedule WHERE doctorid = '${id}' AND YEAR(date)= '${date.getFullYear()}' AND MONTH(date)= '${(date.getMonth()+1)}' AND DAY(date) >= '${date.getDate()}'`;
     return new Promise<any>(async (resolve:(value:any)=>void,reject:(value:any)=>void)=>{
         try{
             let queryResult = await MysqlConnect.query(sql);

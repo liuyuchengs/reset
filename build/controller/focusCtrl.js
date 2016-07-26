@@ -23,7 +23,7 @@ function getUserFocusCount(accessToken) {
     return __awaiter(this, void 0, Promise, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             let result;
-            let sql = "select count(fansId) as countFansMan,(select count(focusId) from focus where fansId in (select user_id from user_token where access_token='" + accessToken + "')) as countFocusMan from focus where focusId in (select user_id from user_token where access_token='" + accessToken + "')";
+            let sql = `select count(fansId) as countFansMan,(select count(focusId) from focus where fansId in (select user_id from user_token where access_token='${accessToken}')) as countFocusMan from focus where focusId in (select user_id from user_token where access_token='${accessToken}')`;
             try {
                 let queryResult = yield MysqlConnect.query(sql);
                 result = HttpResult.CreateSuccessResult(queryResult[0]);

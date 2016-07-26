@@ -14,7 +14,7 @@ import format = require("string-format");
  */
 export async function checkCodeMoney(productId:number):Promise<any>{
     return new Promise<any>(async (resolve:(value:any)=>void,reject:(value:any)=>void)=>{
-        let sql = "SELECT prefer_price as realMoney, prefer_price*0.1 as dealMoney,prefer_price*0.9 as payMoney,0 as giftMoney FROM product WHERE id = '"+productId+"'";
+        let sql = `SELECT prefer_price as realMoney, prefer_price*0.1 as dealMoney,prefer_price*0.9 as payMoney,0 as giftMoney FROM product WHERE id = '${productId}'`;
         try{
             let queryResult = await MysqlConnect.query(sql);
             if(queryResult.length>0){
@@ -46,21 +46,20 @@ export async function make(params:any){
         try{
             let userId:number;
             let schedule:any;
-            let queryUserId:any[] = await MysqlConnect.query("SELECT id FROM alluser WHERE access_token = "+params.headers.accesstoken);
+            let queryUserId:any[] = await MysqlConnect.query(`SELECT id FROM alluser WHERE access_token = '${params.headers.accesstoken}'`);
             if(queryUserId.length>0){
                 userId = queryUserId[0];
             }else{
                 resolve(HttpResult.CreateFailResult("用户信息异常"));
             }
-            let querySchedule:any[] = await MysqlConnect.query("SELECT doctorId,hospital_id FROM schedule WHERE id = '"+params.scheduleId+"'");
+            let querySchedule:any[] = await MysqlConnect.query(`SELECT doctorId,hospital_id FROM schedule WHERE id = '${params.scheduleId}'`);
             if(querySchedule.length>0){
                 schedule = querySchedule[0];
             }else{
                 resolve(HttpResult.CreateSuccessResult("排班信息异常"));
             }
-            /*
-            let sql = "INSERT INTO order_main (orderno, user_id, vistor_id, usertype, doctor_id, hospital_id, createtime, status, optype, productType,orderSource, product_id, scheduleid, treatmenttime, originalprice, discountprice, telephone, operatorid,isReviewDoctor,isReviewhospital, isAllowReDoctor, isAllowReHospital, isAllowAsk, isAllowUploadBill,payStatus, dealMoney, payMoney, giftMoney) "+
-                    "VALUES ('"+orderNo+"','"+userId+"', '"+userId+"', '4', '"+schedule.doctorId+"', '"+schedule.hospitalId+"', current_timestamp(), '0', '4', '2', '1', '"+params.productId+"', '"+params.scheduleId+"', timestamp("++"), '14080', '14080', '18575600158', '11301', '0', '0', '1', '1', '0', '1', '0', '2816', '11264', '0')";*/
+            let sql = `INSERT INTO order_main (orderno, user_id, vistor_id, usertype, doctor_id, hospital_id, createtime, status, optype, productType,orderSource, product_id, scheduleid, treatmenttime, originalprice, discountprice, telephone, operatorid,isReviewDoctor,isReviewhospital, isAllowReDoctor, isAllowReHospital, isAllowAsk, isAllowUploadBill,payStatus, dealMoney, payMoney, giftMoney) "+
+                    "VALUES ('${orderNo}','${userId}', '${userId}', '4', '${schedule.doctorId}', '${schedule.hospitalId}', current_timestamp(), '0', '4', '2', '1', '${params.productId}', '${params.scheduleId}', timestamp(), '14080', '14080', '18575600158', '11301', '0', '0', '1', '1', '0', '1', '0', '2816', '11264', '0')`;
         
         }catch(err){
             reject(err);

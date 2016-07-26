@@ -12,11 +12,11 @@ function activity($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILocat
     $scope.detail = (productId:any,hospitalId:any,type:any)=>{
         if(productId&&hospitalId&&type){
             if(type===5){
-                ToolService.changeRoute("/exam/detail","productId="+productId+"&hospitalId="+hospitalId);
+                ToolService.changeRoute("/exam/detail",`productId=${productId}&hospitalId=${hospitalId}`);
             }if(type===6){
-                ToolService.changeRoute("/exam/detail","productId="+productId+"&hospitalId="+hospitalId+"&activityp=元/次");
+                ToolService.changeRoute("/exam/detail",`productId=${productId}&hospitalId=${hospitalId}&activityp=元/次`);
             }else{
-                ToolService.changeRoute("/product/detail","productId="+productId+"&hospitalId="+hospitalId);
+                ToolService.changeRoute("/product/detail",`productId=${productId}&hospitalId=${hospitalId}`);
             }
         }
     }

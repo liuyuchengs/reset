@@ -44,7 +44,7 @@ function login(params) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             let result;
             let sqlResult;
-            let sql = "select * from (select * from user where phone = '" + params.phone + "') as users left join user_token as token on users.id = token.user_id";
+            let sql = `select * from (select * from user where phone = '${params.phone}') as users left join user_token as token on users.id = token.user_id`;
             try {
                 sqlResult = yield MysqlConnect.query(sql);
                 if (sqlResult.length > 0 && sqlResult[0].password === params.password) {

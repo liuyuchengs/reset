@@ -453,3 +453,4 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
     }
     return interactionDetail;
 });
+//# sourceMappingURL=interactionDetail.js.map

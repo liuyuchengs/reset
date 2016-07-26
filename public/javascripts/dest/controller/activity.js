@@ -9,7 +9,7 @@ define(["require", "exports"], function (require, exports) {
                     ToolService.changeRoute("/exam/detail", "productId=" + productId + "&hospitalId=" + hospitalId);
                 }
                 if (type === 6) {
-                    ToolService.changeRoute("/exam/detail", "productId=" + productId + "&hospitalId=" + hospitalId + "&activityp=元/次");
+                    ToolService.changeRoute("/exam/detail", "productId=" + productId + "&hospitalId=" + hospitalId + "&activityp=\u5143/\u6B21");
                 }
                 else {
                     ToolService.changeRoute("/product/detail", "productId=" + productId + "&hospitalId=" + hospitalId);
@@ -82,3 +82,4 @@ define(["require", "exports"], function (require, exports) {
     }
     return activity;
 });
+//# sourceMappingURL=activity.js.map

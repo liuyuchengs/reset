@@ -14,7 +14,7 @@ import Tool = require("./../modules/Tool");
  */
 export async function queryById(id:number):Promise<any>{
     return new Promise<any>(async (resolve:(value:any)=>void,reject:(value:Error)=>void)=>{
-        let sql = "SELECT h.name,h.address,h.description,h.logo FROM hospital as h WHERE id = '"+id+"'";
+        let sql = `SELECT h.name,h.address,h.description,h.logo FROM hospital as h WHERE id = '${id}'`;
         try{
             let queryResult = await MysqlConnect.query(sql);
             if(queryResult.length>0){

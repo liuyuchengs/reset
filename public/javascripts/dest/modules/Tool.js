@@ -410,3 +410,4 @@ define(["require", "exports"], function (require, exports) {
     }());
     return Tool;
 });
+//# sourceMappingURL=Tool.js.map

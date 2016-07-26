@@ -22,7 +22,7 @@ const MysqlConnect = require("./../modules/MysqlConnect");
  */
 exports.queryBanner = function (type, host) {
     return __awaiter(this, void 0, Promise, function* () {
-        let sql = "select path from tb_image_banner where type = '" + type + "'";
+        let sql = `select path from tb_image_banner where type = '${type}'`;
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             try {
                 let sqlResult = yield MysqlConnect.query(sql);
@@ -39,4 +39,4 @@ exports.queryBanner = function (type, host) {
         }));
     });
 };
-//# sourceMappingURL=bannerCtrl.js.map
+//# sourceMappingURL=BannerCtrl.js.map

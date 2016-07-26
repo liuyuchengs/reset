@@ -185,3 +185,4 @@ define(["require", "exports"], function (require, exports) {
     }());
     return Weixin;
 });
+//# sourceMappingURL=Weixin.js.map
