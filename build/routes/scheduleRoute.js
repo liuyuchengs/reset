@@ -32,5 +32,24 @@ function querybydoctorid(req, res) {
     });
 }
 router.use("/querybydoctorid", querybydoctorid);
+function autoSchedule(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let date = new Date();
+        let times = ['9:00:00', '10:00:00', '11:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00', '17:00:00'];
+        let days = [];
+        for (let index = 0; index < 7; index++) {
+            days.push(date.toISOString().slice(0, 10));
+            date.setDate(date.getDate() + 1);
+        }
+        try {
+            let result = yield scheduleCtrl.autoSchedule(days, times);
+            res.send(result);
+        }
+        catch (err) {
+            res.status(400).end();
+        }
+    });
+}
+router.use("/autoSchedule", autoSchedule);
 module.exports = router;
 //# sourceMappingURL=scheduleRoute.js.map

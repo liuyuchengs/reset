@@ -20,7 +20,7 @@ const MysqlConnect = require("./../modules/MysqlConnect");
 function querybydoctorid(id) {
     return __awaiter(this, void 0, void 0, function* () {
         let date = new Date();
-        let sql = `SELECT id as scheduleid,starttime,date as dateStr FROM schedule WHERE doctorid = '${id}' AND YEAR(date)= '${date.getFullYear()}' AND MONTH(date)= '${(date.getMonth() + 1)}' AND DAY(date) >= '${date.getDate()}'`;
+        let sql = `SELECT id as scheduleid,starttime,date as dateStr FROM schedule WHERE status = '1' AND doctorid = '${id}' AND YEAR(date)= '${date.getFullYear()}' AND MONTH(date)= '${(date.getMonth() + 1)}' AND DAY(date) >= '${date.getDate()}'`;
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             try {
                 let queryResult = yield MysqlConnect.query(sql);
@@ -55,4 +55,31 @@ function querybydoctorid(id) {
     });
 }
 exports.querybydoctorid = querybydoctorid;
+function autoSchedule(days, times) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                let doctors = yield MysqlConnect.query("SELECT id,hospitalId FROM doctor");
+                let sql = "INSERT INTO schedule(doctorid,starttime,status,hospital_id,number_limit,remain,date) values";
+                for (let i1 in doctors) {
+                    let doctorId = doctors[i1].id;
+                    let hospitalId = doctors[i1].hospitalId;
+                    for (let i2 in days) {
+                        for (let i3 in times) {
+                            sql += `('${doctorId}','${times[i3]}',1,'${hospitalId}',1,0,'${days[i2]}'),`;
+                        }
+                    }
+                    sql = sql.slice(0, sql.length - 1);
+                    let result = yield MysqlConnect.query(sql);
+                    sql = "INSERT INTO schedule(doctorid,starttime,status,hospital_id,number_limit,remain,date) values";
+                }
+                resolve("success");
+            }
+            catch (err) {
+                reject(err);
+            }
+        }));
+    });
+}
+exports.autoSchedule = autoSchedule;
 //# sourceMappingURL=scheduleCtrl.js.map
