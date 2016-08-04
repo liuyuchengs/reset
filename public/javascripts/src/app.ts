@@ -12,8 +12,9 @@ import wx = require("WX");
 import Tool = require("./modules/Tool");
 import Ajax = require("./modules/Ajax");
 import Weixin = require("./modules/Weixin");
-let host:string = "http://192.168.0.120:3000";
+let host:string = "http://192.168.0.113:3000";
 var app = ag.module("myApp",['ngRoute']);
+
 
 /**
  * 配置

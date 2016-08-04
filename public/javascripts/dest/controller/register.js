@@ -109,7 +109,7 @@ define(["require", "exports"], function (require, exports) {
         $scope.registering = function () {
             AjaxService.post({
                 url: ToolService.host + "/wx/register/register",
-                data: { phone: $scope.phone, verifyCode: $scope.code, password: $scope.password, referralCode: $scope.referralCode },
+                data: { phone: $scope.phone, verifyCode: $scope.code, password: $scope.password, referralCode: $scope.referralCode, registertype: 8 },
             }).then(function (data) {
                 if (data.code == 0) {
                     ToolService.setLocal("user", data.data);

@@ -38,6 +38,7 @@ app.use("/wx/order/orderCacel",proxyRoute);
 app.use("/wx/order/findAllVouchers",proxyRoute);
 app.use("/wx/order/activate",proxyRoute);
 app.use("/wx/order/overdue",proxyRoute);
+app.use("/wx/order/make",proxyRoute);
 app.use("/wx/order/queryUserGiftCode",proxyRoute);
 app.use("/wx/findpass/findPassPhontCheck",proxyRoute);
 app.use("/wx/findpass/sendsmsfindpasscode",proxyRoute);

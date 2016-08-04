@@ -15,7 +15,8 @@ const proxyRequest = require("./../modules/proxyRequest");
  * @module
  */
 const router = express.Router();
-const url = "https://www.uokang.com";
+//const url = "https://www.uokang.com";
+const url = "https://192.168.0.222:8555/www";
 /**
  * 普通文本接口转发到java服务器
  * @param {any} any
@@ -26,6 +27,6 @@ function proxy(req, res, next) {
         res.send(result);
     });
 }
-router.use();
+router.use(proxy);
 module.exports = router;
 //# sourceMappingURL=proxyRoute.js.map

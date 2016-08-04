@@ -37,8 +37,8 @@ function querybydoctorid(id) {
                         result.push({ date: queryResult[index].dateStr, timeList: [] });
                     }
                 }
+                let indexCount = 0;
                 for (let index in queryResult) {
-                    let indexCount = 0;
                     if (result.length > 0) {
                         if (result[indexCount].date != queryResult[index].dateStr) {
                             indexCount++;
@@ -59,7 +59,7 @@ function autoSchedule(days, times) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             try {
-                let doctors = yield MysqlConnect.query("SELECT id,hospitalId FROM doctor");
+                let doctors = yield MysqlConnect.query("SELECT id,hospitalId FROM doctor WHERE hospitalid in (SELECT id from hospital where code not like 'ESZ%')");
                 let sql = "INSERT INTO schedule(doctorid,starttime,status,hospital_id,number_limit,remain,date) values";
                 for (let i1 in doctors) {
                     let doctorId = doctors[i1].id;

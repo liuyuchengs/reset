@@ -28,8 +28,8 @@ export async function querybydoctorid(id:number){
                     result.push({date:queryResult[index].dateStr,timeList:[]});
                 }
             }
+            let indexCount = 0;
             for(let index in queryResult){
-                let indexCount = 0;
                 if(result.length>0){
                     if(result[indexCount].date != queryResult[index].dateStr){
                         indexCount++;
@@ -42,13 +42,12 @@ export async function querybydoctorid(id:number){
             reject(err);
         }
     })
-    
 }
 
 export async function autoSchedule(days:string[],times:string[]){
     return new Promise<any>(async (resolve:(value:any)=>void,reject:(value:any)=>void)=>{
         try{
-            let doctors = await MysqlConnect.query("SELECT id,hospitalId FROM doctor");
+            let doctors = await MysqlConnect.query("SELECT id,hospitalId FROM doctor WHERE hospitalid in (SELECT id from hospital where code not like 'ESZ%')");
             let sql:string = "INSERT INTO schedule(doctorid,starttime,status,hospital_id,number_limit,remain,date) values";
             for(let i1 in doctors){
                 let doctorId:any = doctors[i1].id;
@@ -67,5 +66,4 @@ export async function autoSchedule(days:string[],times:string[]){
             reject(err);
         }
     })
-    
 }

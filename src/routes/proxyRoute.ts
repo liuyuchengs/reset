@@ -8,7 +8,8 @@ import proxyRequest = require("./../modules/proxyRequest");
  * @module
  */
 const router:express.Router = express.Router();
-const url = "https://www.uokang.com";
+//const url = "https://www.uokang.com";
+const url = "https://192.168.0.222:8555/www";
 
 /**
  * 普通文本接口转发到java服务器
@@ -18,5 +19,6 @@ async function proxy(req:express.Request,res:express.Response,next:express.NextF
     let result = await proxyRequest.request(req,url);
     res.send(result);
 }
-router.use()
+router.use(proxy)
+
 export = router;
