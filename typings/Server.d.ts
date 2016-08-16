@@ -22,8 +22,3 @@ declare module "NodeData"{
         location?:location;
     }
 }
-declare module "string-format"{
-    export interface format{
-        (source:string,...params:any[]):string;
-    }
-}

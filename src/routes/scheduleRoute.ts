@@ -24,4 +24,22 @@ async function querybydoctorid(req:express.Request,res:express.Response){
 }
 router.use("/querybydoctorid",querybydoctorid);
 
+async function autoSchedule(req:express.Request,res:express.Response){
+    let date:any = new Date();
+    let times:string[] = ['9:00:00','10:00:00','11:00:00','13:00:00','14:00:00','15:00:00','16:00:00','17:00:00'];
+    let days:string[] = [];
+    for(let index = 0;index<7;index++){
+        days.push(date.toISOString().slice(0,10));
+        date.setDate(date.getDate()+1);
+    }
+    try{
+        let result = await scheduleCtrl.autoSchedule(days,times);
+        res.send(result);
+    }catch(err){
+        res.status(400).end();
+    }   
+}
+
+router.use("/autoSchedule",autoSchedule);
+
 export = router;

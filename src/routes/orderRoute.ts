@@ -38,4 +38,19 @@ async function checkCodeMoney(req:express.Request,res:express.Response){
 }
 router.use("/checkCodeMoney",checkCodeMoney)
 
+async function make(req:express.Request,res:express.Response){
+    if(req.body.productId&&req.body.scheduleId&&req.body.patientName&&req.body.patientTelephone&&req.body.dealMoney&&req.body.realMoney&&req.body.payMoney){
+        try{
+            let result = await orderCtrl.make(req.body,req.headers);
+            res.send(result);
+        }catch(err){
+            console.log(err);
+            res.status(500).end();
+        }
+    }else{
+        res.status(400).end();
+    }
+}
+router.use("/make",make);
+
 export = router;
