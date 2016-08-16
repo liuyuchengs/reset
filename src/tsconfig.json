@@ -4,7 +4,7 @@
         "target": "es6",
         "declaration":false,
         "noImplicitAny": true,
-        "outDir": "./../build",
+        "outDir": "./../../restart",
         "sourceMap":true,
         "watch":true
     }
