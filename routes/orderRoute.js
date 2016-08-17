@@ -47,5 +47,23 @@ function checkCodeMoney(req, res) {
     });
 }
 router.use("/checkCodeMoney", checkCodeMoney);
+function make(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (req.body.productId && req.body.scheduleId && req.body.patientName && req.body.patientTelephone && req.body.dealMoney && req.body.realMoney && req.body.payMoney) {
+            try {
+                let result = yield orderCtrl.make(req.body, req.headers);
+                res.send(result);
+            }
+            catch (err) {
+                console.log(err);
+                res.status(500).end();
+            }
+        }
+        else {
+            res.status(400).end();
+        }
+    });
+}
+router.use("/make", make);
 module.exports = router;
 //# sourceMappingURL=orderRoute.js.map

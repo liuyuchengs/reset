@@ -50,29 +50,38 @@ exports.checkCodeMoney = checkCodeMoney;
  * @param {number} payMoney - 到店付价格
  * @returns {HttpResult|Error} 返回订单生成结果
  */
-function make(params) {
+function make(body, headers) {
     return __awaiter(this, void 0, void 0, function* () {
         let orderNo = convertDate(new Date());
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             try {
                 let userId;
                 let schedule;
-                let queryUserId = yield MysqlConnect.query(`SELECT id FROM alluser WHERE access_token = '${params.headers.accesstoken}'`);
+                let queryUserId = yield MysqlConnect.query(`SELECT id FROM alluser WHERE access_token = '${headers.accesstoken}'`);
                 if (queryUserId.length > 0) {
-                    userId = queryUserId[0];
+                    userId = queryUserId[0].id;
                 }
                 else {
                     resolve(HttpResult.CreateFailResult("用户信息异常"));
                 }
-                let querySchedule = yield MysqlConnect.query(`SELECT doctorId,hospital_id FROM schedule WHERE id = '${params.scheduleId}'`);
+                let querySchedule = yield MysqlConnect.query(`SELECT doctorId,hospital_id as hospitalId,date,starttime as time FROM schedule WHERE id = '${body.scheduleId}'`);
                 if (querySchedule.length > 0) {
                     schedule = querySchedule[0];
                 }
                 else {
                     resolve(HttpResult.CreateSuccessResult("排班信息异常"));
                 }
-                let sql = `INSERT INTO order_main (orderno, user_id, vistor_id, usertype, doctor_id, hospital_id, createtime, status, optype, productType,orderSource, product_id, scheduleid, treatmenttime, originalprice, discountprice, telephone, operatorid,isReviewDoctor,isReviewhospital, isAllowReDoctor, isAllowReHospital, isAllowAsk, isAllowUploadBill,payStatus, dealMoney, payMoney, giftMoney) "+
-                    "VALUES ('${orderNo}','${userId}', '${userId}', '4', '${schedule.doctorId}', '${schedule.hospitalId}', current_timestamp(), '0', '4', '2', '1', '${params.productId}', '${params.scheduleId}', timestamp(), '14080', '14080', '18575600158', '11301', '0', '0', '1', '1', '0', '1', '0', '2816', '11264', '0')`;
+                let makeOrderSql = `INSERT INTO order_main (orderno, user_id, vistor_id, usertype, doctor_id, hospital_id, createtime, status, optype, productType,orderSource, product_id, scheduleid, treatmenttime, originalprice, discountprice, telephone, operatorid,isReviewDoctor,isReviewhospital, isAllowReDoctor, isAllowReHospital, isAllowAsk, isAllowUploadBill,payStatus, dealMoney, payMoney, giftMoney) VALUES('${orderNo}','${userId}', '${userId}', '4', '${schedule.doctorId}', '${schedule.hospitalId}', current_timestamp(), '0', '4', '2', '1', '${body.productId}', '${body.scheduleId}','${schedule.date.toLocaleDateString()} ${schedule.time}', '${body.realMoney}', '${body.realMoney}', '${body.patientTelephone}', '${userId}', '0', '0', '1', '1', '0', '1', '0', '${body.dealMoney}', '${body.payMoney}', '${body.realMoney - body.payMoney - body.dealMoney}')`;
+                let makeOrderResult = yield MysqlConnect.query(makeOrderSql);
+                if (makeOrderResult.insertId > 0) {
+                    MysqlConnect.query(`UPDATE schedule SET status = '0' WHERE id = '${body.scheduleId}'`);
+                    let queryOrderSql = `SELECT * FROM order_main WHERE id = '${makeOrderResult.insertId}'`;
+                    let result = yield MysqlConnect.query(queryOrderSql);
+                    resolve(HttpResult.CreateSuccessResult(result));
+                }
+                else {
+                    resolve(HttpResult.CreateFailResult("创建订单失败!"));
+                }
             }
             catch (err) {
                 reject(err);
