@@ -9,5 +9,15 @@
         <input type="file" name="headImage">
         <input type="submit" value="提交">
     </form>
+    <script>
+        window.addEventListener("storage",function(e){
+            console.log(`${e.key} changed,${e.oldValue}->${e.newValue}`);
+        })
+        localStorage.setItem("name","tom");
+        localStorage.setItem("name","jack");
+        localStorage.setItem("age","5");
+        var age = Number(localStorage.getItem("age"));
+        console.log(localStorage.getItem("name"));
+    </script>
 </body>
 </html>
