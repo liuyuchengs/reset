@@ -5,6 +5,7 @@
 /// <reference path="globals/form-data/index.d.ts" />
 /// <reference path="globals/jquery/index.d.ts" />
 /// <reference path="globals/koa-bodyparser/index.d.ts" />
+/// <reference path="globals/koa-json/index.d.ts" />
 /// <reference path="globals/koa-router/index.d.ts" />
 /// <reference path="globals/koa-static/index.d.ts" />
 /// <reference path="globals/koa/index.d.ts" />

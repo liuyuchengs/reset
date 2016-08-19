@@ -1,136 +1,109 @@
-/**
- * 做中转路由的app配置
- */
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-
-//加载路由
-var proxyRoute = require("./build/routes/proxyRoute");
-var proxyUserRoute = require("./build/routes/proxyUserRoute");
-var proxyPostRoute = require("./build/routes/proxyPostRoute");
-var app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(favicon(__dirname+"/public/contents/img/logo.png"));
-
-//配置中转路由->普通文本
-app.use("/wx/product/queryrecommend",proxyRoute);
-app.use("/wx/banner/query",proxyRoute);
-app.use("/weixin/check/getjsconfig",proxyRoute);
-app.use("/wx/login/wxlogin",proxyRoute);
-app.use("/wx/focus/focusManCount",proxyRoute);
-app.use("/wx/order/queryOrderList",proxyRoute);
-app.use("/wx/order/orderCacel",proxyRoute);
-app.use("/wx/order/findAllVouchers",proxyRoute);
-app.use("/wx/order/activate",proxyRoute);
-app.use("/wx/order/overdue",proxyRoute);
-app.use("/wx/order/make",proxyRoute);
-app.use("/wx/order/queryUserGiftCode",proxyRoute);
-app.use("/wx/findpass/findPassPhontCheck",proxyRoute);
-app.use("/wx/findpass/sendsmsfindpasscode",proxyRoute);
-app.use("/wx/findpass/changepwd",proxyRoute);
-app.use("/wx/register/registercheck",proxyRoute);
-app.use("/wx/register/sendsmsregistercode",proxyRoute);
-app.use("/wx/register/register",proxyRoute);
-app.use("/wx/health/queryByType",proxyRoute);
-app.use("/wx/health/querydetail",proxyRoute);
-app.use("/wx/order/queryByGift",proxyRoute);
-app.use("/wx/order/queryGift",proxyRoute);
-app.use("/wx/gift/querydate",proxyRoute);
-app.use("/wx/gift/queryproduct",proxyRoute);
-app.use("/wx/order/checkCode",proxyRoute);
-app.use("/wx/gift/getgiftproduct",proxyRoute);
-app.use("/wx/product/querylist",proxyRoute);
-app.use("/wx/image/querybymainid",proxyRoute);
-app.use("/wx/hospital/querybyid",proxyRoute);
-app.use("/wx/doctor/queryscheduledoctorbyproductid",proxyRoute);
-app.use("/wx/schedule/querybydoctorid",proxyRoute);
-app.use("/wx/order/checkCodeMoney",proxyRoute);
-app.use("/wx/post/focus",proxyRoute);
-app.use("/wx/post/cacelFocus",proxyRoute);
-app.use("/wx/product/querybyid",proxyRoute);
-app.use("/wx/doctor/querydoctorbycityandprofession",proxyRoute);
-app.use("/wx/doctor/queryDoctorDetailInfo",proxyRoute);
-app.use("/wx/order/querybydoctorid",proxyRoute);
-app.use("/wx/post/focus",proxyRoute);
-app.use("/wx/post/cacelFocus",proxyRoute);
-app.use("/wx/review/showdoctorreview",proxyRoute);
-app.use("/wx/post/postList",proxyRoute);
-app.use("/wx/post/postDetail",proxyRoute);
-app.use("/wx/post/postMessage",proxyRoute);
-app.use("/wx/post/thumbUp",proxyRoute);
-app.use("/wx/repliesMessage/addRepliesMessage",proxyRoute);
-app.use("/wx/post/myPost",proxyRoute);
-app.use("/wx/repliesMessage/myReply",proxyRoute);
-app.use("/wx/repliesMessage/myMessage",proxyRoute);
-app.use("/wx/post/doctorMessage",proxyRoute);
-app.use("/wx/focus/focusUserMan",proxyRoute);
-app.use("/wx/focus/focusDoctorMan",proxyRoute);
-app.use("/wx/focus/focusProductMan",proxyRoute);
-app.use("/wx/product/packagedetal",proxyRoute);
-app.use("/wx/product/hospitalbyid",proxyRoute);
-app.use("/wx/product/packagedetalItem",proxyRoute);
-app.use("/wx/schedule/querybyhospitalid",proxyRoute);
-app.use("/wx/hospital/querylist",proxyRoute);
-app.use("/wx/product/queryActivity",proxyRoute);
-app.use("/wx/user/createReferralCode",proxyRoute);
-app.use("/wx/share/queryById",proxyRoute);
-app.use("/wx/withDraw/bound",proxyRoute);
-app.use("/wx/withDraw/myBound",proxyRoute);
-app.use("/wx/post/deletePost",proxyRoute);
-app.use("/wx/repliesMessage/deleteReplies",proxyRoute);
-app.use("/wx/mycount/getUserByToken",proxyRoute);
-app.use("/wx/withdraw/myMoney",proxyRoute);
-app.use("/wx/withDraw/apply",proxyRoute);
-//配置中转路由->图片上传
-app.use("/wx/mycount/updateUserInfo",proxyUserRoute);
-app.use("/wx/post/addPost",proxyPostRoute);
-
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator.throw(value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments)).next());
     });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+};
+// system module
+const Koa = require("koa");
+const koaRouter = require("koa-router");
+const koaStatic = require("koa-static");
+const parser = require("koa-bodyparser");
+// router module
+const proxy = require('./modules/base/proxy');
+const app = new Koa();
+const router = new koaRouter();
+// global middlewares
+app.use(parser());
+app.use(function (ctx, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        var start = new Date();
+        yield next();
+        var ms = (new Date().valueOf() - start.valueOf());
+        console.log(`%s $s - $s`, ctx.method, ctx.url, ms);
+    });
 });
-
-
+app.use(koaStatic(__dirname + '/public'));
+// mount root routes
+router.post("/wx/product/queryrecommend", proxy.request);
+router.post("/wx/banner/query", proxy.request);
+router.post("/weixin/check/getjsconfig", proxy.request);
+router.post("/wx/login/wxlogin", proxy.request);
+router.post("/wx/focus/focusManCount", proxy.request);
+router.post("/wx/order/queryOrderList", proxy.request);
+router.post("/wx/order/orderCacel", proxy.request);
+router.post("/wx/order/findAllVouchers", proxy.request);
+router.post("/wx/order/activate", proxy.request);
+router.post("/wx/order/overdue", proxy.request);
+router.post("/wx/order/make", proxy.request);
+router.post("/wx/order/querypostrGiftCode", proxy.request);
+router.post("/wx/findpass/findPassPhontCheck", proxy.request);
+router.post("/wx/findpass/sendsmsfindpasscode", proxy.request);
+router.post("/wx/findpass/changepwd", proxy.request);
+router.post("/wx/register/registercheck", proxy.request);
+router.post("/wx/register/sendsmsregistercode", proxy.request);
+router.post("/wx/register/register", proxy.request);
+router.post("/wx/health/queryByType", proxy.request);
+router.post("/wx/health/querydetail", proxy.request);
+router.post("/wx/order/queryByGift", proxy.request);
+router.post("/wx/order/queryGift", proxy.request);
+router.post("/wx/gift/querydate", proxy.request);
+router.post("/wx/gift/queryproduct", proxy.request);
+router.post("/wx/order/checkCode", proxy.request);
+router.post("/wx/gift/getgiftproduct", proxy.request);
+router.post("/wx/product/querylist", proxy.request);
+router.post("/wx/image/querybymainid", proxy.request);
+router.post("/wx/hospital/querybyid", proxy.request);
+router.post("/wx/doctor/queryscheduledoctorbyproductid", proxy.request);
+router.post("/wx/schedule/querybydoctorid", proxy.request);
+router.post("/wx/order/checkCodeMoney", proxy.request);
+router.post("/wx/post/focus", proxy.request);
+router.post("/wx/post/cacelFocus", proxy.request);
+router.post("/wx/product/querybyid", proxy.request);
+router.post("/wx/doctor/querydoctorbycityandprofession", proxy.request);
+router.post("/wx/doctor/queryDoctorDetailInfo", proxy.request);
+router.post("/wx/order/querybydoctorid", proxy.request);
+router.post("/wx/post/focus", proxy.request);
+router.post("/wx/post/cacelFocus", proxy.request);
+router.post("/wx/review/showdoctorreview", proxy.request);
+router.post("/wx/post/postList", proxy.request);
+router.post("/wx/post/postDetail", proxy.request);
+router.post("/wx/post/postMessage", proxy.request);
+router.post("/wx/post/thumbUp", proxy.request);
+router.post("/wx/repliesMessage/addRepliesMessage", proxy.request);
+router.post("/wx/post/myPost", proxy.request);
+router.post("/wx/repliesMessage/myReply", proxy.request);
+router.post("/wx/repliesMessage/myMessage", proxy.request);
+router.post("/wx/post/doctorMessage", proxy.request);
+router.post("/wx/focus/focuspostrMan", proxy.request);
+router.post("/wx/focus/focusDoctorMan", proxy.request);
+router.post("/wx/focus/focusProductMan", proxy.request);
+router.post("/wx/product/packagedetal", proxy.request);
+router.post("/wx/product/hospitalbyid", proxy.request);
+router.post("/wx/product/packagedetalItem", proxy.request);
+router.post("/wx/schedule/querybyhospitalid", proxy.request);
+router.post("/wx/hospital/querylist", proxy.request);
+router.post("/wx/product/queryActivity", proxy.request);
+router.post("/wx/postr/createReferralCode", proxy.request);
+router.post("/wx/share/queryById", proxy.request);
+router.post("/wx/withDraw/bound", proxy.request);
+router.post("/wx/withDraw/myBound", proxy.request);
+router.post("/wx/post/deletePost", proxy.request);
+router.post("/wx/repliesMessage/deleteReplies", proxy.request);
+router.post("/wx/mycount/getpostrBWyToken", proxy.request);
+router.post("/wx/withdraw/myMoney", proxy.request);
+router.post("/wx/withDraw/apply", proxy.request);
+//配置中转路由->图片上传
+/*
+router.use("/wx/mycount/updateUserInfo",proxyUserRoute);
+router.use("/wx/post/addPost",proxyPostRoute);*/
+app.use(router.routes());
+app.use(router.allowedMethods());
+app.on('error', function (err, ctx) {
+    console.log(err);
+});
 module.exports = app;
+//# sourceMappingURL=proxyApp.js.map

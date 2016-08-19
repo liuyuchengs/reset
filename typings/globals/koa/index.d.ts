@@ -62,6 +62,7 @@ declare module "koa" {
 
             charset?: string;
             length?: number;
+            body?:any;
 
             accepts(): string[];
             accepts(arg: string): void | string;

@@ -8,6 +8,8 @@ var tsc = require("gulp-typescript"); // 编译tsc文件
 var jsdoc = require("gulp-jsdoc3");  //生成jsdoc文档
 var jsdocConfig = require("./jsdocconfig.json");
 
+// 编译环境
+var env = "dev";// dev,test,online
 // 路径变量
 var paths = {
     sass:{src:"public/stylesheets/src/*.scss",devDest:"public/stylesheets/dest",testDest:"public/stylesheets/css",proDest:"public/stylesheets/css"},
@@ -64,6 +66,7 @@ function initGulp(status){
     }
 }
 
-initGulp("dev");
+initGulp(env);
+
 gulp.task("default",["watch"]);
 

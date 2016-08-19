@@ -1,7 +1,7 @@
 /**
- * node.js的自定义类型信息
+ * 自定义类型信息
  */
-declare module "NodeData"{
+declare namespace DataType{
     interface location{
         latitude:number,
         longitude:number,
