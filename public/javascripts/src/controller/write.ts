@@ -156,10 +156,10 @@ function write($scope:any,$rootScope:IRootScope.rootScope,$http:ag.IHttpService,
             var prototype = $scope.beforeParams[index];
             if(prototype.has){
                 if(count<4){
-                    $scope.postData.append(imgStr+count,$(prototype.val).get(0).files[0]);
+                    $scope.postData.append(imgStr+count,($(prototype.val).get(0) as HTMLInputElement).files[0]);
                     count++;
                 }else{
-                    $scope.postData.append(pStr+(count-afterCount),$(prototype.val).get(0).files[0]);
+                    $scope.postData.append(pStr+(count-afterCount),($(prototype.val).get(0) as HTMLInputElement).files[0]);
                     count++;
                 }
             }
@@ -185,7 +185,7 @@ function write($scope:any,$rootScope:IRootScope.rootScope,$http:ag.IHttpService,
         for(var index in $scope.beforeParams){
             var prototypeB = $scope.beforeParams[index];
             if(prototypeB.has){
-                $scope.postData.append(imgStr+beforeCount,$(prototypeB.val).get(0).files[0]);
+                $scope.postData.append(imgStr+beforeCount,($(prototypeB.val).get(0) as HTMLInputElement).files[0]);
                 beforeCount++;
             }
         }
@@ -199,7 +199,7 @@ function write($scope:any,$rootScope:IRootScope.rootScope,$http:ag.IHttpService,
         for(var index in $scope.afterParams){
             var prototypeA = $scope.afterParams[index];
             if(prototypeA.has){
-                $scope.postData.append(pStr+afterCount,$(prototypeA.val).get(0).files[0]);
+                $scope.postData.append(pStr+afterCount,($(prototypeA.val).get(0) as HTMLInputElement).files[0]);
                 afterCount++;
             }
         }

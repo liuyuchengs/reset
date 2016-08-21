@@ -36,6 +36,7 @@ declare module "koa" {
             ctx: Context;
             response: Response;
 
+            body:any;
             fresh: boolean;
             header: any;
             headers: any;
@@ -62,7 +63,6 @@ declare module "koa" {
 
             charset?: string;
             length?: number;
-            body?:any;
 
             accepts(): string[];
             accepts(arg: string): void | string;

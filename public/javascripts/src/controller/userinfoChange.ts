@@ -181,7 +181,7 @@ function userChange($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILoc
                 infoData.append("name",$scope.item);
                 infoData.append("val",$scope.val);
                 if($scope.input.has){
-                    infoData.append("headImage",$("#input1").get(0).files[0]);
+                    infoData.append("headImage",($("#input1").get(0) as HTMLInputElement).files[0]);
                 }else{
                     infoData.append("headImage",new Blob([""],{type:"image/jpeg"}));
                 }

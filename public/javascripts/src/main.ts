@@ -1,6 +1,6 @@
 
 //配置require脚本
-require.config({
+requirejs.config({
     paths:{
         "angular":"../lib/angular.min",
         "angular-route":"../lib/angular.route.min",

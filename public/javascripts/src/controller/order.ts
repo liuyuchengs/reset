@@ -26,7 +26,7 @@ function order($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILocation
     let getParams = ()=>{
         if($location.search().p){
             let params = $location.search().p;
-            let index = null;
+            let index:number = null;
             switch (params) {
                 case "all":
                     index = 0;

@@ -388,7 +388,7 @@ define(["require", "exports"], function (require, exports) {
             return {
                 nothing: function ($q) {
                     var defered = $q.defer();
-                    require([obj.url], function (controller) {
+                    requirejs([obj.url], function (controller) {
                         $controllerProvider.register(obj.name, controller);
                         defered.resolve();
                     });

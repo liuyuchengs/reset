@@ -127,10 +127,10 @@ function askDoctor($scope:any,$rootScope:IRootScope.rootScope,$location:ag.ILoca
             var prototype = $scope.params[index];
             if(prototype.has){
                 if(count<4){
-                    $scope.postData.append(imgStr+count,$(prototype.val).get(0).files[0]);
+                    $scope.postData.append(imgStr+count,($(prototype.val).get(0) as HTMLInputElement).files[0]);
                     count++;
                 }else{
-                    $scope.postData.append(pStr+(count-afterCount),$(prototype.val).get(0).files[0]);
+                    $scope.postData.append(pStr+(count-afterCount),($(prototype.val).get(0) as HTMLInputElement).files[0]);
                     count++;
                 }
             }

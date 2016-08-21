@@ -412,7 +412,7 @@ class Tool{
         return {
             nothing:($q:ag.IQService)=>{
                 let defered = $q.defer();
-                require([obj.url],(controller:any)=>{
+                requirejs([obj.url],(controller:any)=>{
                     $controllerProvider.register(obj.name,controller);
                     defered.resolve();
                 })

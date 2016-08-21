@@ -364,5 +364,6 @@ interface RequireDefine {
 
 // Ambient declarations for 'require' and 'define'
 declare var requirejs: Require;
-declare var require: Require;
+// 与node.js的require定义重复
+//declare var require: Require;
 declare var define: RequireDefine;

@@ -9,6 +9,30 @@ const crypto = require("crypto");
 let cipher = crypto.createCipher("aes192", "uk123456");
 let decipher = crypto.createDecipher("aes192", "uk123456");
 /**
+ * 检查对象内的某些字段是否为空
+ * @param {any} source - 需要检查的对象
+ * @param {string[]} props - 需要检查的字段
+ * @returns {boolean} 检查结果,true->为空,false->不为空
+ */
+function checkObjectPropsEmpty(source, props) {
+    let result = false;
+    if (source == undefined || source == null || props === undefined || props === null) {
+        result = true;
+    }
+    else if (props.length <= 0) {
+        result = true;
+    }
+    else {
+        for (let prop of props) {
+            if (source[prop] == undefined && source[prop] == null) {
+                result = true;
+            }
+        }
+    }
+    return result;
+}
+exports.checkObjectPropsEmpty = checkObjectPropsEmpty;
+/**
  * 过滤查询数据库得到的数据
  * @param {string} dest:需要得到的字段
  * @param {any} source:需要过滤的源数据

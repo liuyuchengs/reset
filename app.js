@@ -9,10 +9,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 // system module
+const fs = require("fs");
 const Koa = require("koa");
 const koaStatic = require("koa-static");
 const parser = require("koa-bodyparser");
+const favicon = require("koa-favicon");
+const morgan = require("koa-morgan");
 // router module
+const bannerRouter = require('./modules/routes/bannerRoute');
+const doctorRouter = require('./modules/routes/doctorRoute');
+const focusRouter = require('./modules/routes/focusRoute');
+const hospitalRouter = require('./modules/routes/hospitalRoute');
+const imageRouter = require('./modules/routes/imageRoute');
+const loginRouter = require('./modules/routes/loginRoute');
+const mycountRouter = require('./modules/routes/mycountRoute');
+const orderRouter = require('./modules/routes/orderRoute');
+const scheduleRouter = require('./modules/routes/scheduleRoute');
 const productRouter = require('./modules/routes/productRoute');
 const app = new Koa();
 // global middlewares
@@ -26,9 +38,31 @@ app.use(function (ctx, next) {
     });
 });
 app.use(koaStatic(__dirname + '/public'));
+app.use(favicon(__dirname + "/public/contents/img/logo.png"));
+app.use(morgan("combined", {
+    stream: fs.createWriteStream(__dirname + "/logger/access.log", { flags: "a" })
+}));
 // mount root routes
 app.use(productRouter.routes());
 app.use(productRouter.allowedMethods());
+app.use(bannerRouter.routes());
+app.use(bannerRouter.allowedMethods());
+app.use(doctorRouter.routes());
+app.use(doctorRouter.allowedMethods());
+app.use(focusRouter.routes());
+app.use(focusRouter.allowedMethods());
+app.use(hospitalRouter.routes());
+app.use(hospitalRouter.allowedMethods());
+app.use(imageRouter.routes());
+app.use(imageRouter.allowedMethods());
+app.use(loginRouter.routes());
+app.use(loginRouter.routes());
+app.use(mycountRouter.routes());
+app.use(mycountRouter.allowedMethods());
+app.use(orderRouter.routes());
+app.use(orderRouter.allowedMethods());
+app.use(scheduleRouter.routes());
+app.use(scheduleRouter.allowedMethods());
 app.on('error', function (err, ctx) {
     console.log(err);
 });

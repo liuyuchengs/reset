@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/15337e2b6679415ad45841a2c6f9795366a64789/koa-favicon/koa-favicon.d.ts",
+    "raw": "registry:dt/koa-favicon#2.0.0+20160406115540",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/15337e2b6679415ad45841a2c6f9795366a64789/koa-favicon/koa-favicon.d.ts"
+  }
+}
