@@ -9,7 +9,7 @@ define(["require", "exports"], function (require, exports) {
         };
         $scope.userInfo = {};
         // 获取查询字符串参数
-        var loadQueryParams = function () {
+        let loadQueryParams = () => {
             if ($location.search().productId) {
                 $scope.queryParams.productId = $location.search().productId;
             }
@@ -35,7 +35,7 @@ define(["require", "exports"], function (require, exports) {
                     headers: {
                         "accessToken": ToolService.user.accessToken,
                     }
-                }).then(function (data) {
+                }).then((data) => {
                     if (data.code == 0) {
                         getGift($scope.queryParams);
                     }
@@ -46,7 +46,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 生成惠赠订单
-        var getGift = function (queryParams) {
+        let getGift = (queryParams) => {
             AjaxService.post({
                 url: ToolService.host + "/wx/gift/getgiftproduct",
                 data: queryParams,

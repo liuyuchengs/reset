@@ -7,6 +7,7 @@ export async function query(ctx:Koa.Context,next:()=>Promise<any>){
         try{
             let result:any = await next();
             ctx.response.body = HttpResult.CreateSuccessResult(result);
+            
         }catch(err){
             console.log(err);
             ctx.throw(500);

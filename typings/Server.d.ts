@@ -22,4 +22,18 @@ declare namespace DataType{
         pageRows?:number;
         location?:location;
     }
+    export enum MysqlEnv{
+        /**
+         * 阿里云
+         */
+        Aliyun,
+        /**
+         * 本机
+         */
+        Local,
+        /**
+         * 测试服务器
+         */
+        Test
+    }
 }

@@ -9,13 +9,13 @@ define(["require", "exports"], function (require, exports) {
         $scope.nickname;
         $scope.email;
         //退出登录
-        $scope.exit = function () {
+        $scope.exit = () => {
             ToolService.clearLocal();
             ToolService.changeRoute("/user");
         };
         //跳转到修改账户信息页面
-        $scope.change = function (item) {
-            var state;
+        $scope.change = (item) => {
+            let state;
             if (item === "wxpay") {
                 if (ToolService.user.wxpay === null || ToolService.user.wxpay === "") {
                     state = 2;
@@ -38,14 +38,14 @@ define(["require", "exports"], function (require, exports) {
                 ToolService.changeRoute("/user/userinfochange", "item=" + item);
             }
         };
-        var queryUserInfo = function () {
+        let queryUserInfo = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/mycount/getUserByToken",
                 data: { "accessToken": ToolService.user.accessToken },
                 headers: {
                     accessToken: ToolService.user.accessToken
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 ToolService.setLocal("user", data.data);
                 var user = data.data;
                 $scope.phone = user.phone || "";

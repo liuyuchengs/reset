@@ -16,13 +16,13 @@ define(["require", "exports"], function (require, exports) {
         };
         $scope.noNote = false;
         $scope.notes = [];
-        var queryNotes = function () {
+        let queryNotes = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/withDraw/myBound",
                 data: {
                     accessToken: ToolService.getLocal("user").accessToken
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code === 0) {
                     if (data.data.length < 1) {
                         $scope.noNote = true;

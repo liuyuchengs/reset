@@ -4,11 +4,11 @@ define(["require", "exports"], function (require, exports) {
         $scope.detail = {};
         $scope.id = null;
         //加载资讯信息
-        var loadDetail = function () {
+        let loadDetail = function () {
             AjaxService.post({
                 url: ToolService.host + "/wx/health/querydetail",
                 data: { id: $scope.id },
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     data.data.content = mergeDetail(data.data.content);
                     $scope.detail = data.data;
@@ -21,7 +21,7 @@ define(["require", "exports"], function (require, exports) {
         /**
          * 对资讯信息进行排版
          */
-        var mergeDetail = function (str) {
+        let mergeDetail = (str) => {
             var sourceArray = str.split("\r\n");
             var destArray = [];
             if (sourceArray.length > 0) {

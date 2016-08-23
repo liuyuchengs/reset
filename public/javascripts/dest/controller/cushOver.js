@@ -6,14 +6,14 @@ define(["require", "exports"], function (require, exports) {
         $scope.cushs;
         $scope.noCushOver = false;
         // 加载过期代金券信息
-        var loadCushOver = function () {
+        let loadCushOver = function () {
             AjaxService.post({
                 url: ToolService.host + "/wx/order/overdue",
                 data: { userId: ToolService.user.id },
                 headers: {
                     accessToken: ToolService.user.accessToken
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     if (data.data.length < 1) {
                         $scope.noCushOver = true;
@@ -29,7 +29,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 判断代金券是过期还是已使用
-        var merge = function (items) {
+        let merge = (items) => {
             items.forEach(function (item) {
                 if (item.state == 1) {
                     item.mess = "已使用";

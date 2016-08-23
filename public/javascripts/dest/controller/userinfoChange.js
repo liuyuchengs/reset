@@ -38,7 +38,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             "alipay": "请填写支付宝账号",
         };
         //监听input
-        var listen = function () {
+        let listen = () => {
             $("#input1").on("change", function () {
                 var url = $scope.getUrl(this.files[0]);
                 $scope.input.has = true;
@@ -47,21 +47,21 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             });
         };
         // 获取input元素图片的url，做图片预览
-        $scope.getUrl = function (obj) {
-            var url = null;
+        $scope.getUrl = (obj) => {
+            let url = null;
             if (window.URL != undefined) {
                 url = window.URL.createObjectURL(obj);
             }
             return url;
         };
         //选择图片
-        $scope.choosePic = function () {
-            $timeout(function () {
+        $scope.choosePic = () => {
+            $timeout(() => {
                 $("#input1").click();
             }, 0);
         };
         //删除选定图片
-        $scope.removePic = function () {
+        $scope.removePic = () => {
             $scope.input.has = false;
             $scope.input.url = "";
             var element = document.getElementById("input1");
@@ -69,7 +69,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             listen();
         };
         //检查内容是否符合要求
-        $scope.check = function () {
+        $scope.check = () => {
             if ($scope.val.length == 0) {
                 ToolService.alert("填写内容为空！");
                 return false;
@@ -135,7 +135,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             }
         };
         //选择性别
-        $scope.select = function (value) {
+        $scope.select = (value) => {
             if (value == "男") {
                 if (!$scope.sexparams.men) {
                     $scope.sexparams.men = true;
@@ -153,7 +153,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             }
         };
         //修改信息
-        $scope.change = function () {
+        $scope.change = () => {
             if (ToolService.checkLogin()) {
                 if ($scope.item === "wxpay" || $scope.item === "alipay") {
                     $scope.payParams.account = $scope.val;
@@ -197,7 +197,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
                             "accessToken": ToolService.user.accessToken,
                             "Content-Type": undefined,
                         }
-                    }).success(function (data) {
+                    }).success((data) => {
                         $rootScope.load.has = false;
                         if (data.code == 0) {
                             ToolService.setLocal("user", data.data);

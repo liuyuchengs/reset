@@ -53,7 +53,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             pageRows: 10,
         };
         // 初始化swiper
-        var initSwiper = function () {
+        let initSwiper = () => {
             $scope.mySwiper = new Swiper('.swiper-container', {
                 slidesPerView: 4,
                 slidesPerGroup: 4,
@@ -62,7 +62,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             });
         };
         // swiper跳转到指定页
-        $scope.toPage = function (params, $event) {
+        $scope.toPage = (params, $event) => {
             if (params === "per") {
                 $scope.mySwiper.slidePrev();
             }
@@ -80,7 +80,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             $scope.hasProduct = !$scope.hasProduct;
         };
         // 获取查询参数
-        var getParams = function () {
+        let getParams = function () {
             if ($location.search().id) {
                 $scope.id = $location.search().id;
                 $scope.queryParams.id = $scope.id;
@@ -110,8 +110,8 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 获取医生信息
-        var queryDoctor = function () {
-            var params = { needPackageInfo: true, id: $scope.id, accessToken: "" };
+        let queryDoctor = () => {
+            let params = { needPackageInfo: true, id: $scope.id, accessToken: "" };
             if (ToolService.checkLogin()) {
                 ToolService.loadUser();
                 params.accessToken = ToolService.user.accessToken;
@@ -122,7 +122,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             AjaxService.post({
                 url: ToolService.host + "/wx/doctor/queryDoctorDetailInfo",
                 data: params,
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     $scope.order.doctorName = data.data.doctorName;
                     $scope.order.doctorId = data.data.id;
@@ -135,13 +135,13 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             });
         };
         // 检查医生信息
-        var mergeDoctor = function (ele) {
+        let mergeDoctor = (ele) => {
             ToolService.empty(ele.score) ? ele.score = "暂无评分" : ele.score += "分";
             if (ele.focusState == 1) {
                 $scope.follow.hasFollow = true;
                 $scope.follow.followText = "已关注";
             }
-            ele.dentallist.forEach(function (item) {
+            ele.dentallist.forEach((item) => {
                 if (!ToolService.empty(item.priceunit)) {
                     item.preferPriceType = item.pricetype + "/" + item.priceunit;
                 }
@@ -151,7 +151,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             });
         };
         // 获取医生排班信息
-        var querySchedule = function () {
+        let querySchedule = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/order/querybydoctorid",
                 data: { doctorId: $scope.id },
@@ -167,12 +167,12 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             });
         };
         // 检查医生排班信息
-        var mergeSchedule = function (items) {
+        let mergeSchedule = (items) => {
             var initBoolean = true;
             items.forEach(function (item) {
-                var childrenList = [];
+                let childrenList = [];
                 if (item.timeList.length > 0) {
-                    item.timeList.forEach(function (childrenItem) {
+                    item.timeList.forEach((childrenItem) => {
                         childrenList.push({
                             has: false,
                             id: childrenItem.scheduleid,
@@ -190,13 +190,13 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             });
         };
         // 获取医生评价信息
-        var queryAssess = function () {
+        let queryAssess = function () {
             AjaxService.post({
                 url: ToolService.host + "/wx/review/showdoctorreview",
                 data: $scope.queryParams
             }).then(function (data) {
                 if (data.code == 0) {
-                    data.data.forEach(function (item) {
+                    data.data.forEach((item) => {
                         if (item.totalscore == null) {
                             item.totalscore = "暂无评分";
                         }
@@ -209,12 +209,12 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             });
         };
         // 切换导航栏
-        $scope.switchDay = function (index, $event) {
+        $scope.switchDay = (index, $event) => {
             ToolService.select(index, $scope.time.timeList);
             $event.stopPropagation();
         };
         // 选择时间
-        $scope.selectTime = function (index, obj, $event) {
+        $scope.selectTime = (index, obj, $event) => {
             $event.stopPropagation();
             if ($scope.time.selectIndex == null) {
                 $scope.time.selectIndex = index;
@@ -233,7 +233,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             $scope.time.openSelect = false;
         };
         // 获取money以及跳转页面
-        $scope.orderDetail = function (id, title, price) {
+        $scope.orderDetail = (id, title, price) => {
             if (!$scope.time.noTime) {
                 if ($scope.time.hasSelect) {
                     if (!ToolService.checkLogin()) {
@@ -281,7 +281,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 打开时间选择窗口
-        $scope.openSelect = function () {
+        $scope.openSelect = () => {
             if ($scope.time.noTime) {
                 ToolService.alert("此医生没有排班，暂不能下单。去其他医生看看吧!");
             }
@@ -290,11 +290,11 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 隐藏时间选择窗口
-        $scope.hideSelect = function () {
+        $scope.hideSelect = () => {
             $scope.time.openSelect = false;
         };
         // 跳转到咨询页面
-        $scope.ask = function () {
+        $scope.ask = () => {
             if (ToolService.checkLogin()) {
                 ToolService.loadUser();
                 ToolService.changeRoute("/doctor/askDoctor", "id=" + $scope.id);
@@ -329,7 +329,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 关注发帖医生
-        var tofollow = function () {
+        let tofollow = function () {
             AjaxService.post({
                 url: ToolService.host + "/wx/post/focus",
                 data: { flag: 2, userId: $scope.id },
@@ -347,7 +347,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             });
         };
         // 取消关注医生
-        var cacelFollow = function () {
+        let cacelFollow = function () {
             AjaxService.post({
                 url: ToolService.host + "/wx/post/cacelFocus",
                 data: { flag: 2, userId: $scope.id },

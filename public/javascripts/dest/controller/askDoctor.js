@@ -15,7 +15,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             input6: { has: false, url: "", val: "#input6" },
         };
         //获取医生id参数
-        var getParams = function () {
+        let getParams = () => {
             if ($location.search().id) {
                 $scope.doctorId = $location.search().id;
             }
@@ -24,11 +24,11 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             }
         };
         //切换是否医生可见
-        $scope.chooseSee = function () {
+        $scope.chooseSee = () => {
             $scope.hasSee = !$scope.hasSee;
         };
         // 监听input元素选择图片
-        var listen = function () {
+        let listen = () => {
             $("#input1").on("change", function () {
                 var url = getUrl(this.files[0]);
                 $scope.params.input1.has = true;
@@ -73,7 +73,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             });
         };
         //获取input元素图片的url，做图片预览
-        var getUrl = function (obj) {
+        let getUrl = (obj) => {
             var url = null;
             if (URL.createObjectURL(obj)) {
                 url = URL.createObjectURL(obj);
@@ -81,7 +81,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             return url;
         };
         // 触发随便说说选择照片
-        $scope.choosePic = function () {
+        $scope.choosePic = () => {
             var count = 0;
             for (var item in $scope.params) {
                 count++;
@@ -97,17 +97,17 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             }
         };
         // 删除图片
-        $scope.remove = function (item) {
+        $scope.remove = (item) => {
             if ($scope.params[item]) {
                 $scope.params[item].has = false;
                 $scope.params[item].url = "";
-                var element = document.getElementById(item);
+                let element = document.getElementById(item);
                 element.outerHTML = element.outerHTML; //重新替换Input元素
                 $scope.listen(); //替换input后重新监听
             }
         };
         // 调整照片参数
-        $scope.mergePic = function () {
+        $scope.mergePic = () => {
             var imgStr = "img";
             var pStr = "p";
             var count = 1;
@@ -136,7 +136,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             }
         };
         // 提交提问
-        $scope.send = function () {
+        $scope.send = () => {
             if ($scope.content === null || $scope.content === "") {
                 ToolService.alert("请填写咨询内容!");
             }
@@ -153,7 +153,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
                         "Content-Type": undefined,
                         "accessToken": ToolService.user.accessToken,
                     }
-                }).success(function (data) {
+                }).success((data) => {
                     $rootScope.load.has = false;
                     if (data.code == 0) {
                         history.back();
@@ -169,7 +169,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             }
         };
         //返回上一页
-        $scope.back = function () {
+        $scope.back = () => {
             history.back();
         };
         //初始化页面
@@ -180,7 +180,7 @@ define(["require", "exports", "jquery"], function (require, exports, $) {
             ToolService.loadUser();
         }
         else {
-            ToolService.comfirm("请先登录", function () {
+            ToolService.comfirm("请先登录", () => {
                 $rootScope.messageTip.has = false;
                 ToolService.changeRoute("/login");
             });

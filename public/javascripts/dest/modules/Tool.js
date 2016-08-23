@@ -1,7 +1,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
-    var Tool = (function () {
-        function Tool($rootScope, $location, host) {
+    class Tool {
+        constructor($rootScope, $location, host) {
             this.$rootScope = $rootScope;
             this.$location = $location;
             this.host = host;
@@ -129,66 +129,66 @@ define(["require", "exports"], function (require, exports) {
          * 设置local
          * @params key:localStorage键,val:localStorage值
          */
-        Tool.prototype.setLocal = function (key, val) {
+        setLocal(key, val) {
             localStorage.setItem(key, JSON.stringify(val));
-        };
+        }
         /**
          * 查找local
          * @params key:localStorage键
          * return localStorage值
          */
-        Tool.prototype.getLocal = function (key) {
+        getLocal(key) {
             return JSON.parse(localStorage.getItem(key));
-        };
+        }
         /**
          * 删除local
          * @params key->localStorage键
          */
-        Tool.prototype.removeLocal = function (key) {
+        removeLocal(key) {
             localStorage.removeItem(key);
-        };
+        }
         /**
          * 清除所有local
          */
-        Tool.prototype.clearLocal = function () {
+        clearLocal() {
             localStorage.clear();
-        };
+        }
         /**
          * 设置session
          * @params key->session键,val->session值
          */
-        Tool.prototype.setSession = function (key, val) {
+        setSession(key, val) {
             sessionStorage.setItem(key, JSON.stringify(val));
-        };
+        }
         /**
          * 查找session
          * @params key->session键
          * return session值
          */
-        Tool.prototype.getSession = function (key) {
+        getSession(key) {
             return JSON.parse(sessionStorage.getItem(key));
-        };
+        }
         /**
          * 删除session
          * @params key->需要删除的session键
          */
-        Tool.prototype.removeSession = function (key) {
+        removeSession(key) {
             sessionStorage.removeItem(key);
-        };
+        }
         /**
          * 跳转到指定url
          * @params url->需要跳转的完整url
          */
-        Tool.prototype.toUrl = function (url) {
+        toUrl(url) {
             if (url.length > 0) {
                 location.href = url;
             }
-        };
+        }
         /**
          * 改变路由
          * @params path->路径,search->查询字符串
          */
-        Tool.prototype.changeRoute = function (path, search) {
+        changeRoute(path, search) {
             this.$location.path(path);
             if (search) {
                 this.$location.search(search);
@@ -196,24 +196,24 @@ define(["require", "exports"], function (require, exports) {
             else {
                 this.$location.search("");
             }
-        };
+        }
         /**
          * 通过检查localStorage,判断是否登录
          */
-        Tool.prototype.checkLogin = function () {
+        checkLogin() {
             if (this.getLocal("user")) {
                 return true;
             }
             else {
                 return false;
             }
-        };
+        }
         /**
          * 判断用户是否完成用户信息,检查所有项
          */
-        Tool.prototype.infoComplete = function () {
+        infoComplete() {
             if (this.getLocal("user")) {
-                var user = this.getLocal("user");
+                let user = this.getLocal("user");
                 if (this.empty(user.phone) || this.empty(user.realname) || this.empty(user.age) || this.empty(user.age)) {
                     return false;
                 }
@@ -224,13 +224,12 @@ define(["require", "exports"], function (require, exports) {
             else {
                 return false;
             }
-        };
+        }
         /**
          * 确认按钮的提示框
          * @params mess->提示文本，callback->确认按钮处理函数，不传则使用默认处理函数
          */
-        Tool.prototype.alert = function (mess, callback) {
-            var _this = this;
+        alert(mess, callback) {
             this.$rootScope.messageTip.message = mess;
             this.$rootScope.messageTip.hasCancel = false;
             this.$rootScope.messageTip.hasComfirm = true;
@@ -239,38 +238,37 @@ define(["require", "exports"], function (require, exports) {
                 this.$rootScope.messageTip.comfirm = callback;
             }
             else {
-                this.$rootScope.messageTip.comfirm = function () {
-                    _this.$rootScope.messageTip.has = false;
+                this.$rootScope.messageTip.comfirm = () => {
+                    this.$rootScope.messageTip.has = false;
                 };
             }
-        };
+        }
         /**
          * 带确认按钮和取消按钮的提示框
          * @params mess->提示文本,callback->确认按钮处理函数,必传
          */
-        Tool.prototype.comfirm = function (mess, callback) {
-            var _this = this;
+        comfirm(mess, callback) {
             this.$rootScope.messageTip.message = mess;
             this.$rootScope.messageTip.hasCancel = true;
             this.$rootScope.messageTip.hasComfirm = true;
             this.$rootScope.messageTip.has = true;
-            this.$rootScope.messageTip.cancel = function () {
-                _this.$rootScope.messageTip.has = false;
+            this.$rootScope.messageTip.cancel = () => {
+                this.$rootScope.messageTip.has = false;
             };
             this.$rootScope.messageTip.comfirm = callback;
-        };
+        }
         /**
          * 获取用户信息
          */
-        Tool.prototype.loadUser = function () {
+        loadUser() {
             this.user = this.getLocal("user");
-        };
+        }
         /**
          * 判断变量是否为空
          * @params params->判断该变量是否为空，支持string,number,boolean
          * return ture->为空,false->非空
          */
-        Tool.prototype.empty = function (params) {
+        empty(params) {
             if (typeof params === "string") {
                 if (params === null || params === "") {
                     return true;
@@ -293,32 +291,29 @@ define(["require", "exports"], function (require, exports) {
             else {
                 return false;
             }
-        };
+        }
         /**
          * 判断对象是否为空
          * @params obj->判断该对象是否为空，检查所有属性
          * return true->为空，false->非空
          */
-        Tool.prototype.emptyany = function (obj) {
-            var result = false;
-            for (var _i = 0, obj_1 = obj; _i < obj_1.length; _i++) {
-                var item = obj_1[_i];
+        emptyany(obj) {
+            let result = false;
+            for (let item of obj) {
                 if (this.empty(item)) {
                     result = true;
                 }
             }
             return result;
-        };
+        }
         /**
          * 设置下拉菜单项为选择状态
          * @params index->需要设置为选择状态的下拉对象索引，container->下拉对象容器
          */
-        Tool.prototype.select = function (index, container, cancel) {
-            if (cancel === void 0) { cancel = false; }
+        select(index, container, cancel = false) {
             //如果已经选择则不做处理
             if (!container[index].has) {
-                for (var _i = 0, container_1 = container; _i < container_1.length; _i++) {
-                    var item = container_1[_i];
+                for (let item of container) {
                     if (item.has) {
                         item.has = false;
                     }
@@ -328,51 +323,50 @@ define(["require", "exports"], function (require, exports) {
             else if (cancel) {
                 container[index].has = false;
             }
-        };
+        }
         /**
          * 将对象转换成字符串
          * @params obj->需要转换的对象
          * return 转换成的字符串
          */
-        Tool.prototype.convertParams = function (obj) {
-            var str = "";
-            for (var key in obj) {
+        convertParams(obj) {
+            let str = "";
+            for (let key in obj) {
                 if (obj[key] !== null) {
                     str += key + "=" + obj[key] + "&";
                 }
             }
             str = str.slice(0, str.length - 1); //截取第一个"&"
             return str;
-        };
+        }
         /**
          * 获取查询参数
          * @params name->查询参数的key
          * return 查询参数的值，如果有
          */
-        Tool.prototype.queryString = function (name) {
-            var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-            var r = window.location.search.substr(1).match(reg);
+        queryString(name) {
+            let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+            let r = window.location.search.substr(1).match(reg);
             if (r != null) {
                 return decodeURI(r[2]);
             }
             return null;
-        };
+        }
         /**
          * 取消window的scroll监听
          */
-        Tool.prototype.cancelWindowListen = function () {
+        cancelWindowListen() {
             window.onscroll = null;
-        };
+        }
         /**
          * 添加window的scroll监听
          */
-        Tool.prototype.onWindowListen = function (fn) {
-            var _this = this;
-            window.onscroll = function () {
-                if (!(_this.$rootScope.load.has || _this.$rootScope.followTip.has)) {
-                    var body = document.body;
-                    var html = document.documentElement;
-                    var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+        onWindowListen(fn) {
+            window.onscroll = () => {
+                if (!(this.$rootScope.load.has || this.$rootScope.followTip.has)) {
+                    let body = document.body;
+                    let html = document.documentElement;
+                    let height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
                     if (height > window.innerHeight) {
                         if (height - window.scrollY - window.innerHeight < 100) {
                             fn();
@@ -380,34 +374,33 @@ define(["require", "exports"], function (require, exports) {
                     }
                 }
             };
-        };
+        }
         /**
          * 加载并注册控制器
          */
-        Tool.loadCtrl = function (obj, $controllerProvider) {
+        static loadCtrl(obj, $controllerProvider) {
             return {
-                nothing: function ($q) {
-                    var defered = $q.defer();
-                    requirejs([obj.url], function (controller) {
+                nothing: ($q) => {
+                    let defered = $q.defer();
+                    requirejs([obj.url], (controller) => {
                         $controllerProvider.register(obj.name, controller);
                         defered.resolve();
                     });
                     return defered.promise;
                 }
             };
-        };
+        }
         /**
          * 重置全局变量
          */
-        Tool.prototype.reset = function () {
+        reset() {
             this.$rootScope.followTip.has = false;
             this.$rootScope.followTip.val = null;
             this.$rootScope.globalProp.hasBgColor = false;
             this.$rootScope.globalProp.hasBlackBg = false;
             this.cancelWindowListen();
-        };
-        return Tool;
-    }());
+        }
+    }
     return Tool;
 });
 //# sourceMappingURL=Tool.js.map

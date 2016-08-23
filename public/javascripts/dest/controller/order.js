@@ -19,10 +19,10 @@ define(["require", "exports"], function (require, exports) {
             { has: false, val: "待评价", id: 4 },
         ];
         // 获取查询参数
-        var getParams = function () {
+        let getParams = () => {
             if ($location.search().p) {
-                var params = $location.search().p;
-                var index = null;
+                let params = $location.search().p;
+                let index = null;
                 switch (params) {
                     case "all":
                         index = 0;
@@ -42,7 +42,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 加载订单数据
-        var loadOrder = function () {
+        let loadOrder = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/order/queryOrderList",
                 data: { userId: ToolService.user.id, status: $scope.status },
@@ -69,8 +69,8 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 根据订单状态码，生成对应的状态信息,如支付中...
-        var merge = function (orders) {
-            orders.forEach(function (item, index, array) {
+        let merge = (orders) => {
+            orders.forEach((item, index, array) => {
                 item.toPay = false;
                 item.payed = false;
                 item.canceled = false;
@@ -120,7 +120,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 支付订单
-        $scope.toPay = function (order) {
+        $scope.toPay = (order) => {
             ToolService.setSession("order", order);
             var appid = "wx0229404bc9eeea00";
             var redirect_uri = ToolService.host + "/v2/htmls/temp.html";
@@ -128,12 +128,12 @@ define(["require", "exports"], function (require, exports) {
             ToolService.toUrl(url);
         };
         // 取消订单
-        $scope.toCancel = function (id) {
+        $scope.toCancel = (id) => {
             $scope.cancelOrderId = id;
             ToolService.comfirm("确定要取消订单吗？", cancelFn);
         };
         // 取消订单提示框，确认按钮回调
-        var cancelFn = function () {
+        let cancelFn = () => {
             $rootScope.messageTip.has = false;
             AjaxService.post({
                 url: ToolService.host + "/wx/order/orderCacel",
@@ -152,7 +152,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 切换导航条
-        $scope.switchOrder = function (index) {
+        $scope.switchOrder = (index) => {
             ToolService.select(index, $scope.filterParams);
             $scope.status = $scope.filterParams[index].id;
             loadOrder();

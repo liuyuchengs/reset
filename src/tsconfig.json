@@ -6,6 +6,7 @@
         "noImplicitAny": true,
         "outDir": "./../../restart",
         "sourceMap":true,
-        "watch":true
+        "watch":true,
+        "experimentalDecorators":true
     }
 }

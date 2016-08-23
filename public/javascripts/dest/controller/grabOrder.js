@@ -4,13 +4,13 @@ define(["require", "exports"], function (require, exports) {
         $scope.hasGift = false;
         $scope.gift = {};
         // 查询惠赠订单
-        var queryGift = function () {
+        let queryGift = () => {
             AjaxService.get({
                 url: ToolService.host + "/wx/order/queryUserGiftCode",
                 headers: {
                     accessToken: ToolService.user.accessToken,
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     if (data.data.length > 0) {
                         $scope.gift = data.data[0];

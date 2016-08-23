@@ -4,14 +4,14 @@ define(["require", "exports"], function (require, exports) {
         $scope.cushs = null;
         $scope.noCush = false;
         $scope.activeValue = "";
-        var loadCush = function () {
+        let loadCush = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/order/findAllVouchers",
                 data: { userId: ToolService.user.id },
                 headers: {
                     accessToken: ToolService.user.accessToken
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     if (data.data.length == 0) {
                         $scope.noCush = true;
@@ -27,8 +27,8 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 判断代金券是否有使用
-        var merge = function (items) {
-            items.forEach(function (item) {
+        let merge = function (items) {
+            items.forEach((item) => {
                 if (item.flags > item.money) {
                     item.used = true;
                 }
@@ -38,7 +38,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 激活代金券
-        $scope.active = function () {
+        $scope.active = () => {
             if ($scope.activeValue.length == 6) {
                 AjaxService.post({
                     url: ToolService.host + "/wx/order/activate",
@@ -46,7 +46,7 @@ define(["require", "exports"], function (require, exports) {
                     headers: {
                         accessToken: ToolService.user.accessToken
                     }
-                }).then(function (data) {
+                }).then((data) => {
                     if (data.code == 0) {
                         merge(data.data);
                         $scope.cushs = data.data;

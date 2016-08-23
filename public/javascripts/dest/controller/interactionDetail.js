@@ -28,7 +28,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             showAfter: false
         };
         // 初始化图片轮播插件
-        var initSwiper = function () {
+        let initSwiper = () => {
             //初始化swiper
             var myswiper1 = new Swiper("#swiper1", {
                 loop: false,
@@ -44,7 +44,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             });
         };
         //切换预览显示
-        $scope.switchSwiper = function (item, has) {
+        $scope.switchSwiper = (item, has) => {
             $scope.swiperParams.hasSwiper = has;
             if (item === "before") {
                 $scope.swiperParams.showBefore = has;
@@ -54,7 +54,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 获取帖子id
-        var getQueryString = function () {
+        let getQueryString = () => {
             if ($location.search().id) {
                 $scope.postId = $location.search().id;
                 $scope.queryParams.id = $location.search().id;
@@ -64,12 +64,12 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 加载下一页数据
-        var loadNext = function () {
+        let loadNext = () => {
             $scope.queryParams.currentPage++;
             queryMessage();
         };
         // 获取帖子详细信息
-        var queryPost = function () {
+        let queryPost = () => {
             var obj = {
                 id: $scope.postId,
                 accessToken: "",
@@ -84,7 +84,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             AjaxService.post({
                 url: ToolService.host + "/wx/post/postDetail",
                 data: obj
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     $scope.post = data.data;
                     if ($scope.post.faceImage !== null || $scope.post.faceImage !== "") {
@@ -103,11 +103,11 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             });
         };
         // 查询评论信息
-        var queryMessage = function () {
+        let queryMessage = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/post/postMessage",
                 data: $scope.queryParams
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     if (data.data.commentList.length < 1) {
                         $rootScope.followTip.has = true;
@@ -126,7 +126,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             });
         };
         // 检查评论信息
-        var mergeMessage = function (post) {
+        let mergeMessage = (post) => {
             post.message = "";
             var comment = post.commentList;
             if ($scope.replyMess.commentList) {
@@ -169,7 +169,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 检查是否登录
-        var checkLogin = function () {
+        let checkLogin = () => {
             if (!ToolService.checkLogin()) {
                 ToolService.comfirm("请先登录！", function () {
                     $rootScope.followTip.has = false;
@@ -183,7 +183,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 点赞，flag:0->帖子,flag:1->评论
-        $scope.thumb = function (id, flag) {
+        $scope.thumb = (id, flag) => {
             if (checkLogin()) {
                 var reply = "";
                 if (flag == 0) {
@@ -202,7 +202,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
                     headers: {
                         accessToken: ToolService.user.accessToken,
                     }
-                }).then(function (data) {
+                }).then((data) => {
                     if (data.code == 0) {
                         reply.praiseNum = data.data;
                     }
@@ -213,7 +213,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 显示评论回复输入框
-        $scope.showReplyInput = function (id, replyId, replyName) {
+        $scope.showReplyInput = (id, replyId, replyName) => {
             if (checkLogin()) {
                 if ($scope.showReplyInputId != id) {
                     var post = $scope.replyMess;
@@ -251,7 +251,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 显示评论输入框
-        $scope.showPostInput = function () {
+        $scope.showPostInput = () => {
             if (checkLogin()) {
                 if ($scope.showPostinput == false) {
                     $scope.showPostinput = true;
@@ -259,14 +259,14 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 隐藏评论输入框
-        $scope.hidePostInput = function () {
+        $scope.hidePostInput = () => {
             if ($scope.showPostinput == true) {
                 $scope.showPostinput = false;
                 $scope.post.message = "";
             }
         };
         // 隐藏评论回复输入框
-        $scope.hideReplyInput = function (id) {
+        $scope.hideReplyInput = (id) => {
             var post = $scope.replyMess;
             for (var index in post.commentList) {
                 if (post.commentList[index].id == id) {
@@ -286,7 +286,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 发表评论
-        $scope.sendPost = function (content) {
+        $scope.sendPost = (content) => {
             if (content == "" || content == null) {
                 ToolService.alert("消息为空!");
             }
@@ -317,7 +317,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 检查新发表的评论信息
-        $scope.mergeNewReply = function (reply) {
+        $scope.mergeNewReply = (reply) => {
             if (reply.userImage === null || reply.userImage === "") {
                 var user = ToolService.getLocal("user");
                 if (user.sex === "男" || user.sex === "" || user.sex === null) {
@@ -329,7 +329,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 发表回复
-        $scope.sendReply = function (content, id) {
+        $scope.sendReply = (content, id) => {
             if (content == "" || content == null) {
                 ToolService.alert("消息为空！");
             }
@@ -377,7 +377,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 关注按钮处理函数
-        $scope.clickFollow = function () {
+        $scope.clickFollow = () => {
             if (!ToolService.checkLogin()) {
                 ToolService.comfirm("请先登录!", function () {
                     $rootScope.messageTip.has = false;
@@ -394,7 +394,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             }
         };
         // 关注发帖人
-        $scope.tofollow = function () {
+        $scope.tofollow = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/post/focus",
                 data: {
@@ -404,7 +404,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
                 headers: {
                     accessToken: ToolService.user.accessToken,
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     $scope.follow.hasFollow = true;
                     $scope.follow.followText = "已关注";
@@ -415,7 +415,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             });
         };
         // 取消关注发帖人
-        $scope.cacelFollow = function () {
+        $scope.cacelFollow = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/post/cacelFocus",
                 data: {
@@ -436,11 +436,11 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             });
         };
         // 跳转到医生页面
-        $scope.goDoctor = function (id) {
+        $scope.goDoctor = (id) => {
             ToolService.changeRoute("/doctor/detail", "id=" + id);
         };
         // 跳转到项目页面
-        $scope.goProduct = function (productId, hospitalId) {
+        $scope.goProduct = (productId, hospitalId) => {
             ToolService.changeRoute("/product/detail", "flag=1&productId=" + productId + "&hospitalId=" + hospitalId);
         };
         //页面初始化

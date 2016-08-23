@@ -11,16 +11,16 @@ define(["require", "exports"], function (require, exports) {
         $scope.grabs = [];
         //是否显示分享窗口
         $scope.showTip = false;
-        var shareObj = {
+        let shareObj = {
             title: "悠康医生是信息就医平台。",
             desc: "用悠康，有健康。悠康医生为您提供各类优惠医疗项目，快来看看吧!",
             link: "https://www.uokang.com/mobile/htmls/index.html#/home",
             imgUrl: "https://www.uokang.com/new/contents/img/logo.png",
-            success: function () {
+            success: () => {
                 ToolService.setLocal("share", "true");
                 $scope.switchTip("close");
             },
-            cancel: function () { }
+            cancel: () => { }
         };
         //菜单项变量
         $scope.areaParams = ToolService.areaParams;
@@ -36,7 +36,7 @@ define(["require", "exports"], function (require, exports) {
             { has: false, val: "日期", children: $scope.dataParams }
         ];
         // 获取url参数
-        var getQueryParams = function () {
+        let getQueryParams = () => {
             if ($location.search().item) {
                 if ($location.search().item == "meirong") {
                     $scope.queryParams.professionId = 3;
@@ -44,11 +44,11 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 加载日期时间
-        var loadDate = function (callback) {
+        let loadDate = (callback) => {
             AjaxService.get({
                 url: ToolService.host + "/wx/gift/querydate",
-            }).then(function (data) {
-                for (var i = 0; i < data.length; i++) {
+            }).then((data) => {
+                for (let i = 0; i < data.length; i++) {
                     var item = data[i];
                     if (i == 0) {
                         $scope.dataParams.push({
@@ -68,12 +68,12 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 切换下拉菜单
-        $scope.switchMenu = function (index, obj) {
+        $scope.switchMenu = (index, obj) => {
             ToolService.select(index, obj, true);
             $rootScope.globalProp.hasBlackBg = obj[index].has;
         };
         // 点击下拉菜单项
-        $scope.switchDrop = function (index, obj) {
+        $scope.switchDrop = (index, obj) => {
             ToolService.select(index, obj);
             if (obj === $scope.areaParams) {
                 $scope.queryParams.area = obj[index].id;
@@ -93,11 +93,11 @@ define(["require", "exports"], function (require, exports) {
             $rootScope.globalProp.hasBlackBg = false;
         };
         // 加载数据
-        var loadData = function () {
+        let loadData = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/gift/queryproduct",
                 data: $scope.queryParams
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.length < 1) {
                     if ($scope.grabs.length < 1) {
                         $rootScope.followTip.val = $rootScope.followTip.empty;
@@ -114,7 +114,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 处理数据
-        var merge = function (items) {
+        let merge = (items) => {
             items.forEach(function (item) {
                 if (item.amount == 0 || item.amount == null) {
                     item.noamount = true;
@@ -127,7 +127,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 抢单按钮
-        $scope.writeCode = function (noamount, productId, hospitalId) {
+        $scope.writeCode = (noamount, productId, hospitalId) => {
             if (noamount) {
                 return;
             }
@@ -164,11 +164,11 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 问题按钮
-        $scope.question = function () {
+        $scope.question = () => {
             ToolService.alert("每个用户只可享受一次免费抢单，如需帮助请致电：0755-26905699");
         };
         // 切换tip窗口
-        $scope.switchTip = function (params) {
+        $scope.switchTip = (params) => {
             if (params === "close") {
                 $scope.showTip = false;
             }
@@ -182,7 +182,7 @@ define(["require", "exports"], function (require, exports) {
         loadDate(loadData);
         WeixinService.wxInit();
         WeixinService.wxConfig();
-        ToolService.onWindowListen(function () {
+        ToolService.onWindowListen(() => {
             $scope.queryParams.currentPage++;
             loadData();
         });

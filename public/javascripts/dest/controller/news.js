@@ -16,7 +16,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             { has: false, val: "中医理疗" },
         ];
         // 初始化图片轮播插件
-        var initSwiper = function () {
+        let initSwiper = () => {
             var myswiper = new Swiper(".swiper-container", {
                 loop: false,
                 pagination: '.swiper-pagination',
@@ -36,7 +36,7 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             loadNews();
         };
         // 查询数据
-        var loadNews = function () {
+        let loadNews = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/health/queryByType",
                 data: { type: $scope.navValue, currentPage: $scope.currentPage, pageRows: $scope.pageRows },
@@ -61,14 +61,14 @@ define(["require", "exports", "Swiper"], function (require, exports, Swiper) {
             });
         };
         // 跳转到详细页面
-        $scope.toDetail = function (id) {
+        $scope.toDetail = (id) => {
             ToolService.changeRoute("/news/detail", "id=" + id);
         };
         //初始化页面
         ToolService.reset();
         initSwiper();
         loadNews();
-        ToolService.onWindowListen(function () {
+        ToolService.onWindowListen(() => {
             $scope.currentPage++;
             loadNews();
         });

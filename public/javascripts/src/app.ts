@@ -565,12 +565,10 @@ app.directive("zoomImage",()=>{
  */
 app.filter("defaultHeadImg",()=>{
     return (input:string,sex:string)=>{
-        if(input===null||input===""||input===undefined){
-            if(sex==="女"){
-                input = "../contents/img/women-head.png";
-            }else{
-                input = "../contents/img/men-head.png";
-            }
+        if(!input&&sex==="女"){
+            input = "../contents/img/women-head.png";
+        }else if(!input){
+            input = "../contents/img/men-head.png";
         }
         return input;
     }
@@ -584,7 +582,7 @@ app.filter("defaultHeadImg",()=>{
  */
 app.filter("defaultImg",()=>{
     return (input:string,type:string)=>{
-        if(input===null||input===""||input===undefined){
+        if(!input){
             if(type==="doc"){
                 input = "../contents/img/doc-head.png";
             }

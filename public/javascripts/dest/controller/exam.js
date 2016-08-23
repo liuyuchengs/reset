@@ -37,7 +37,7 @@ define(["require", "exports"], function (require, exports) {
             { has: false, val: "性别", children: $scope.sexParams }
         ];
         //切换导航项目
-        $scope.switch = function (item) {
+        $scope.switch = (item) => {
             for (var proto in $scope.params) {
                 if (proto === item) {
                     $scope.params[item] = true;
@@ -59,12 +59,12 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 切换菜单栏
-        $scope.switchMenu = function (index, obj) {
+        $scope.switchMenu = (index, obj) => {
             ToolService.select(index, obj, true);
             $rootScope.globalProp.hasBlackBg = obj[index].has;
         };
         // 点击菜单选项
-        $scope.switchDrop = function (index, obj) {
+        $scope.switchDrop = (index, obj) => {
             ToolService.select(index, obj);
             if (obj === $scope.areaParams) {
                 $scope.menuParams[0].has = false;
@@ -89,11 +89,11 @@ define(["require", "exports"], function (require, exports) {
             loadProduct();
         };
         // 加载体检项目
-        var loadProduct = function () {
+        let loadProduct = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/product/querylist",
                 data: $scope.productQueryParams,
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.length < 1) {
                     if ($scope.products.length < 1) {
                         $rootScope.followTip.val = $rootScope.followTip.empty;
@@ -110,13 +110,13 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         //加载医院信息
-        var loadHospital = function () {
+        let loadHospital = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/hospital/querylist",
                 data: $scope.hospitalQueryParams,
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.list.length > 0) {
-                    data.list.forEach(function (item) {
+                    data.list.forEach((item) => {
                         if (item.score == "" || item.score == null) {
                             item.score = "暂无评分";
                         }
@@ -135,12 +135,12 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         //跳转到套餐详细页面
-        $scope.detail = function (proId, hosId) {
+        $scope.detail = (proId, hosId) => {
             ToolService.changeRoute("/exam/detail", "productId=" + proId + "&hospitalId=" + hosId);
         };
         //合并价格单位,如：元/次
-        var mergeProdcut = function (items) {
-            items.forEach(function (item) {
+        let mergeProdcut = (items) => {
+            items.forEach((item) => {
                 if (item.priceunit != null && item.priceunit != "") {
                     item.preferPriceType = item.pricetype + "/" + item.priceunit;
                 }
@@ -150,7 +150,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         //获取参数
-        var getQuery = function () {
+        let getQuery = () => {
             if ($location.search().item) {
                 var proto = $location.search().item;
                 $scope.switch(proto);
@@ -160,15 +160,15 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         //设置滚动加载
-        var setNext = function (item) {
+        let setNext = (item) => {
             if (item === "product") {
-                ToolService.onWindowListen(function () {
+                ToolService.onWindowListen(() => {
                     $scope.productQueryParams.currentPage++;
                     loadProduct();
                 });
             }
             if (item === "hospital") {
-                ToolService.onWindowListen(function () {
+                ToolService.onWindowListen(() => {
                     $scope.hospitalQueryParams.currentPage++;
                     loadHospital();
                 });

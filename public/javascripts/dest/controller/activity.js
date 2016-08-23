@@ -3,30 +3,30 @@ define(["require", "exports"], function (require, exports) {
     function activity($scope, $rootScope, $location, ToolService, AjaxService) {
         $scope.products = [];
         //跳转到详情页面
-        $scope.detail = function (productId, hospitalId, type) {
+        $scope.detail = (productId, hospitalId, type) => {
             if (productId && hospitalId && type) {
                 if (type === 5) {
-                    ToolService.changeRoute("/exam/detail", "productId=" + productId + "&hospitalId=" + hospitalId);
+                    ToolService.changeRoute("/exam/detail", `productId=${productId}&hospitalId=${hospitalId}`);
                 }
                 if (type === 6) {
-                    ToolService.changeRoute("/exam/detail", "productId=" + productId + "&hospitalId=" + hospitalId + "&activityp=\u5143/\u6B21");
+                    ToolService.changeRoute("/exam/detail", `productId=${productId}&hospitalId=${hospitalId}&activityp=元/次`);
                 }
                 else {
-                    ToolService.changeRoute("/product/detail", "productId=" + productId + "&hospitalId=" + hospitalId);
+                    ToolService.changeRoute("/product/detail", `productId=${productId}&hospitalId=${hospitalId}`);
                 }
             }
         };
-        var queryParams = {
+        let queryParams = {
             pageRows: 10,
             currentPage: 1,
             flag: "",
         };
         //查询活动数据
-        var queryActivity = function () {
+        let queryActivity = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/product/queryActivity",
                 data: queryParams,
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code === 0) {
                     if (data.data.length < 1) {
                         if ($scope.products.length < 1) {
@@ -42,15 +42,15 @@ define(["require", "exports"], function (require, exports) {
                         $scope.products = $scope.products.concat(data.data);
                     }
                 }
-            }).catch(function () {
+            }).catch(() => {
                 ToolService.alert("获取数据失败");
-            }).finally(function () {
+            }).finally(() => {
                 $rootScope.load.has = false;
             });
         };
         //处理活动数据
-        var mergeActivity = function (items) {
-            items.forEach(function (item) {
+        let mergeActivity = (items) => {
+            items.forEach((item) => {
                 if (item.priceunit != null && item.priceunit != "") {
                     item.preferPriceType = item.pricetype + "/" + item.priceunit;
                 }
@@ -63,7 +63,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         //加载下一页数据
-        var loadNext = function () {
+        let loadNext = () => {
             queryParams.currentPage++;
             queryActivity();
         };

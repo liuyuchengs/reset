@@ -36,7 +36,7 @@ define(["require", "exports"], function (require, exports) {
             discountid: null,
         };
         // 切换导航条
-        $scope.switch = function (index, obj) {
+        $scope.switch = (index, obj) => {
             ToolService.select(index, obj);
         };
         // 返回上一页
@@ -44,7 +44,7 @@ define(["require", "exports"], function (require, exports) {
             window.history.back();
         };
         // 获取url参数
-        var loadParams = function () {
+        let loadParams = () => {
             if ($location.search().productId) {
                 $scope.productId = $location.search().productId;
                 $scope.order.productId = $scope.productId;
@@ -55,11 +55,11 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 加载排班信息
-        var loadSchedule = function () {
+        let loadSchedule = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/schedule/querybyhospitalid",
                 data: { hospitalId: $scope.hospitalId },
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.length > 0) {
                     mergeSchedule(data);
                     $scope.schedules = data;
@@ -70,7 +70,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 保存排班信息
-        var mergeSchedule = function (items) {
+        let mergeSchedule = (items) => {
             for (var index = 0; index > items.length; index++) {
                 var item = items[index];
                 if (index == 0) {
@@ -90,11 +90,11 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 加载体检套餐信息
-        var loadProduct = function () {
+        let loadProduct = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/product/packagedetal",
                 data: { packageid: $scope.productId },
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     mergeProduct(data.data);
                     $scope.product = data.data;
@@ -107,7 +107,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 处理套餐信息
-        var mergeProduct = function (item) {
+        let mergeProduct = (item) => {
             if (item.priceunit != null && item.priceunit != "") {
                 item.preferPriceType = item.pricetype + "/" + item.priceunit;
             }
@@ -119,20 +119,20 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 加载体检套餐的项目信息
-        var loadProductItem = function () {
+        let loadProductItem = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/product/packagedetalItem",
                 data: { packageid: $scope.productId },
-            }).then(function (data) {
+            }).then((data) => {
                 $scope.productItem = data;
             });
         };
         // 加载医院信息
-        var loadHospital = function () {
+        let loadHospital = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/product/hospitalbyid",
                 data: { id: $scope.hospitalId },
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     $scope.hospital = data.data;
                     $scope.order.hospitalAddress = $scope.hospital.address;
@@ -141,11 +141,11 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 加载医院图片
-        var loadHopitalImg = function () {
+        let loadHopitalImg = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/image/querybymainid",
                 data: { type: "HOSPITAL", mainId: $scope.hospitalId },
-            }).then(function (data) {
+            }).then((data) => {
                 if (data[0].url == "" || data[0].url == null) {
                     data[0].url = "../contents/img/p_default.png";
                 }
@@ -153,17 +153,17 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 打开选择时间按钮
-        $scope.selectTimeBtn = function () {
+        $scope.selectTimeBtn = () => {
             if (!$scope.noSchedule) {
                 $scope.hasSelectTime = true;
             }
         };
         // 取消选择时间
-        $scope.cancelTime = function () {
+        $scope.cancelTime = () => {
             $scope.hasSelectTime = false;
         };
         // 选择时间
-        $scope.selectTime = function (id) {
+        $scope.selectTime = (id) => {
             if (!$scope.noSchedule) {
                 ToolService.select(id, $scope.scheduleParams);
                 $scope.order.treatmentTime = $scope.scheduleParams[id].val;
@@ -171,7 +171,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 跳转到详细页面
-        $scope.detail = function () {
+        $scope.detail = () => {
             if (!ToolService.checkLogin()) {
                 ToolService.comfirm("请先登录并完善个人信息!", function () {
                     $rootScope.followTip.has = false;
@@ -192,7 +192,7 @@ define(["require", "exports"], function (require, exports) {
                     headers: {
                         "accessToken": ToolService.user.accessToken
                     }
-                }).then(function (data) {
+                }).then((data) => {
                     $scope.order.dealMoney = data.dealMoney;
                     $scope.order.payMoney = data.payMoney;
                     $scope.order.realMoney = data.realMoney;

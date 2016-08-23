@@ -10,12 +10,12 @@ define(["require", "exports"], function (require, exports) {
         $scope.codeText = "获取短信验证码";
         $scope.sendCodes = false;
         // 检测手机号码是否有注册
-        $scope.checkPhone = function () {
+        $scope.checkPhone = () => {
             if (/^1[3|4|5|7|8]\d{9}$/.test($scope.phone)) {
                 AjaxService.post({
                     url: ToolService.host + "/wx/findpass/findPassPhontCheck",
                     data: { name: "phone", param: $scope.phone }
-                }).then(function (data) {
+                }).then((data) => {
                     if (data.code == 0) {
                         ToolService.changeRoute("/findpwd/code", "phone=" + $scope.phone);
                     }
@@ -29,13 +29,13 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 检测验证码是否正确
-        $scope.checkCode = function () {
+        $scope.checkCode = () => {
             if ($scope.sendCodes) {
                 if ($scope.code.length == 4) {
                     AjaxService.post({
                         url: ToolService.host + "/wx/findpass/findPassPhontCheck",
                         data: { name: "verifyCode", param: $scope.code, p: $scope.getPhone },
-                    }).then(function (data) {
+                    }).then((data) => {
                         if (data.code == 0) {
                             ToolService.changeRoute("/findpwd/pwd", "phone=" + $scope.getPhone + "&code=" + $scope.code);
                         }
@@ -53,12 +53,12 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 修改密码
-        $scope.changePwd = function () {
+        $scope.changePwd = () => {
             if ($scope.pwd.length >= 8 && $scope.pwd.length <= 20) {
                 AjaxService.post({
                     url: ToolService.host + "/wx/findpass/changepwd",
                     data: { phone: $scope.getPhone, code: $scope.getCodes, password: $scope.pwd }
-                }).then(function (data) {
+                }).then((data) => {
                     if (data.code == 0) {
                         ToolService.alert("密码修改成功!", function () {
                             $rootScope.followTip.has = false;
@@ -72,12 +72,12 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 发送短信验证码
-        $scope.getCode = function () {
+        $scope.getCode = () => {
             if (!$scope.hasSendCode) {
                 AjaxService.post({
                     url: ToolService.host + "/wx/findpass/sendsmsfindpasscode",
                     data: { phone: $scope.getPhone },
-                }).then(function (data) {
+                }).then((data) => {
                     if (data.code == 0) {
                         $scope.hasSendCode = true;
                         $scope.sendCodes = true;

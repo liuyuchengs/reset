@@ -6,7 +6,7 @@ define(["require", "exports"], function (require, exports) {
         $scope.currentPage = 1;
         $scope.productInfo = [];
         // 加载特惠数据
-        var loadGift = function () {
+        let loadGift = () => {
             if ($scope.itemState == "discount") {
                 var url = ToolService.host + "/wx/order/queryByGift";
             }
@@ -19,7 +19,7 @@ define(["require", "exports"], function (require, exports) {
                 headers: {
                     accessToken: ""
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     if (data.data.length < 1) {
                         if ($scope.productInfo.length < 1) {
@@ -41,7 +41,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 处理特惠数据
-        var mergeProdcut = function (items) {
+        let mergeProdcut = (items) => {
             items.forEach(function (item) {
                 if (item.priceunit != null && item.priceunit != "") {
                     item.preferPriceType = item.pricetype + "/" + item.priceunit;
@@ -55,7 +55,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 切换最低和本月优惠
-        $scope.switchState = function (item) {
+        $scope.switchState = (item) => {
             if ($scope.itemState != item) {
                 if (item == "discount") {
                     $scope.discountSelect = true;
@@ -71,7 +71,7 @@ define(["require", "exports"], function (require, exports) {
             loadGift();
         };
         // 跳转到项目详细信息
-        $scope.detail = function (proId, hospitalId, preferPrice) {
+        $scope.detail = (proId, hospitalId, preferPrice) => {
             var query = "productId=" + proId + "&hospitalId=" + hospitalId;
             if ($scope.itemState == "discount") {
                 query += "&code=123";
@@ -82,13 +82,13 @@ define(["require", "exports"], function (require, exports) {
             ToolService.changeRoute("/product/detail", query);
         };
         // 疑问按钮处理函数
-        $scope.question = function () {
+        $scope.question = () => {
             ToolService.alert("如有疑问，请致电0755-26905699");
         };
         // 初始化页面
         ToolService.reset();
         loadGift();
-        ToolService.onWindowListen(function () {
+        ToolService.onWindowListen(() => {
             $scope.currentPage++;
             loadGift();
         });

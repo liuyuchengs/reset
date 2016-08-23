@@ -7,7 +7,7 @@ define(["require", "exports"], function (require, exports) {
             balance: null,
         };
         //显示支付
-        $scope.choosePay = function () {
+        $scope.choosePay = () => {
             if ($scope.money.balance > 0) {
                 $scope.showPay = true;
             }
@@ -16,11 +16,11 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         //隐藏支付
-        $scope.hiddenPay = function () {
+        $scope.hiddenPay = () => {
             $scope.showPay = false;
         };
         //查询提现金额
-        var queryMoney = function () {
+        let queryMoney = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/withDraw/myMoney",
                 data: { "accessToken": ToolService.user.accessToken },
@@ -34,7 +34,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         //申请提现
-        $scope.getMoney = function (flag, $event) {
+        $scope.getMoney = (flag, $event) => {
             $event.stopPropagation();
             if (checkAccount(flag)) {
                 AjaxService.post({
@@ -55,7 +55,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         //检查是否有绑定账号
-        var checkAccount = function (flag) {
+        let checkAccount = (flag) => {
             if (flag == 1 && ToolService.user.alipay != null && ToolService.user.alipay != "") {
                 return true;
             }

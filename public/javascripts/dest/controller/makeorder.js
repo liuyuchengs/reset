@@ -8,7 +8,7 @@ define(["require", "exports"], function (require, exports) {
         $scope.orderInfo = null;
         $scope.hasDoctor = true;
         // 是否使用代金券
-        $scope.selectCush = function () {
+        $scope.selectCush = () => {
             if ($scope.hasGift) {
                 $scope.hasCheck = !$scope.hasCheck;
                 var payMoney = parseFloat($scope.orderInfo.payMoney);
@@ -24,7 +24,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 判定是否有代金券可用
-        var checkGift = function () {
+        let checkGift = () => {
             if (parseFloat($scope.orderInfo.giftMoney) > 0) {
                 $scope.hasCheck = true;
                 $scope.hasGift = true;
@@ -35,7 +35,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 下单按钮
-        $scope.makeorder = function () {
+        $scope.makeorder = () => {
             var params = {
                 productId: $scope.orderInfo.productId,
                 scheduleId: $scope.orderInfo.scheduleId,
@@ -59,7 +59,7 @@ define(["require", "exports"], function (require, exports) {
                 headers: {
                     'accessToken': ToolService.user.accessToken
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     ToolService.removeSession("makeorder");
                     ToolService.setSession("order", data.data);
@@ -74,7 +74,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 返回按钮
-        $scope.back = function () {
+        $scope.back = () => {
             window.history.back();
         };
         // 页面初始化

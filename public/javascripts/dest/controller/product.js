@@ -31,13 +31,13 @@ define(["require", "exports"], function (require, exports) {
         $scope.title = "";
         $scope.products = [];
         // 加载地理信息
-        var initLocation = function () {
+        let initLocation = function () {
             if (ToolService.getSession("locationInfo")) {
                 $scope.hasLocation = true;
             }
         };
         // 加载分类信息
-        var loadClassParams = function () {
+        let loadClassParams = function () {
             if ($location.search().product) {
                 var product = $location.search().product;
                 $scope.productParams[product].has = true;
@@ -65,12 +65,12 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 下拉菜单切换
-        $scope.switchMenu = function (index, obj) {
+        $scope.switchMenu = (index, obj) => {
             ToolService.select(index, obj, true);
             $rootScope.globalProp.hasBlackBg = obj[index].has;
         };
         //下拉菜单项切换
-        $scope.switchDrop = function (index, obj) {
+        $scope.switchDrop = (index, obj) => {
             ToolService.select(index, obj);
             if (obj === $scope.areaParams) {
                 $scope.queryParams.area = obj[index].id;
@@ -91,11 +91,11 @@ define(["require", "exports"], function (require, exports) {
             loadData();
         };
         // 查询数据
-        var loadData = function () {
+        let loadData = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/product/querylist",
                 data: $scope.queryParams
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.length < 1) {
                     if ($scope.products.length < 1) {
                         $rootScope.followTip.val = $rootScope.followTip.empty;
@@ -112,8 +112,8 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         //处理项目信息
-        var mergeProdcut = function (items) {
-            items.forEach(function (item) {
+        let mergeProdcut = (items) => {
+            items.forEach((item) => {
                 if (item.priceunit != null && item.priceunit != "") {
                     item.preferPriceType = item.pricetype + "/" + item.priceunit;
                 }
@@ -123,11 +123,11 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 跳转到详细页面
-        $scope.detail = function (productId, hospitalId) {
+        $scope.detail = (productId, hospitalId) => {
             ToolService.changeRoute("/product/detail", "flag=1&productId=" + productId + "&hospitalId=" + hospitalId);
         };
         // 疑问按钮处理函数
-        $scope.question = function () {
+        $scope.question = () => {
             ToolService.alert("如有疑问，请致电0755-26905699");
         };
         //初始化
@@ -135,7 +135,7 @@ define(["require", "exports"], function (require, exports) {
         loadClassParams();
         initLocation();
         loadData();
-        ToolService.onWindowListen(function () {
+        ToolService.onWindowListen(() => {
             $scope.queryParams.currentPage++;
             loadData();
         });

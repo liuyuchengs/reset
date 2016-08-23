@@ -47,19 +47,19 @@ define(["require", "exports"], function (require, exports) {
             value: ""
         };
         // 跳转到具体的发帖页面
-        $scope.goTo = function (path) {
+        $scope.goTo = (path) => {
             if (ToolService.checkLogin()) {
                 ToolService.changeRoute(path);
             }
             else {
-                ToolService.comfirm("您还没有登录，请先登录", function () {
+                ToolService.comfirm("您还没有登录，请先登录", () => {
                     $rootScope.messageTip.has = false;
                     ToolService.changeRoute("/user");
                 });
             }
         };
         // 监听input元素选择图片
-        $scope.listen = function () {
+        $scope.listen = () => {
             $("#input1").on("change", function () {
                 var url = $scope.getUrl(this.files[0]);
                 $scope.beforeParams.input1.has = true;
@@ -125,7 +125,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 获取input元素图片的url，做图片预览
-        $scope.getUrl = function (obj) {
+        $scope.getUrl = (obj) => {
             var url = null;
             if (window.URL != undefined) {
                 url = window.URL.createObjectURL(obj);
@@ -133,14 +133,14 @@ define(["require", "exports"], function (require, exports) {
             return url;
         };
         // 切换发帖类型
-        $scope.switch = function (index) {
+        $scope.switch = (index) => {
             ToolService.select(index, $scope.switchParams);
             if ($scope.switchParams[index]) {
                 $scope.queryParams.flag = $scope.switchParams[index].id;
             }
         };
         // 调整随便聊聊照片参数
-        $scope.mergeSay = function () {
+        $scope.mergeSay = () => {
             var imgStr = "img";
             var pStr = "p";
             var count = 1;
@@ -173,7 +173,7 @@ define(["require", "exports"], function (require, exports) {
             $scope.postData.append("postFlags", 2);
         };
         // 调整写日记参数
-        $scope.mergeNote = function () {
+        $scope.mergeNote = () => {
             var imgStr = "img";
             var beforeCount = 1;
             var file = new Blob([""], { type: "image/jpeg" });
@@ -212,7 +212,7 @@ define(["require", "exports"], function (require, exports) {
             $scope.postData.append("postFlags", 1);
         };
         // 发帖功能
-        $scope.addPost = function (merge) {
+        $scope.addPost = (merge) => {
             if ($scope.queryParams.postName == "" || $scope.queryParams.postName == null || $scope.queryParams.postContent == "" || $scope.queryParams.postContent == null) {
                 ToolService.alert("请填写发帖内容!");
             }
@@ -225,7 +225,7 @@ define(["require", "exports"], function (require, exports) {
                         "Content-Type": undefined,
                         "accessToken": ToolService.user.accessToken,
                     }
-                }).success(function (data) {
+                }).success((data) => {
                     $rootScope.load.has = false;
                     if (data.code == 0) {
                         ToolService.changeRoute("/interaction");
@@ -233,7 +233,7 @@ define(["require", "exports"], function (require, exports) {
                     else {
                         ToolService.alert("连接失败，请稍后再试!");
                     }
-                }).error(function () {
+                }).error(() => {
                     $rootScope.load.has = false;
                     $scope.postData = new FormData();
                     ToolService.alert("连接失败，请稍后再试!");
@@ -241,11 +241,11 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 发布随便说说帖子
-        $scope.addSayPost = function () {
+        $scope.addSayPost = () => {
             $scope.addPost($scope.mergeSay);
         };
         // 发布写日记
-        $scope.addNotePost = function () {
+        $scope.addNotePost = () => {
             if (!$scope.select.has) {
                 if ($scope.queryParams.productId == null || $scope.queryParams.hospitalId == null || $scope.queryParams.doctorId == null) {
                     ToolService.alert("请选择项目信息");
@@ -259,7 +259,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 触发随便说说选择照片
-        $scope.chooseSayPic = function () {
+        $scope.chooseSayPic = () => {
             var count = 0;
             for (var item in $scope.beforeParams) {
                 var prototype = $scope.beforeParams[item];
@@ -274,7 +274,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 触发写日记选择术前照片
-        $scope.chooseBeforePic = function () {
+        $scope.chooseBeforePic = () => {
             var count = 0;
             for (var item in $scope.beforeParams) {
                 count++;
@@ -291,7 +291,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 触发写日记选择术后照片
-        $scope.chooseAfterPic = function () {
+        $scope.chooseAfterPic = () => {
             var count = 0;
             for (var item in $scope.afterParams) {
                 count++;
@@ -306,7 +306,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 删除术前图片
-        $scope.removeBefore = function (item) {
+        $scope.removeBefore = (item) => {
             if ($scope.beforeParams[item]) {
                 $scope.beforeParams[item].has = false;
                 $scope.beforeParams[item].url = "";
@@ -315,7 +315,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 删除术后图片
-        $scope.removeAfter = function (item) {
+        $scope.removeAfter = (item) => {
             if ($scope.afterParams[item]) {
                 $scope.afterParams[item].has = false;
                 $scope.afterParams[item].url = "";
@@ -324,21 +324,21 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 重新替换要重新选择图片的input元素
-        $scope.clear = function (selector) {
+        $scope.clear = (selector) => {
             var element = document.getElementById(selector);
             element.outerHTML = element.outerHTML; //重新替换Input元素
         };
         // 发帖页面加载用户已完成订单信息
-        $scope.loadOrder = function () {
+        $scope.loadOrder = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/order/queryOrderList",
                 data: { status: "", userId: ToolService.user.id },
                 headers: {
                     accessToken: ToolService.user.accessToken
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code === 0) {
-                    var result = data.data.filter(function (item) {
+                    var result = data.data.filter((item) => {
                         return item.status == 4;
                     });
                     if (result.length > 0) {
@@ -352,7 +352,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 触发项目选择
-        $scope.chooseOrder = function () {
+        $scope.chooseOrder = () => {
             if ($scope.order.has) {
                 $scope.select.has = !$scope.select.has;
             }
@@ -361,7 +361,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 选择项目
-        $scope.chooseProduct = function (id) {
+        $scope.chooseProduct = (id) => {
             //先清理掉以选择的项
             for (var prototype in $scope.order.orderInfo) {
                 if ($scope.order.orderInfo[prototype].has) {

@@ -14,14 +14,14 @@ define(["require", "exports"], function (require, exports) {
         $scope.item = "";
         $scope.messages = [];
         //获取参数
-        var getQuery = function () {
+        let getQuery = () => {
             if ($location.search().item) {
                 $scope.item = $location.search().item;
                 $scope.switch($scope.item);
             }
         };
         // 切换导航条
-        $scope.switch = function (item) {
+        $scope.switch = (item) => {
             for (var proto in $scope.params) {
                 if (proto == item) {
                     $scope.params[proto] = true;
@@ -32,14 +32,14 @@ define(["require", "exports"], function (require, exports) {
             }
             clearData();
             if (item === "user") {
-                ToolService.onWindowListen(function () {
+                ToolService.onWindowListen(() => {
                     $scope.queryParams.currentPage++;
                     queryUserMessage();
                 });
                 queryUserMessage();
             }
             if (item === "doctor") {
-                ToolService.onWindowListen(function () {
+                ToolService.onWindowListen(() => {
                     $scope.queryParams.currentPage++;
                     queryDoctorMessage();
                 });
@@ -47,20 +47,20 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         //清空数据
-        var clearData = function () {
+        let clearData = () => {
             $scope.messages = [];
             $rootScope.followTip.has = false;
             $scope.queryParams.currentPage = 1;
         };
         // 查询用户消息
-        var queryUserMessage = function () {
+        let queryUserMessage = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/repliesMessage/myMessage",
                 data: $scope.queryParams,
                 headers: {
                     accessToken: ToolService.user.accessToken
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     if (data.data.length < 1) {
                         if ($scope.messages.length < 1) {
@@ -81,7 +81,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 查询医生消息
-        var queryDoctorMessage = function () {
+        let queryDoctorMessage = () => {
             var obj = {
                 pageRows: 10,
                 currentPage: $scope.queryParams.currentPage,
@@ -93,7 +93,7 @@ define(["require", "exports"], function (require, exports) {
                 headers: {
                     accessToken: ToolService.user.accessToken,
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     if (data.data.length < 1) {
                         if ($scope.messages.length < 1) {
@@ -115,8 +115,8 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 检查消息数据
-        var mergeMessage = function (items) {
-            items.forEach(function (item) {
+        let mergeMessage = (items) => {
+            items.forEach((item) => {
                 item.dataStr = item.createTimeStr.slice(5, 10);
                 item.postIntro = "：" + item.postIntro;
                 if (item.postState == 1) {
@@ -128,11 +128,11 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 跳转到帖子页面
-        $scope.detail = function (id) {
+        $scope.detail = (id) => {
             ToolService.changeRoute("/interaction/detail", "id=" + id);
         };
         //跳转到医生详情
-        $scope.doctorDetail = function (id) {
+        $scope.doctorDetail = (id) => {
             ToolService.changeRoute("/doctor/detail", "id=" + id);
         };
         //初始化页面

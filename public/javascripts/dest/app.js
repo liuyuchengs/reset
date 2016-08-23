@@ -1,12 +1,12 @@
 define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./modules/Ajax", "./modules/Weixin"], function (require, exports, ag, Swiper, wx, Tool, Ajax, Weixin) {
     "use strict";
-    var host = "http://192.168.0.104:3000";
+    let host = "http://192.168.0.104:3000";
     var app = ag.module("myApp", ['ngRoute']);
     /**
      * 配置
      * 程序启动前配置$rootScope
      */
-    app.run(function ($rootScope, $location, $http) {
+    app.run(($rootScope, $location, $http) => {
         //设置默认的ajax headers
         $http.defaults.headers.post = { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" };
         // 导航栏参数
@@ -45,7 +45,7 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             hasBlackBg: false,
         };
         //改变导航栏样式
-        $rootScope.switchNavMenu = function (item) {
+        $rootScope.switchNavMenu = (item) => {
             if (item === "/home") {
                 if (!$rootScope.navMenu.home) {
                     $rootScope.navMenu.home = true;
@@ -91,21 +91,21 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             }
         };
         //路由改变时触发
-        $rootScope.$on("$routeChangeStart", function () {
+        $rootScope.$on("$routeChangeStart", () => {
             $rootScope.load.has = true;
             var path = $location.path();
             $rootScope.switchNavMenu(path);
         });
         //路由改变完成后触发
-        $rootScope.$on("$routeChangeSuccess", function () {
+        $rootScope.$on("$routeChangeSuccess", () => {
             $rootScope.load.has = false;
         });
         //导航栏菜单处理事件
-        $rootScope.menuClick = function (path) {
+        $rootScope.menuClick = (path) => {
             $location.path(path);
         };
         //html中改变路由
-        $rootScope.changeRoute = function (path, query) {
+        $rootScope.changeRoute = (path, query) => {
             $location.path(path);
             if (query) {
                 $location.search(query);
@@ -120,7 +120,7 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
      * 1.主要的四个控制器直接包含在app.js中,无需再require注入
      * 2.其余的控制器通过require动态加载后注入
      */
-    app.config(function ($routeProvider, $controllerProvider) {
+    app.config(($routeProvider, $controllerProvider) => {
         $routeProvider.when("/home", {
             templateUrl: "home.html",
             controller: "homeCtrl",
@@ -415,7 +415,7 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
      * 服务
      * 各种小工具
      */
-    app.factory("ToolService", function ($rootScope, $location) {
+    app.factory("ToolService", ($rootScope, $location) => {
         return new Tool($rootScope, $location, host);
     });
     /**
@@ -424,25 +424,25 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
      * get:get方式异步数据
      * post:post方式异步数据
      */
-    app.factory("AjaxService", function ($rootScope, $http, $q, ToolService) {
+    app.factory("AjaxService", ($rootScope, $http, $q, ToolService) => {
         return new Ajax($rootScope, $http, $q, ToolService);
     });
     /**
      * 服务
      * 与微信jsapi交互
      */
-    app.factory("WeixinService", function ($rootScope, AjaxService, ToolService) {
+    app.factory("WeixinService", ($rootScope, AjaxService, ToolService) => {
         return new Weixin($rootScope, AjaxService, ToolService, wx);
     });
     /**
      * 指令
      * 图片加载后，使用 设置的图片
      */
-    app.directive("fallbackSrc", function () {
+    app.directive("fallbackSrc", () => {
         return {
             restrict: "A",
-            link: function (scope, iElement, iAttr) {
-                iElement.bind("error", function () {
+            link: (scope, iElement, iAttr) => {
+                iElement.bind("error", () => {
                     iElement.attr("src", iAttr["fallbackSrc"]);
                 });
             },
@@ -453,11 +453,11 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
      * 项目图片加载失败后，使用默认图片
      * like:<img product-error>
      */
-    app.directive("productError", function () {
+    app.directive("productError", () => {
         return {
             restrict: "A",
-            link: function ($scope, iElement, iAttr) {
-                iElement.bind("error", function () {
+            link: ($scope, iElement, iAttr) => {
+                iElement.bind("error", () => {
                     iElement.attr("src", "../contents/img/p_default.png");
                 });
             },
@@ -468,11 +468,11 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
      * 医生图像加载失败后，使用默认图片
      * like:<img doctor-error='男'/>
      */
-    app.directive("doctorError", function () {
+    app.directive("doctorError", () => {
         return {
             restrict: "A",
-            link: function ($scope, iElement, iAttr) {
-                iElement.bind("error", function () {
+            link: ($scope, iElement, iAttr) => {
+                iElement.bind("error", () => {
                     iElement.attr("src", "../contents/img/doc-head.png");
                 });
             }
@@ -483,11 +483,11 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
      * 用户头像加载失败后，使用默认图片
      * like:<img user-error="女">
      */
-    app.directive("userError", function () {
+    app.directive("userError", () => {
         return {
             restrict: "A",
-            link: function ($scope, iElement, iAttr) {
-                iElement.bind("error", function () {
+            link: ($scope, iElement, iAttr) => {
+                iElement.bind("error", () => {
                     var imgUrl = "../contents/img/men-head.png";
                     if (iAttr["userError"]) {
                         if (iAttr["userError"] === "女") {
@@ -504,16 +504,16 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
      * 自适应宽度的正方形图片
      * like:<img zoom-image>
      */
-    app.directive("zoomImage", function () {
+    app.directive("zoomImage", () => {
         return {
             restrict: "A",
-            link: function ($scope, iElement, iAttr) {
-                var containSize = parseInt(iElement.css("width").slice(0, -2));
+            link: ($scope, iElement, iAttr) => {
+                let containSize = parseInt(iElement.css("width").slice(0, -2));
                 iElement.css("height", containSize);
-                var children = iElement.children();
-                children.bind("load", function () {
-                    var width = parseInt(children.css("width").slice(0, -2));
-                    var height = parseInt(children.css("height").slice(0, -2));
+                let children = iElement.children();
+                children.bind("load", () => {
+                    let width = parseInt(children.css("width").slice(0, -2));
+                    let height = parseInt(children.css("height").slice(0, -2));
                     if (width > height) {
                         var zWidth = (containSize / height) * width;
                         var zHeight = containSize;
@@ -535,15 +535,13 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
      * 图片路径为空时，设置默认的头像
      * sex:使用不同性别的头像
      */
-    app.filter("defaultHeadImg", function () {
-        return function (input, sex) {
-            if (input === null || input === "" || input === undefined) {
-                if (sex === "女") {
-                    input = "../contents/img/women-head.png";
-                }
-                else {
-                    input = "../contents/img/men-head.png";
-                }
+    app.filter("defaultHeadImg", () => {
+        return (input, sex) => {
+            if (!input && sex === "女") {
+                input = "../contents/img/women-head.png";
+            }
+            else if (!input) {
+                input = "../contents/img/men-head.png";
             }
             return input;
         };
@@ -553,9 +551,9 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
      * 图片路径为空时，设置默认图片
      * type:根据不同的类别使用不同的图片,doc->医生,pro->项目
      */
-    app.filter("defaultImg", function () {
-        return function (input, type) {
-            if (input === null || input === "" || input === undefined) {
+    app.filter("defaultImg", () => {
+        return (input, type) => {
+            if (!input) {
                 if (type === "doc") {
                     input = "../contents/img/doc-head.png";
                 }
@@ -569,7 +567,7 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
     /**
      * home控制器
      */
-    app.controller("homeCtrl", function ($scope, $rootScope, $http, ToolService, AjaxService, WeixinService) {
+    app.controller("homeCtrl", ($scope, $rootScope, $http, ToolService, AjaxService, WeixinService) => {
         //初始化$scope
         $scope.locationInfo = "深圳市";
         $scope.items = [];
@@ -578,10 +576,10 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             "width": screen.width
         };
         //逆地址服务，现暂不使用
-        $scope.getLocation = function (latitude, longitude) {
-            var key = "LFQBZ-7UNCX-VDR44-T34PN-OX2VQ-M2BNI";
-            var url = "https://apis.map.qq.com/ws/geocoder/v1/?output=jsonp&callback=JSON_CALLBACK&location=" + latitude + "," + longitude + "&key=" + key;
-            $http.jsonp(url).success(function (data) {
+        $scope.getLocation = (latitude, longitude) => {
+            let key = "LFQBZ-7UNCX-VDR44-T34PN-OX2VQ-M2BNI";
+            let url = "https://apis.map.qq.com/ws/geocoder/v1/?output=jsonp&callback=JSON_CALLBACK&location=" + latitude + "," + longitude + "&key=" + key;
+            $http.jsonp(url).success((data) => {
                 if (data.status == 0) {
                     $scope.locationInfo = data.result.address_component.city;
                     var locationInfo = ToolService.getSession("locationInfo");
@@ -591,20 +589,20 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
                 else {
                     $scope.locationInfo = "定位失败";
                 }
-            }).error(function () {
+            }).error(() => {
                 $scope.locationInfo = "定位失败";
             });
         };
-        var queryParams = {
+        let queryParams = {
             city: "深圳",
             currentPage: 1,
         };
         //查询热门推荐
-        var loadRecommend = function () {
+        let loadRecommend = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/product/queryrecommend",
                 data: queryParams,
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code === 0) {
                     if (data.data.length < 1) {
                         if ($scope.items.length < 1) {
@@ -623,23 +621,23 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             });
         };
         // 获取图片轮播
-        var queryBanners = function () {
+        let queryBanners = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/banner/query",
                 data: { "type": "home_banner" },
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     $scope.banners = data.data;
                 }
             });
         };
         // 分页查询，查询下一页
-        var loadNext = function () {
+        let loadNext = () => {
             queryParams.currentPage++;
             loadRecommend();
         };
         // 初始化图片轮播插件
-        var initSwiper = function () {
+        let initSwiper = () => {
             var myswiper = new Swiper(".swiper-container", {
                 loop: false,
                 pagination: '.swiper-pagination',
@@ -648,7 +646,7 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
                 observeParents: true,
                 observer: true,
                 //第一张轮播图显示6s,其他的2s
-                onSlideChangeEnd: function (swiper) {
+                onSlideChangeEnd: (swiper) => {
                     if (swiper.activeIndex == 0 || swiper.activeIndex == 1) {
                         swiper.stopAutoplay();
                         setTimeout(function () {
@@ -664,7 +662,7 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             });
         };
         // 处理热门数据
-        var mergeProduct = function (items) {
+        let mergeProduct = (items) => {
             items.forEach(function (item) {
                 if (item.priceunit != null && item.priceunit != "") {
                     item.preferPriceType = item.pricetype + "/" + item.priceunit;
@@ -675,7 +673,7 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             });
         };
         //跳转到详细页面
-        $scope.detail = function (productId, hospitalId, type) {
+        $scope.detail = (productId, hospitalId, type) => {
             if (type === 5) {
                 ToolService.changeRoute("/exam/detail", "productId=" + productId + "&hospitalId=" + hospitalId);
             }
@@ -684,7 +682,7 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             }
         };
         //图片轮播跳转
-        $scope.activity = function (id) {
+        $scope.activity = (id) => {
             if (id === 1) {
                 ToolService.changeRoute("/activity", "flag=2");
             }
@@ -712,7 +710,7 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
      * 控制器
      * 医生页面
      */
-    app.controller("doctorCtrl", function ($scope, $rootScope, $http, ToolService, AjaxService) {
+    app.controller("doctorCtrl", ($scope, $rootScope, $http, ToolService, AjaxService) => {
         $scope.doctors = [];
         $scope.orderParams = ToolService.doctorOrderParams;
         $scope.areaParams = ToolService.areaParams;
@@ -723,7 +721,7 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             { has: false, val: "排序" }
         ];
         //查询参数
-        var queryParams = {
+        let queryParams = {
             professionId: "",
             itemid: "",
             orderby: "",
@@ -733,11 +731,11 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             currentPage: 1
         };
         // 加载医生数据
-        var queryDoctor = function () {
+        let queryDoctor = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/doctor/querydoctorbycityandprofession",
                 data: queryParams
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.data.length < 1) {
                     if ($scope.doctors.length < 1) {
                         $rootScope.followTip.val = $rootScope.followTip.empty;
@@ -754,8 +752,8 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             });
         };
         // 处理医生数据
-        var mergeDoctor = function (items) {
-            items.forEach(function (item) {
+        let mergeDoctor = (items) => {
+            items.forEach((item) => {
                 if (item.score == "" || item.score == null) {
                     item.score = "暂无评";
                 }
@@ -765,12 +763,12 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             });
         };
         // 导航栏菜单切换
-        $scope.switchNav = function (index, obj) {
+        $scope.switchNav = (index, obj) => {
             ToolService.select(index, obj, true);
             $rootScope.globalProp.hasBlackBg = obj[index].has;
         };
         // 区域和排序切换
-        $scope.switchDrop = function (index, obj) {
+        $scope.switchDrop = (index, obj) => {
             ToolService.select(index, obj);
             if (obj === $scope.areaParams) {
                 $scope.menuParams[1].has = false;
@@ -787,16 +785,16 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             $rootScope.globalProp.hasBlackBg = false;
         };
         //切换专科一级菜单
-        $scope.switchLevelOne = function (index, obj) {
+        $scope.switchLevelOne = (index, obj) => {
             ToolService.select(index, obj, true);
         };
         //缓存以选择二级菜单项
-        var selected = {
+        let selected = {
             index: 0,
             obj: $scope.professionalParams[0],
         };
         // 切换专科二级菜单
-        $scope.switchLevelTwo = function (index, obj) {
+        $scope.switchLevelTwo = (index, obj) => {
             if (selected.obj !== obj || (selected.obj === obj && selected.index != index)) {
                 ToolService.select(selected.index, selected.obj.children, true);
                 selected.index = index;
@@ -813,12 +811,12 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             }
         };
         // 加载下一页数据
-        var loadNext = function () {
+        let loadNext = () => {
             queryParams.currentPage++;
             queryDoctor();
         };
         // 跳转到详情页面
-        $scope.detail = function (id) {
+        $scope.detail = (id) => {
             ToolService.changeRoute("/doctor/detail", "id=" + id);
         };
         //页面初始化
@@ -835,9 +833,9 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
      * 控制器
      * 互动页面
      */
-    app.controller("interactionCtrl", function ($scope, $rootScope, ToolService, AjaxService) {
+    app.controller("interactionCtrl", ($scope, $rootScope, ToolService, AjaxService) => {
         // 查询参数
-        var queryParams = {
+        let queryParams = {
             flag: 1,
             pageRows: 10,
             currentPage: 1
@@ -850,11 +848,11 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
         ];
         $scope.posts = [];
         // 加载帖子数据
-        var queryPost = function () {
+        let queryPost = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/post/postList",
                 data: queryParams,
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.data.length < 1) {
                     if ($scope.posts.length < 1) {
                         $rootScope.followTip.val = $rootScope.followTip.empty;
@@ -871,8 +869,8 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             });
         };
         // 处理帖子数据
-        var mergePost = function (items) {
-            items.forEach(function (item) {
+        let mergePost = (items) => {
+            items.forEach((item) => {
                 if (item.visitNum == null || item.visitNum == "") {
                     item.visitNum = 0;
                 }
@@ -890,7 +888,7 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             });
         };
         // 切换帖子类型
-        $scope.switchType = function (index) {
+        $scope.switchType = (index) => {
             queryParams.flag = $scope.navParams[index].id;
             queryParams.currentPage = 1;
             ToolService.select(index, $scope.navParams);
@@ -899,11 +897,11 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             queryPost();
         };
         //跳转到详细页面
-        $scope.detail = function (id) {
+        $scope.detail = (id) => {
             ToolService.changeRoute("/interaction/detail", "id=" + id);
         };
         // 加载下一页数据
-        var loadNext = function () {
+        let loadNext = () => {
             queryParams.currentPage++;
             queryPost();
         };
@@ -919,13 +917,13 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
      * 控制器
      * 用户页面控制器
      */
-    app.controller("userCtrl", function ($scope, $rootScope, $location, ToolService, AjaxService) {
+    app.controller("userCtrl", ($scope, $rootScope, $location, ToolService, AjaxService) => {
         $scope.user = {};
         $scope.isLogin = false;
         $scope.countFocusMan = 0;
         $scope.countFansMan = 0;
         //切换用户名称的显示
-        var init = function () {
+        let init = () => {
             if (ToolService.checkLogin()) {
                 ToolService.loadUser();
                 $scope.user = ToolService.user;
@@ -940,15 +938,15 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             }
         };
         //未开放项目的提示
-        $scope.alert = function (mess) {
+        $scope.alert = (mess) => {
             ToolService.alert(mess);
         };
         //获取关注数量和粉丝数量
-        var queryFocus = function () {
+        let queryFocus = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/focus/focusManCount",
                 data: { "accessToken": ToolService.user.accessToken },
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     if (!ToolService.empty(data.data.countFocusMan)) {
                         $scope.countFocusMan = data.data.countFocusMan;
@@ -960,7 +958,7 @@ define(["require", "exports", "angular", "Swiper", "WX", "./modules/Tool", "./mo
             });
         };
         //跳转到选项页面
-        $scope.goto = function (path, query) {
+        $scope.goto = (path, query) => {
             if (ToolService.checkLogin()) {
                 ToolService.changeRoute(path, query);
             }

@@ -1,7 +1,7 @@
 define(["require", "exports"], function (require, exports) {
     "use strict";
-    var Ajax = (function () {
-        function Ajax($rootScope, $http, $q, Tool) {
+    class Ajax {
+        constructor($rootScope, $http, $q, Tool) {
             this.$rootScope = $rootScope;
             this.$http = $http;
             this.$q = $q;
@@ -11,12 +11,11 @@ define(["require", "exports"], function (require, exports) {
          * $http get请求
          * @params obj->请求参数，obj.url->地址
          */
-        Ajax.prototype.get = function (obj) {
-            var _this = this;
+        get(obj) {
             if (obj.url) {
                 this.$rootScope.load.has = true;
-                var defered_1 = this.$q.defer();
-                var headers = {};
+                let defered = this.$q.defer();
+                let headers = {};
                 if (obj.headers) {
                     if (obj.headers.accessToken) {
                         headers["accessToken"] = obj.headers.accessToken;
@@ -24,26 +23,25 @@ define(["require", "exports"], function (require, exports) {
                 }
                 this.$http.get(obj.url, {
                     headers: headers
-                }).success(function (data) {
-                    _this.$rootScope.load.has = false;
-                    return defered_1.resolve(data);
-                }).error(function (data) {
-                    _this.$rootScope.load.has = false;
-                    _this.alert("连接数据失败");
-                    return defered_1.reject(data);
+                }).success((data) => {
+                    this.$rootScope.load.has = false;
+                    return defered.resolve(data);
+                }).error((data) => {
+                    this.$rootScope.load.has = false;
+                    this.alert("连接数据失败");
+                    return defered.reject(data);
                 });
-                return defered_1.promise;
+                return defered.promise;
             }
-        };
+        }
         /**
          * $http post请求
          *
          */
-        Ajax.prototype.post = function (obj) {
-            var _this = this;
+        post(obj) {
             if (obj.url) {
                 this.$rootScope.load.has = true;
-                var defered_2 = this.$q.defer();
+                let defered = this.$q.defer();
                 var headers = {};
                 if (obj.headers) {
                     if (obj.headers.contentType) {
@@ -53,25 +51,24 @@ define(["require", "exports"], function (require, exports) {
                         headers["accessToken"] = obj.headers.accessToken;
                     }
                 }
-                var dataStr = this.Tool.convertParams(obj.data);
+                let dataStr = this.Tool.convertParams(obj.data);
                 this.$http.post(obj.url, dataStr, {
                     headers: headers
-                }).success(function (data) {
-                    _this.$rootScope.load.has = false;
-                    return defered_2.resolve(data);
-                }).error(function (data) {
-                    _this.$rootScope.load.has = false;
-                    _this.alert("连接数据失败");
-                    return defered_2.reject(data);
+                }).success((data) => {
+                    this.$rootScope.load.has = false;
+                    return defered.resolve(data);
+                }).error((data) => {
+                    this.$rootScope.load.has = false;
+                    this.alert("连接数据失败");
+                    return defered.reject(data);
                 });
-                return defered_2.promise;
+                return defered.promise;
             }
-        };
+        }
         /**
          * 文本提示
          */
-        Ajax.prototype.alert = function (mess, callback) {
-            var _this = this;
+        alert(mess, callback) {
             this.$rootScope.messageTip.message = mess;
             this.$rootScope.messageTip.hasCancel = false;
             this.$rootScope.messageTip.hasComfirm = true;
@@ -80,13 +77,12 @@ define(["require", "exports"], function (require, exports) {
                 this.$rootScope.messageTip.comfirm = callback;
             }
             else {
-                this.$rootScope.messageTip.comfirm = function () {
-                    _this.$rootScope.messageTip.has = false;
+                this.$rootScope.messageTip.comfirm = () => {
+                    this.$rootScope.messageTip.has = false;
                 };
             }
-        };
-        return Ajax;
-    }());
+        }
+    }
     return Ajax;
 });
 //# sourceMappingURL=Ajax.js.map

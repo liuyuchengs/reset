@@ -11,14 +11,14 @@ define(["require", "exports"], function (require, exports) {
         $scope.disable = false;
         $scope.phoneCheckResult = false;
         // 验证码按钮处理函数
-        $scope.getCode = function () {
+        $scope.getCode = () => {
             if ($scope.codeState) {
                 if ($scope.phoneCheckResult) {
                     // 发送短信验证码
                     AjaxService.post({
                         url: ToolService.host + "/wx/register/sendsmsregistercode",
                         data: { "phone": $scope.phone }
-                    }).then(function (data) {
+                    }).then((data) => {
                         if (data.code == 0) {
                             var time = 59;
                             $scope.codeState = false;
@@ -42,7 +42,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 检查手机号码是否可以注册
-        $scope.phoneCheck = function () {
+        $scope.phoneCheck = () => {
             if (/^1[3|4|5|7|8]\d{9}$/.test($scope.phone)) {
                 AjaxService.post({
                     url: ToolService.host + "/wx/register/registercheck",
@@ -62,7 +62,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 检查输入是否符合要求
-        var check = function () {
+        let check = () => {
             if (/^1[3|4|5|7|8]\d{9}$/.test($scope.phone) && $scope.password.length >= 8 && $scope.password.length <= 20 && $scope.password == $scope.passwordAgian) {
                 return true;
             }
@@ -86,11 +86,11 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 验证短信验证码是否正确
-        var codeCheck = function (callback) {
+        let codeCheck = (callback) => {
             AjaxService.post({
                 url: ToolService.host + "/wx/register/registercheck",
                 data: { name: "verifyCode", param: $scope.code, p: $scope.phone },
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     callback();
                 }
@@ -100,7 +100,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 注册按钮处理函数
-        $scope.register = function () {
+        $scope.register = () => {
             if (check()) {
                 codeCheck($scope.registering);
             }
@@ -110,7 +110,7 @@ define(["require", "exports"], function (require, exports) {
             AjaxService.post({
                 url: ToolService.host + "/wx/register/register",
                 data: { phone: $scope.phone, verifyCode: $scope.code, password: $scope.password, referralCode: $scope.referralCode, registertype: 8 },
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     ToolService.setLocal("user", data.data);
                     ToolService.alert("注册成功!", function () {

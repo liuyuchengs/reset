@@ -4,12 +4,12 @@ define(["require", "exports"], function (require, exports) {
         $scope.phone = "";
         $scope.password = "";
         // 登录
-        $scope.login = function () {
+        $scope.login = () => {
             if (check()) {
                 AjaxService.post({
                     url: ToolService.host + "/wx/login/wxlogin",
                     data: { phone: $scope.phone, password: $scope.password },
-                }).then(function (data) {
+                }).then((data) => {
                     if (data.code == 0) {
                         ToolService.setLocal("user", data.data);
                         $location.path("/user");
@@ -27,7 +27,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 检查信息是否符合要求
-        var check = function () {
+        let check = () => {
             if (/^1[3-8]\d{9}$/.test($scope.phone) && $scope.password.length >= 8 && $scope.password.length <= 20) {
                 return true;
             }

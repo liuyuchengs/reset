@@ -39,7 +39,7 @@ define(["require", "exports"], function (require, exports) {
             discountid: null,
         };
         // 加载url参数
-        var loadQueryParams = function () {
+        let loadQueryParams = () => {
             $scope.hosId = $location.search().hospitalId;
             $scope.proId = $location.search().productId;
             if ($location.search().flag) {
@@ -57,11 +57,11 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 返回上一页
-        $scope.back = function () {
+        $scope.back = () => {
             window.history.back();
         };
         // 查询项目信息
-        var queryProduct = function () {
+        let queryProduct = () => {
             var obj = {
                 productId: $scope.proId
             };
@@ -72,7 +72,7 @@ define(["require", "exports"], function (require, exports) {
             AjaxService.post({
                 url: ToolService.host + "/wx/product/querybyid",
                 data: obj
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.data.focusState === 1) {
                     $scope.follow.hasFollow = true;
                     $scope.follow.followText = "已关注";
@@ -84,51 +84,51 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 查询项目图片
-        var queryProductImg = function () {
+        let queryProductImg = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/image/querybymainid",
                 data: { type: "PRODUCT", mainId: $scope.proId }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.length > 0) {
                     $scope.productImg = data;
                 }
             });
         };
         // 加载医院信息
-        var queryHospital = function () {
+        let queryHospital = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/hospital/querybyid",
                 data: { id: $scope.hosId }
-            }).then(function (data) {
+            }).then((data) => {
                 $scope.hospitalInfo = data;
                 $scope.order.hospitalName = data.name;
                 $scope.order.hospitalAddress = data.address;
             });
         };
         // 查询医院图片
-        var queryHospitalImg = function () {
+        let queryHospitalImg = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/image/querybymainid",
                 data: {
                     type: "HOSPITAL",
                     mainId: $scope.hosId
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.length > 0) {
                     $scope.hospitalImg = data;
                 }
             });
         };
         // 查询医生信息
-        var queryDoctor = function () {
+        let queryDoctor = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/doctor/queryscheduledoctorbyproductid",
                 data: { productId: $scope.proId }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.list.length > 0) {
                     $scope.hasDoctor = true;
                     $scope.doctorInfo = data.list;
-                    $scope.doctorInfo.forEach(function (item) {
+                    $scope.doctorInfo.forEach((item) => {
                         if (item.score == "" || item.score == null) {
                             item.score = "暂无评";
                         }
@@ -139,7 +139,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 查询医生排班信息
-        var queryDoctorSchedule = function (docId) {
+        let queryDoctorSchedule = (docId) => {
             if ($scope.hasDocSchedule == docId) {
                 $scope.selectTime = true;
             }
@@ -147,7 +147,7 @@ define(["require", "exports"], function (require, exports) {
                 AjaxService.post({
                     url: ToolService.host + "/wx/schedule/querybydoctorid",
                     data: { doctorId: docId }
-                }).then(function (data) {
+                }).then((data) => {
                     $scope.mergeSchedule(data);
                     $scope.scheduleInfo = data;
                     $scope.loading = false;
@@ -157,18 +157,18 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 选择就医时间按钮
-        $scope.chooseSchedule = function (docId, name) {
+        $scope.chooseSchedule = (docId, name) => {
             $scope.order.doctorId = docId;
             $scope.order.doctorName = name;
             queryDoctorSchedule(docId);
             $scope.selectDoc = docId;
         };
-        var selected = {
+        let selected = {
             index: 0,
             obj: { timeList: [] }
         };
         // 选择具体的就医时间
-        $scope.chooseTime = function (index, obj) {
+        $scope.chooseTime = (index, obj) => {
             if (selected.obj !== obj || (selected.obj === obj && selected.index !== index)) {
                 if (selected.obj.timeList.length > 0) {
                     ToolService.select(selected.index, selected.obj.timeList, true);
@@ -184,7 +184,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 下单按钮时间
-        $scope.orderDetail = function () {
+        $scope.orderDetail = () => {
             if (!$scope.noSelectTime) {
                 if (!ToolService.checkLogin()) {
                     ToolService.comfirm("请先登录并完善个人信息", function () {
@@ -232,7 +232,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 修改项目信息
-        $scope.mergeProdcut = function (data) {
+        $scope.mergeProdcut = (data) => {
             if (data.priceunit != null && data.priceunit != "") {
                 data.preferPriceType = data.pricetype + "/" + data.priceunit;
             }
@@ -244,7 +244,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 截取排班参数
-        $scope.mergeSchedule = function (items) {
+        $scope.mergeSchedule = (items) => {
             for (var Itemindex = 0; Itemindex < items.length; Itemindex++) {
                 var item = items[Itemindex];
                 for (var Timeindex = 0; Timeindex < item.length; Timeindex++) {
@@ -265,8 +265,8 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 改变就医时间的选取值
-        $scope.mergeDocSelect = function (docId, value) {
-            $scope.doctorInfo.forEach(function (item) {
+        $scope.mergeDocSelect = (docId, value) => {
+            $scope.doctorInfo.forEach((item) => {
                 if (item.id == docId) {
                     item.selectTimeValue = value;
                     item.hasSelecTimeValue = true;
@@ -278,7 +278,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 关注按钮处理函数
-        $scope.switchFollow = function () {
+        $scope.switchFollow = () => {
             if (!ToolService.checkLogin()) {
                 ToolService.comfirm("请先登录!", function () {
                     $rootScope.messageTip.has = false;
@@ -296,14 +296,14 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 关注项目
-        $scope.tofollow = function () {
+        $scope.tofollow = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/post/focus",
                 data: { flag: 3, userId: $scope.proId },
                 headers: {
                     'accessToken': ToolService.user.accessToken,
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     $scope.follow.hasFollow = true;
                     $scope.follow.followText = "已关注";
@@ -321,7 +321,7 @@ define(["require", "exports"], function (require, exports) {
                 headers: {
                     'accessToken': ToolService.user.accessToken,
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     $scope.follow.hasFollow = false;
                     $scope.follow.followText = "关注";

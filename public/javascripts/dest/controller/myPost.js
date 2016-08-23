@@ -15,7 +15,7 @@ define(["require", "exports"], function (require, exports) {
         $scope.replys = [];
         $scope.user = {};
         //切换导航条
-        $scope.switch = function (p) {
+        $scope.switch = (p) => {
             if (p === "publish") {
                 $scope.params.hasPublish = true;
                 $scope.posts = [];
@@ -48,7 +48,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         //获取查询参数
-        var getQuery = function () {
+        let getQuery = () => {
             if ($location.search().item) {
                 $scope.item = $location.search().item;
                 $scope.switch($scope.item);
@@ -58,14 +58,14 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 查询我的回复
-        var queryReply = function () {
+        let queryReply = function () {
             AjaxService.post({
                 url: ToolService.host + "/wx/repliesMessage/myReply",
                 data: $scope.queryParams,
                 headers: {
                     accessToken: ToolService.user.accessToken,
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code === 0) {
                     if (data.data.length < 1) {
                         if ($scope.replys.length < 1) {
@@ -77,7 +77,7 @@ define(["require", "exports"], function (require, exports) {
                         $rootScope.followTip.has = true;
                     }
                     else {
-                        data.data.forEach(function (item) {
+                        data.data.forEach((item) => {
                             item.dataStr = item.createDateStr.slice(5, 10);
                         });
                         $scope.replys = $scope.replys.concat(data.data);
@@ -89,7 +89,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 加载我的帖子数据
-        var queryPost = function () {
+        let queryPost = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/post/myPost",
                 data: $scope.queryParams,
@@ -120,18 +120,18 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 跳转到帖子页面
-        $scope.goPost = function (id) {
+        $scope.goPost = (id) => {
             ToolService.changeRoute("/interaction/detail", "id=" + id);
         };
         //删除帖子
-        $scope.deletePost = function (id, $event) {
+        $scope.deletePost = (id, $event) => {
             $event.stopPropagation();
             ToolService.comfirm("确定要删除吗?", function () {
                 $rootScope.messageTip.has = false;
                 AjaxService.post({
                     url: ToolService.host + "/wx/post/deletePost",
                     data: { postId: id, accessToken: ToolService.user.accessToken },
-                }).then(function (data) {
+                }).then((data) => {
                     if (data.code == 0) {
                         deleteObj(id, $scope.posts);
                     }
@@ -139,13 +139,13 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         //删除回复
-        $scope.deleteReply = function (postid, id) {
+        $scope.deleteReply = (postid, id) => {
             ToolService.comfirm("确定要删除吗?", function () {
                 $rootScope.messageTip.has = false;
                 AjaxService.post({
                     url: ToolService.host + "/wx/repliesMessage/deleteReplies",
                     data: { postId: postid, repliesId: id, accessToken: ToolService.user.accessToken },
-                }).then(function (data) {
+                }).then((data) => {
                     if (data.code == 0) {
                         $scope.switch("reply");
                     }
@@ -153,7 +153,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         //从帖子数据中删除指定帖子
-        var deleteObj = function (id, array) {
+        let deleteObj = (id, array) => {
             for (var index in array) {
                 if (array[index].id == id) {
                     array.splice(index, 1);

@@ -20,6 +20,7 @@ declare module "koa" {
 
             name?: string;
             respond?: boolean;
+            render?:any;
 
             assert(test: any, ...args: any[]): void;
             onerror(err?: any): void;

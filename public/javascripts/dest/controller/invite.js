@@ -25,7 +25,7 @@ define(["require", "exports"], function (require, exports) {
         $scope.code = "";
         $scope.showTip = false;
         //邀请好友初始化
-        var inviteInit = function () {
+        let inviteInit = () => {
             if ($location.search().at) {
                 var accessToken = $location.search().at;
                 queryCode(accessToken);
@@ -39,7 +39,7 @@ define(["require", "exports"], function (require, exports) {
                     WeixinService.wxConfig();
                 }
                 else {
-                    ToolService.alert("请先登录", function () {
+                    ToolService.alert("请先登录", () => {
                         $rootScope.messageTip.has = false;
                         ToolService.changeRoute("/user");
                     });
@@ -47,11 +47,11 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 查询用户的邀请码
-        var queryCode = function (accessToken) {
+        let queryCode = (accessToken) => {
             AjaxService.post({
                 url: ToolService.host + "/wx/user/createReferralCode",
                 data: { "accessToken": accessToken },
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     $scope.code = data.data.referralCode;
                     $scope.shareObj.link = $scope.shareObj.link + "?code=" + $scope.code + "&name=" + ToolService.user.nickname;
@@ -63,11 +63,11 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 查询分享内容
-        var queryShare = function () {
+        let queryShare = () => {
             AjaxService.post({
                 url: ToolService.host + "/wx/share/queryById",
                 data: { id: 98 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     $scope.shareObj.title = data.data.title;
                     $scope.shareObj.desc = data.data.content;
@@ -82,7 +82,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         //切换提示框
-        $scope.switchTip = function (item) {
+        $scope.switchTip = (item) => {
             if (item === "close") {
                 $scope.showTip = false;
             }
@@ -91,7 +91,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         //分享邀请按钮
-        $scope.share = function () {
+        $scope.share = () => {
             if ($scope.shareObj.ready) {
                 $scope.switchTip("open");
                 WeixinService.wxShare($scope.shareObj);
@@ -101,7 +101,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         //新用户注册初始化
-        var registerInit = function () {
+        let registerInit = () => {
             if ($location.search().code) {
                 $scope.code = $location.search().code;
                 $scope.name = $location.search().name;
@@ -114,7 +114,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         //跳转注册
-        $scope.goRegister = function () {
+        $scope.goRegister = () => {
             ToolService.changeRoute("/register", "code=" + $scope.code);
         };
         //页面初始化

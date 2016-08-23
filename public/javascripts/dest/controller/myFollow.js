@@ -14,7 +14,7 @@ define(["require", "exports"], function (require, exports) {
         };
         $scope.follows = [];
         //获取查询参数
-        var getQuery = function () {
+        let getQuery = () => {
             if ($location.search().item) {
                 $scope.switch($location.search().item);
             }
@@ -23,7 +23,7 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         //切换导航条
-        $scope.switch = function (item) {
+        $scope.switch = (item) => {
             for (var proto in $scope.params) {
                 if (proto == item) {
                     $scope.params[proto] = true;
@@ -47,13 +47,13 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         //清空数据
-        var clearData = function () {
+        let clearData = () => {
             $scope.follows = [];
             $rootScope.followTip.has = false;
             $scope.queryParams.currentPage = 1;
         };
         //查询关注的用户
-        $scope.queryUser = function () {
+        $scope.queryUser = () => {
             $scope.queryParams.flag = 1;
             AjaxService.post({
                 url: ToolService.host + "/wx/focus/focusUserMan",
@@ -61,7 +61,7 @@ define(["require", "exports"], function (require, exports) {
                 headers: {
                     accessToken: ToolService.user.accessToken,
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code === 0) {
                     if (data.data.length < 1) {
                         if ($scope.follows.length < 1) {
@@ -73,7 +73,7 @@ define(["require", "exports"], function (require, exports) {
                         $rootScope.followTip.has = true;
                     }
                     else {
-                        data.data.forEach(function (item) {
+                        data.data.forEach((item) => {
                             item.hasFollow = true;
                             item.followText = "已关注";
                         });
@@ -86,7 +86,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         //查询关注的医生
-        $scope.queryDoctor = function () {
+        $scope.queryDoctor = () => {
             $scope.queryParams.flag = 2;
             AjaxService.post({
                 url: ToolService.host + "/wx/focus/focusDoctorMan",
@@ -94,7 +94,7 @@ define(["require", "exports"], function (require, exports) {
                 headers: {
                     accessToken: ToolService.user.accessToken,
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code === 0) {
                     if (data.data.length < 1) {
                         if ($scope.follows.length < 1) {
@@ -106,7 +106,7 @@ define(["require", "exports"], function (require, exports) {
                         $rootScope.followTip.has = true;
                     }
                     else {
-                        data.data.forEach(function (item) {
+                        data.data.forEach((item) => {
                             item.hasFollow = true;
                             item.followText = "已关注";
                         });
@@ -119,7 +119,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         //查询关注的项目
-        $scope.queryProduct = function () {
+        $scope.queryProduct = () => {
             $scope.queryParams.flag = 3;
             AjaxService.post({
                 url: ToolService.host + "/wx/focus/focusProductMan",
@@ -127,7 +127,7 @@ define(["require", "exports"], function (require, exports) {
                 headers: {
                     accessToken: ToolService.user.accessToken,
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code === 0) {
                     if (data.data.length < 1) {
                         if ($scope.follows.length < 1) {
@@ -139,7 +139,7 @@ define(["require", "exports"], function (require, exports) {
                         $rootScope.followTip.has = true;
                     }
                     else {
-                        data.data.forEach(function (item) {
+                        data.data.forEach((item) => {
                             item.hasFollow = true;
                             item.followText = "已关注";
                         });
@@ -152,7 +152,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 关注按钮处理函数
-        $scope.switchFollow = function (id, flag) {
+        $scope.switchFollow = (id, flag) => {
             if (ToolService.checkLogin()) {
                 ToolService.loadUser();
                 if (selectFollow(id)) {
@@ -173,14 +173,14 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         // 关注用户
-        var tofollow = function (id, flag) {
+        let tofollow = (id, flag) => {
             AjaxService.post({
                 url: ToolService.host + "/wx/post/focus",
                 data: { flag: flag, userId: id },
                 headers: {
                     accessToken: ToolService.user.accessToken,
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     if (selectFollow(id)) {
                         var follow = selectFollow(id);
@@ -194,14 +194,14 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         // 取消关注用户
-        var cacelFollow = function (id, flag) {
+        let cacelFollow = (id, flag) => {
             AjaxService.post({
                 url: ToolService.host + "/wx/post/cacelFocus",
                 data: { flag: flag, userId: id },
                 headers: {
                     accessToken: ToolService.user.accessToken,
                 }
-            }).then(function (data) {
+            }).then((data) => {
                 if (data.code == 0) {
                     if (selectFollow(id)) {
                         var follow = selectFollow(id);
@@ -215,7 +215,7 @@ define(["require", "exports"], function (require, exports) {
             });
         };
         //定位具体的关注元素
-        var selectFollow = function (id) {
+        let selectFollow = (id) => {
             for (var proto in $scope.follows) {
                 var follow = $scope.follows[proto];
                 if (follow.id == id) {
@@ -224,8 +224,8 @@ define(["require", "exports"], function (require, exports) {
             }
         };
         //设置加载下一页的方法
-        var setNext = function (fn) {
-            ToolService.onWindowListen(function () {
+        let setNext = (fn) => {
+            ToolService.onWindowListen(() => {
                 $scope.queryParams.currentPage++;
                 fn();
             });
